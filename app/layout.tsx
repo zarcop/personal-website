@@ -7,7 +7,7 @@ import { ThemeProvider } from 'next-themes'
 export const metadata: Metadata = {
   title: 'Elias Zarco Gonzalez — Portfolio',
   description: 'Builder + Analyst. SWE, Data, Quant, Product.',
-  openGraph: { title: 'Elias Zarco Gonzalez', images: ['/IMG_4026 2.png'] },
+  openGraph: { title: 'Elias Zarco Gonzalez', images: ['/images/profile/IMG_4026 2.png'] },
   metadataBase: new URL('https://eliaszarco.com'),
 }
 

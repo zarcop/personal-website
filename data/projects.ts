@@ -12,7 +12,7 @@ export const projects: Project[] = [
       'Real‑time order book via websockets',
       'Role‑based access & audit log',
     ],
-    cover: '/images/order-entry.png',
+    // cover: '/images/projects/order-entry.png', // TODO: Add project image
   },
   {
     slug: 'playlist-agents',
