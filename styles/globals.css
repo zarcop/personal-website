@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --radius: 1rem; }
+html { scroll-behavior: smooth; }
+.prose img { border-radius: 0.75rem; }
