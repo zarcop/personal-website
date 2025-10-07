@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Elias Zarco Gonzalez — Portfolio',
   description: 'Builder + Analyst. SWE, Data, Quant, Product.',
   openGraph: { title: 'Elias Zarco Gonzalez', images: ['/IMG_4026 2.png'] },
-  metadataBase: new URL('https://YOUR-DOMAIN.com'),
+  metadataBase: new URL('https://eliaszarco.com'),
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
