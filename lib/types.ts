@@ -14,6 +14,7 @@ export type Experience = {
   role: string
   start: string
   end?: string
+  logo?: string
   bullets: string[]
   links?: Link[]
 }
