@@ -22,7 +22,20 @@ export default function Timeline({ experiences }: TimelineProps) {
             </div>
             
             {/* Content card */}
-            <div className="flex-1 rounded-lg border bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div className="flex-1 rounded-lg border bg-card p-6 shadow-sm transition-shadow hover:shadow-md relative">
+              {/* Logo in top-right corner */}
+              {exp.logo && (
+                <div className="absolute top-6 right-6 w-16 h-16 flex items-center justify-center">
+                  <Image
+                    src={exp.logo}
+                    alt={`${exp.org} logo`}
+                    width={64}
+                    height={64}
+                    className="object-contain"
+                  />
+                </div>
+              )}
+              
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div className="flex-1">
                   <div className="text-sm text-muted-foreground mb-1">
@@ -31,18 +44,7 @@ export default function Timeline({ experiences }: TimelineProps) {
                   <h3 className="text-xl font-semibold text-foreground mb-1">
                     {exp.role}
                   </h3>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    {exp.logo && (
-                      <div className="relative w-5 h-5 flex-shrink-0">
-                        <Image
-                          src={exp.logo}
-                          alt={`${exp.org} logo`}
-                          width={20}
-                          height={20}
-                          className="object-contain"
-                        />
-                      </div>
-                    )}
+                  <div className="text-muted-foreground">
                     <span>{exp.org}</span>
                   </div>
                 </div>

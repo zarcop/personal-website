@@ -77,10 +77,11 @@ export default function HomePage() {
       {/* Personal History Section */}
       <Section title="My Journey">
         <div className="prose prose-lg max-w-none">
-          <p className="text-base text-muted-foreground leading-relaxed">
-            [I was born and raised in Mexico City, a place full of energy, creativity, and challenges. From a young age, I was curious about how things worked and how I could fix the problems around me. At first, I believed the best way to help people was through public policy, so I joined debate tournaments and worked on ideas that could make life fairer for others. But after seeing how politics often failed to bring real change, I decided I wanted to build things that could. That’s when I turned to engineering — a field that taught me how to think logically, solve problems, and turn ideas into reality. Choosing to study Industrial and Systems Engineering at Georgia Tech was my way of preparing to make a real impact, and for a time, I explored finance too, hoping to understand how money and systems could drive progress.
-
-It was in college that I found what truly excited me: Computer Science. I realized that through code, I could create tools, design systems, and make ideas come alive. After many late nights of learning and building, my path became clear. During my internship at Google, I worked with the LearnX team to develop AI tools that help people study and learn — and it changed everything for me. Seeing technology used for something so meaningful made me realize what I wanted to do with my life. Now, my goal is simple: to use technology, data, and AI to make a positive impact on the world and give back to the country that raised me.]
+          <p className="text-base text-white leading-relaxed mb-4">
+          I was born and raised in Mexico City, where I grew up curious about how things worked and driven to solve real problems in my community. At first, I believed public policy was the path to creating change, so I joined debate tournaments and focused on social issues. Over time, I realized that progress often required building practical solutions — not just discussing them. That led me to pursue engineering, where I could apply analytical thinking to tangible challenges. I chose to study Industrial and Systems Engineering at Georgia Tech, exploring fields like business and finance before discovering where my true passion lay.
+          </p>
+          <p className="text-base text-white leading-relaxed mb-4">
+          At Georgia Tech, I found that Computer Science combined everything I cared about — creativity, logic, and impact. Learning to code opened a new world for me, one where I could design and build systems that make a difference. My internship at Google confirmed that direction, as I worked with the LearnX team developing educational AI tools that help people learn and grow. That experience solidified my goal: to use technology, data, and AI to create meaningful, accessible solutions for my community, my country, and the world.
           </p>
         </div>
       </Section>
