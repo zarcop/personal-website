@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import GitHubIcon from '@/components/icons/GitHub'
 import Section from '@/components/Section'
 import Timeline from '@/components/Timeline'
 import TechBadges from '@/components/TechBadges'
@@ -78,10 +79,10 @@ export default function HomePage() {
       {/* Personal History Section */}
       <Section title="My Journey">
         <div className="prose prose-lg max-w-none">
-          <p className="text-base text-white leading-relaxed mb-4">
+          <p className="text-base dark:text-white text-black leading-relaxed mb-4">
           I was born and raised in Mexico City, where I grew up curious about how things worked and driven to solve real problems in my community. At first, I believed public policy was the path to creating change, so I joined debate tournaments and focused on social issues. Over time, I realized that progress often required building practical solutions — not just discussing them. That led me to pursue engineering, where I could apply analytical thinking to tangible challenges. I chose to study Industrial and Systems Engineering at Georgia Tech, exploring fields like business and finance before discovering where my true passion lay.
           </p>
-          <p className="text-base text-white leading-relaxed mb-4">
+          <p className="text-base dark:text-white text-black leading-relaxed mb-4">
           At Georgia Tech, I found that Computer Science combined everything I cared about — creativity, logic, and impact. Learning to code opened a new world for me, one where I could design and build systems that make a difference. My internship at Google confirmed that direction, as I worked with the LearnX team developing educational AI tools that help people learn and grow. That experience solidified my goal: to use technology, data, and AI to create meaningful, accessible solutions for my community, my country, and the world.
           </p>
         </div>
@@ -95,7 +96,7 @@ export default function HomePage() {
       {/* Key Projects Section */}
       <Section title="Key Projects">
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow">
+          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow relative">
             <h3 className="text-xl font-semibold mb-3">Order-Entry System</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Low-latency order entry system built with Redis and FastAPI. Demoed at Millennium HQ in NYC.
@@ -107,9 +108,18 @@ export default function HomePage() {
               <p>• Real-time order book via WebSockets</p>
               <p>• Role-based access & audit logging</p>
             </div>
+            <a
+              href="https://github.com/zarcop/order-entry-system-millenium" 
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View project on GitHub"
+              className="absolute bottom-4 right-4 text-muted-foreground hover:text-foreground"
+            >
+              <GitHubIcon className="h-5 w-5" />
+            </a>
           </div>
 
-          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow">
+          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow relative">
             <h3 className="text-xl font-semibold mb-3">Cruise Line Database System</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Designed EERD and built optimized SQL database for complex cruise line management system.
@@ -121,9 +131,18 @@ export default function HomePage() {
               <p>• Enhanced data integrity and query performance</p>
               <p>• Scalable architecture for complex scenarios</p>
             </div>
+            <a
+              href="https://github.com/zarcop/CruiseLine-DatabaseSystem" 
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View project on GitHub"
+              className="absolute bottom-4 right-4 text-muted-foreground hover:text-foreground"
+            >
+              <GitHubIcon className="h-5 w-5" />
+            </a>
           </div>
 
-          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow">
+          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow relative">
             <h3 className="text-xl font-semibold mb-3">Peohnein - Software that Matches Air Quality Data to PPE Recommendations</h3>
             <p className="text-sm text-muted-foreground mb-4">
             Engineered a real-time workplace safety app that analyzes air quality data from PurpleAir sensors to recommend PPE using the Amazon Product Advertising API.
@@ -135,15 +154,24 @@ export default function HomePage() {
               <p>• Automated PPE recommendations based on safety thresholds</p>
               <p>• Interactive dashboard for workplace safety metrics</p>
             </div>
+            {/* Peohnein has no GitHub link */}
           </div>
-
-          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow">
+          <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow relative">
             <h3 className="text-xl font-semibold mb-3">Air Quality Analysis</h3>
             <p className="text-sm text-muted-foreground mb-4">
             Analyzed over one million pollution data points using Python to uncover trends through correlation analysis, time-series modeling, and statistical forecasting.
             </p>
             <TechBadges technologies={['Numpy', 'Pandas', 'MatPlotlib']} />
             <div className="mb-4"></div>
+            <a
+              href="https://github.com/zarcop/Air-Quality-Stastical-Analysis." 
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View project on GitHub"
+              className="absolute bottom-4 right-4 text-muted-foreground hover:text-foreground"
+            >
+              <GitHubIcon className="h-5 w-5" />
+            </a>
           </div>
         </div>
       </Section>
