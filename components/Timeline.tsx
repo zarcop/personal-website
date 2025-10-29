@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import TechBadges from '@/components/TechBadges'
 import type { Experience } from '@/lib/types'
 
 interface TimelineProps {
@@ -37,16 +38,19 @@ export default function Timeline({ experiences }: TimelineProps) {
               )}
               
               <div className="flex items-start justify-between gap-4 mb-4">
-                <div className="flex-1">
+                <div className="flex-1 pr-20">
                   <div className="text-sm text-muted-foreground mb-1">
                     {exp.start} {exp.end ? `— ${exp.end}` : ''}
                   </div>
                   <h3 className="text-xl font-semibold text-foreground mb-1">
                     {exp.role}
                   </h3>
-                  <div className="text-muted-foreground">
+                  <div className="text-muted-foreground mb-3">
                     <span>{exp.org}</span>
                   </div>
+                  {exp.techStack && exp.techStack.length > 0 && (
+                    <TechBadges technologies={exp.techStack} />
+                  )}
                 </div>
               </div>
               

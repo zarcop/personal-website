@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Section from '@/components/Section'
+import TechBadges from '@/components/TechBadges'
 import { experience } from '@/data/experience'
 
 export default function ExperiencePage() {
@@ -22,9 +23,12 @@ export default function ExperiencePage() {
             )}
             
             <div className="mb-1 text-sm opacity-70">{e.start}{e.end ? ` — ${e.end}` : ''}</div>
-            <div className="mb-2">
+            <div className="mb-3">
               <div className="text-lg font-semibold">{e.role}</div>
-              <div className="opacity-80">{e.org}</div>
+              <div className="opacity-80 mb-3">{e.org}</div>
+              {e.techStack && e.techStack.length > 0 && (
+                <TechBadges technologies={e.techStack} />
+              )}
             </div>
             <ul className="mt-3 list-disc pl-5">
               {e.bullets.map((b, i) => <li key={i}>{b}</li>)}

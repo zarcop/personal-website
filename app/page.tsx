@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Section from '@/components/Section'
 import Timeline from '@/components/Timeline'
+import TechBadges from '@/components/TechBadges'
 import { experience } from '@/data/experience'
 
 export default function HomePage() {
@@ -99,11 +100,8 @@ export default function HomePage() {
             <p className="text-sm text-muted-foreground mb-4">
               Low-latency order entry system built with Redis and FastAPI. Demoed at Millennium HQ in NYC.
             </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">Python</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">FastAPI</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">Redis</span>
-            </div>
+            <TechBadges technologies={['Python', 'FastAPI', 'Redis']} />
+            <div className="mb-4"></div>
             <div className="text-sm text-muted-foreground space-y-1">
               <p>• Sub-50ms request/response times</p>
               <p>• Real-time order book via WebSockets</p>
@@ -116,11 +114,8 @@ export default function HomePage() {
             <p className="text-sm text-muted-foreground mb-4">
               Designed EERD and built optimized SQL database for complex cruise line management system.
             </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">SQL</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">Database Design</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">ER Modeling</span>
-            </div>
+            <TechBadges technologies={['SQL', 'Python']} />
+            <div className="mb-4"></div>
             <div className="text-sm text-muted-foreground space-y-1">
               <p>• Optimized constraints and stored procedures</p>
               <p>• Enhanced data integrity and query performance</p>
@@ -129,37 +124,26 @@ export default function HomePage() {
           </div>
 
           <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow">
-            <h3 className="text-xl font-semibold mb-3">Commodities Trading Strategy</h3>
+            <h3 className="text-xl font-semibold mb-3">Peohnein - Software that Matches Air Quality Data to PPE Recommendations</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Advanced quantitative models for commodities volatility monitoring and trading.
+            Engineered a real-time workplace safety app that analyzes air quality data from PurpleAir sensors to recommend PPE using the Amazon Product Advertising API.
             </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">Python</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">ARIMA</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">XGBoost</span>
-            </div>
+            <TechBadges technologies={['Python', 'Javascript', 'Node.js']} />
+            <div className="mb-4"></div>
             <div className="text-sm text-muted-foreground space-y-1">
-              <p>• ARIMA and SARIMA-GARCH forecasting models</p>
-              <p>• Ensemble trading strategies</p>
-              <p>• Risk-adjusted performance metrics</p>
+              <p>• Real-time air quality monitoring and API integration</p>
+              <p>• Automated PPE recommendations based on safety thresholds</p>
+              <p>• Interactive dashboard for workplace safety metrics</p>
             </div>
           </div>
 
           <div className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow">
-            <h3 className="text-xl font-semibold mb-3">Financial Sector Research</h3>
+            <h3 className="text-xl font-semibold mb-3">Air Quality Analysis</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Financial modeling and valuations for institutional stocks. Influenced $2.3M portfolio decisions.
+            Analyzed over one million pollution data points using Python to uncover trends through correlation analysis, time-series modeling, and statistical forecasting.
             </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">Finance</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">Valuation</span>
-              <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">DDM</span>
-            </div>
-            <div className="text-sm text-muted-foreground space-y-1">
-              <p>• DDM and comparative analysis for 7 institutions</p>
-              <p>• Sector Sharpe ratio of 2.79</p>
-              <p>• Impactful stock pitch presentations</p>
-            </div>
+            <TechBadges technologies={['Numpy', 'Pandas', 'MatPlotlib']} />
+            <div className="mb-4"></div>
           </div>
         </div>
       </Section>

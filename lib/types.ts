@@ -15,6 +15,7 @@ export type Experience = {
   start: string
   end?: string
   logo?: string
+  techStack?: string[]
   bullets: string[]
   links?: Link[]
 }
