@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   description: 'Builder + Analyst. SWE, Data, Quant, Product.',
   openGraph: { title: 'Elias Zarco Gonzalez', images: ['/images/profile/IMG_4026 2.png'] },
   metadataBase: new URL('https://eliaszarco.com'),
+  icons: {
+    icon: '/images/website-header/page-icon.jpg',
+    shortcut: '/images/website-header/page-icon.jpg',
+    apple: '/images/website-header/page-icon.jpg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
