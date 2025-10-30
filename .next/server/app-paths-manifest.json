@@ -1,3 +1,4 @@
 {
+  "/why-isye/page": "app/why-isye/page.js",
   "/page": "app/page.js"
 }
