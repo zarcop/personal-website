@@ -1172,6 +1172,12 @@ video {
 .top-full {
   top: 100%;
 }
+.-left-3 {
+  left: -0.75rem;
+}
+.top-1\.5 {
+  top: 0.375rem;
+}
 .z-10 {
   z-index: 10;
 }
@@ -1235,8 +1241,11 @@ video {
 .mt-8 {
   margin-top: 2rem;
 }
-.block {
-  display: block;
+.ml-4 {
+  margin-left: 1rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
 }
 .flex {
   display: flex;
@@ -1289,11 +1298,17 @@ video {
 .h-\[var\(--radix-navigation-menu-viewport-height\)\] {
   height: var(--radix-navigation-menu-viewport-height);
 }
+.h-auto {
+  height: auto;
+}
 .h-full {
   height: 100%;
 }
 .h-px {
   height: 1px;
+}
+.h-2\.5 {
+  height: 0.625rem;
 }
 .max-h-\[var\(--radix-dropdown-menu-content-available-height\)\] {
   max-height: var(--radix-dropdown-menu-content-available-height);
@@ -1337,6 +1352,9 @@ video {
 .w-max {
   width: -moz-max-content;
   width: max-content;
+}
+.w-2\.5 {
+  width: 0.625rem;
 }
 .min-w-\[8rem\] {
   min-width: 8rem;
@@ -1503,6 +1521,9 @@ video {
 .border-t {
   border-top-width: 1px;
 }
+.border-l {
+  border-left-width: 1px;
+}
 .border-transparent {
   border-color: transparent;
 }
@@ -1520,11 +1541,17 @@ video {
 .p-1 {
   padding: 0.25rem;
 }
+.p-2 {
+  padding: 0.5rem;
+}
 .p-5 {
   padding: 1.25rem;
 }
 .p-6 {
   padding: 1.5rem;
+}
+.p-4 {
+  padding: 1rem;
 }
 .px-2 {
   padding-left: 0.5rem;
@@ -1589,8 +1616,8 @@ video {
 .pt-0 {
   padding-top: 0px;
 }
-.text-center {
-  text-align: center;
+.pl-6 {
+  padding-left: 1.5rem;
 }
 .font-mono {
   font-family: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -1650,6 +1677,9 @@ video {
 }
 .underline {
   text-decoration-line: underline;
+}
+.decoration-dotted {
+  text-decoration-style: dotted;
 }
 .underline-offset-4 {
   text-underline-offset: 4px;
@@ -1757,6 +1787,9 @@ html { scroll-behavior: smooth; }
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
+.hover\:decoration-solid:hover {
+  text-decoration-style: solid;
+}
 .hover\:opacity-100:hover {
   opacity: 1;
 }
@@ -1833,6 +1866,14 @@ html { scroll-behavior: smooth; }
     position: absolute;
   }
 
+  .md\:-left-4 {
+    left: -1rem;
+  }
+
+  .md\:ml-6 {
+    margin-left: 1.5rem;
+  }
+
   .md\:w-\[var\(--radix-navigation-menu-viewport-width\)\] {
     width: var(--radix-navigation-menu-viewport-width);
   }
@@ -1851,6 +1892,10 @@ html { scroll-behavior: smooth; }
 
   .md\:items-start {
     align-items: flex-start;
+  }
+
+  .md\:pl-8 {
+    padding-left: 2rem;
   }
 }
 .\[\&\>svg\]\:size-4>svg {

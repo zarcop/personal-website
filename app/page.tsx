@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import GitHubIcon from '@/components/icons/GitHub'
 import Section from '@/components/Section'
 import Timeline from '@/components/Timeline'
@@ -37,6 +38,7 @@ export default function HomePage() {
               With past experience at <strong>Google</strong>, I bring a mix of creative insight and 
               technical skill to everything I build — from data-driven tools to intelligent models 
               that make complex systems work smarter.
+              {' '}<Link href="/why-isye" className="underline underline-offset-4 decoration-dotted hover:decoration-solid hover:text-foreground transition-colors">Want to see why an ISYE makes a great SWE?</Link>
             </p>
             
             {/* Social Links */}
