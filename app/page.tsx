@@ -44,7 +44,7 @@ export default function HomePage() {
             {/* Social Links */}
             <div className="flex flex-wrap gap-4 text-sm">
               <a 
-                href="https://drive.google.com/file/d/1GidEu3uZZTEMEmspi4-FuP4tec6E0iqy/view?usp=sharing" 
+                href="https://drive.google.com/file/d/1W8xRdizQGlmWFm8Wq9meKZAKcCrNzWpX/view?usp=sharing" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
