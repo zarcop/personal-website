@@ -15,7 +15,7 @@ export default function HomePage() {
           {/* Portrait Photo */}
           <div className="flex-shrink-0">
             <Image 
-              src="/images/profile/professional_portrait.png" 
+              src="/images/profile/professional_portrait.jpg" 
               alt="Elias Zarco Gonzalez" 
               width={200}
               height={200}
