@@ -6,6 +6,7 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/why-isye', label: 'Why ISYE?' },
   { href: '/experience', label: 'Experience' },
+  { href: '/projects', label: 'Projects' },
   { href: '/lab', label: 'Lab' },
 ]
 
@@ -15,7 +16,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="mx-auto flex max-w-5xl items-center justify-between py-4 px-6">
         <Link href="/" className="font-mono text-sm">elias.dev</Link>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center justify-end gap-4 sm:gap-6">
           {links.map(l => (
             <Link key={l.href} href={l.href}
               className={`text-sm transition-opacity hover:opacity-100 ${pathname === l.href ? 'opacity-100' : 'opacity-70'}`}>
