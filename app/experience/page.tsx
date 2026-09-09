@@ -1,41 +1,69 @@
 import Image from 'next/image'
-import Section from '@/components/Section'
-import TechBadges from '@/components/TechBadges'
+import Container from '@/components/Container'
+import PageHeader from '@/components/PageHeader'
+import TechList from '@/components/TechList'
 import { experience } from '@/data/experience'
+
+export const metadata = {
+  title: 'Experience',
+  description: 'Where I have worked and what I built there.',
+}
 
 export default function ExperiencePage() {
   return (
-    <Section title="Experience">
-      <div className="space-y-6">
-        {experience.map((e, idx) => (
-          <div key={idx} className="rounded-xl border p-5 relative">
-            {/* Logo in top-right corner */}
-            {e.logo && (
-              <div className="absolute top-5 right-5 w-16 h-16 flex items-center justify-center">
-                <Image
-                  src={e.logo}
-                  alt={`${e.org} logo`}
-                  width={64}
-                  height={64}
-                  className="object-contain"
-                />
+    <Container className="pb-4 pt-10 sm:pt-16">
+      <PageHeader title="Experience" lead="Where I've worked, and what I actually built there." />
+
+      <div className="space-y-14">
+        {experience.map((role, index) => (
+          <article
+            key={role.slug}
+            id={role.slug}
+            className="scroll-offset animate-rise"
+            style={{ animationDelay: `${index * 60}ms` }}
+          >
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <p className="font-mono text-2xs uppercase tracking-label text-faint">
+                  {role.period}
+                </p>
+                <h2 className="mt-3 text-[1.0625rem] font-medium leading-snug text-foreground">
+                  {role.role}
+                </h2>
+                <p className="mt-1 text-[0.9375rem] text-muted">{role.org}</p>
               </div>
-            )}
-            
-            <div className="mb-1 text-sm opacity-70">{e.start}{e.end ? ` — ${e.end}` : ''}</div>
-            <div className="mb-3">
-              <div className="text-lg font-semibold">{e.role}</div>
-              <div className="opacity-80 mb-3">{e.org}</div>
-              {e.techStack && e.techStack.length > 0 && (
-                <TechBadges technologies={e.techStack} />
+
+              {role.logo && (
+                <Image
+                  src={role.logo}
+                  alt=""
+                  width={72}
+                  height={72}
+                  aria-hidden
+                  className="h-9 w-9 flex-none rounded-md object-contain opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+                />
               )}
             </div>
-            <ul className="mt-3 list-disc pl-5">
-              {e.bullets.map((b, i) => <li key={i}>{b}</li>)}
+
+            <ul className="mt-5 space-y-2">
+              {role.bullets.map((bullet) => (
+                <li
+                  key={bullet}
+                  className="relative pl-5 text-[0.9375rem] leading-relaxed text-muted before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-line"
+                >
+                  {bullet}
+                </li>
+              ))}
             </ul>
-          </div>
+
+            {role.tech && role.tech.length > 0 && (
+              <div className="mt-5">
+                <TechList items={role.tech} />
+              </div>
+            )}
+          </article>
         ))}
       </div>
-    </Section>
+    </Container>
   )
 }
