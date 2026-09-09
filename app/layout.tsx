@@ -24,11 +24,11 @@ export const metadata: Metadata = {
     template: '%s — Elias Zarco',
   },
   description:
-    'Software and data engineer from Mexico City. Industrial & Systems Engineering and CS at Georgia Tech.',
+    'Industrial engineer from Toluca, Mexico. Industrial & Systems Engineering and CS at Georgia Tech, working at the intersection of AI and optimization.',
   openGraph: {
     title: 'Elias Zarco',
     description:
-      'Software and data engineer from Mexico City. Industrial & Systems Engineering and CS at Georgia Tech.',
+      'Industrial engineer from Toluca, Mexico. Industrial & Systems Engineering and CS at Georgia Tech, working at the intersection of AI and optimization.',
     url: 'https://eliaszarco.com',
     siteName: 'Elias Zarco',
     images: ['/images/profile/professional_portrait.jpg'],

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 
 type NarrativeState = {
@@ -81,8 +82,20 @@ export function Keyword({ id, children }: { id: string; children: React.ReactNod
  * The panel a Keyword reveals. Height animates via grid-template-rows 0fr→1fr;
  * `visibility` keeps collapsed content out of the tab order and the a11y tree
  * while still transitioning (CSS keeps it `visible` for the whole animation).
+ *
+ * Pass `image` to sit a photo alongside the text — it stacks above the copy on
+ * narrow screens. Collapsed panels never fetch their image (`loading="lazy"`),
+ * so a page full of them still loads on one request.
  */
-export function Detail({ id, children }: { id: string; children: React.ReactNode }) {
+export function Detail({
+  id,
+  image,
+  children,
+}: {
+  id: string
+  image?: { src: string; alt: string }
+  children: React.ReactNode
+}) {
   const { isOpen } = useNarrative('Detail')
   const open = isOpen(id)
 
@@ -95,8 +108,23 @@ export function Detail({ id, children }: { id: string; children: React.ReactNode
       ].join(' ')}
     >
       <div className="overflow-hidden">
-        <div className="my-3 border-l border-accent/40 pl-4 text-[0.9375rem] leading-relaxed text-muted">
-          {children}
+        <div className="my-4 border-l border-accent/40 pl-5 text-[0.9375rem] leading-relaxed text-muted">
+          {image ? (
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={440}
+                height={440}
+                loading="lazy"
+                sizes="(max-width: 640px) 100vw, 11rem"
+                className="h-auto w-full flex-none rounded-xl object-cover sm:w-44"
+              />
+              <div className="min-w-0 space-y-3">{children}</div>
+            </div>
+          ) : (
+            <div className="space-y-3">{children}</div>
+          )}
         </div>
       </div>
     </div>
