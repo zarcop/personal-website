@@ -1,145 +1,103 @@
 import Image from 'next/image'
-import TechBadges from '@/components/TechBadges'
-import GitHubIcon from '@/components/icons/GitHub'
+import Container from '@/components/Container'
+import PageHeader from '@/components/PageHeader'
+import TechList from '@/components/TechList'
+import { projects } from '@/data/projects'
 
 export const metadata = {
-  title: 'Projects — Elias Zarco',
-  description: 'Selected technical projects: order entry systems, analytics & ML, and full-stack applications.',
+  title: 'Projects',
+  description:
+    'Selected work: trading systems, humanitarian analytics, databases, and statistical modeling.',
 }
 
 export default function ProjectsPage() {
   return (
-    <>
-      <section className="mx-auto max-w-7xl w-full py-8">
-        <h2 className="mb-6 text-2xl font-semibold">Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {/* ——— Order Entry System at Millennium ——— */}
-          <div className="flex flex-col rounded-xl border bg-card p-6 space-y-6">
-            <h2 className="text-xl font-semibold">Order Entry System at Millennium</h2>
-            <p className="text-sm dark:text-white text-black leading-relaxed">
-              Led a three-person team to design and deploy a full-stack Python order entry system for hedge fund traders;
-              optimized order data retrieval with Redis caching and achieved sub-50&nbsp;ms request/response times through
-              low-latency order matching using FastAPI and WebSocket, with a lightweight HTMX front end demoed at Millennium HQ in New York.
-            </p>
+    <Container className="pb-4 pt-10 sm:pt-16">
+      <PageHeader
+        title="Projects"
+        lead="Things I built end to end — mostly systems where the data had to be right and the latency had to be low."
+      />
 
-            <div>
-              <h3 className="text-sm font-semibold mb-2">Technical scope</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                Asynchronous FastAPI, Redis sorted sets (price-time priority), atomic matching via Lua scripts, WebSocket
-                streaming, and HTMX UI with real-time order book visualization.
-              </p>
-              <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-5 mb-3">
-                <li>Sub-50&nbsp;ms latency, risk limits, multi-account support</li>
+      <div className="space-y-20">
+        {projects.map((project, index) => (
+          <article
+            key={project.slug}
+            id={project.slug}
+            className="scroll-offset animate-rise"
+            style={{ animationDelay: `${index * 60}ms` }}
+          >
+            <p className="font-mono text-2xs uppercase tracking-label text-faint">
+              {project.year ?? '—'}
+            </p>
+            <h2 className="mt-3 text-[1.0625rem] font-medium leading-snug text-foreground">
+              {project.title}
+            </h2>
+
+            <p className="mt-4 text-[0.9375rem] leading-relaxed text-muted">{project.description}</p>
+
+            {project.highlights && project.highlights.length > 0 && (
+              <ul className="mt-5 space-y-2">
+                {project.highlights.map((highlight) => (
+                  <li
+                    key={highlight}
+                    className="relative pl-5 text-[0.9375rem] leading-relaxed text-muted before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-line"
+                  >
+                    {highlight}
+                  </li>
+                ))}
               </ul>
-              <TechBadges technologies={['Python', 'FastAPI', 'Redis']} />
+            )}
+
+            <div className="mt-5">
+              <TechList items={project.tech} />
             </div>
 
-            <div>
-              <h3 className="text-sm font-semibold mb-2">In action</h3>
-              <div className="rounded-lg border bg-card/40 p-2 overflow-hidden">
-                <Image
-                  src="/images/projects/order-entry-screenshot.png"
-                  alt="Order Entry System — order book and trading interface"
-                  width={800}
-                  height={480}
-                  className="w-full h-auto rounded-md"
-                />
+            {project.figures && project.figures.length > 0 && (
+              <div className="mt-8 space-y-6">
+                {project.figures.map((figure) => (
+                  <figure key={figure.src}>
+                    <Image
+                      src={figure.src}
+                      alt={figure.alt}
+                      width={figure.width}
+                      height={figure.height}
+                      sizes="(max-width: 640px) 100vw, 38rem"
+                      className="h-auto w-full rounded-lg ring-1 ring-line"
+                    />
+                    {figure.caption && (
+                      <figcaption className="mt-3 text-sm leading-relaxed text-faint">
+                        {figure.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
               </div>
-            </div>
+            )}
 
-            <p className="text-sm dark:text-white text-black leading-relaxed">
-              Demoed at <strong>Millennium HQ in New York</strong> — walked stakeholders through order submission, real-time matching, and risk controls.
-            </p>
-            <div className="rounded-lg border bg-card/40 p-2 overflow-hidden">
-              <Image
-                src="/images/projects/millennium-hq-team.jpg"
-                alt="Team at Millennium HQ in New York"
-                width={800}
-                height={480}
-                className="w-full h-auto rounded-md"
-              />
-            </div>
-
-            <a
-              href="https://github.com/zarcop/order-entry-system-millenium"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mt-auto pt-2"
-            >
-              <GitHubIcon className="h-5 w-5 flex-shrink-0" />
-              zarcop/order-entry-system-millenium
-            </a>
-          </div>
-
-          {/* ——— Insight for Impact (H2C2) ——— */}
-          <div className="flex flex-col rounded-xl border bg-card p-6 space-y-6">
-            <h2 className="text-xl font-semibold">Insight for Impact</h2>
-            <p className="text-sm dark:text-white text-black leading-relaxed">
-              AI-powered humanitarian command center built for <strong>Hacklytics 2026</strong> (Databricks × United Nations).
-              Transforms fragmented UN humanitarian data into actionable insights: 3D crisis globe, funding gap analytics,
-              ML forecasts (XGBoost + Prophet), and natural-language queries via Databricks Genie — turning months of analysis into minutes of insight.
-            </p>
-
-            <div>
-              <h3 className="text-sm font-semibold mb-2">Technical scope</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                Full-stack Streamlit app with interactive 3D globe (Globe.gl / Three.js), Plotly charts, and a two-stage ML pipeline:
-                Prophet for funding trends and XGBoost for needs/requirements prediction. Databricks Genie for conversational queries over live data.
-              </p>
-              <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-5 mb-3">
-                <li>UN HNO/HRP data, mismatch scores, high-neglect-risk forecasting</li>
-              </ul>
-              <TechBadges technologies={['Python']} />
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold mb-2">In action</h3>
-              <div className="rounded-lg border bg-card/40 p-2 overflow-hidden">
-                <Image
-                  src="/images/projects/insight-for-impact-screenshot.png"
-                  alt="Insight for Impact — humanitarian dashboard and 3D globe"
-                  width={800}
-                  height={480}
-                  className="w-full h-auto rounded-md"
-                />
+            {project.links && project.links.length > 0 && (
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
+                {project.links.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group font-mono text-2xs uppercase tracking-label text-faint transition-colors duration-200 hover:text-foreground"
+                  >
+                    {link.label}
+                    <span
+                      aria-hidden
+                      className="ml-1.5 inline-block transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
+                    >
+                      ↗
+                    </span>
+                  </a>
+                ))}
               </div>
-            </div>
-
-            <p className="text-sm dark:text-white text-black leading-relaxed">
-              Built with <strong>Nikil Kandala</strong> for <strong>Hacklytics 2026: Golden Byte</strong> at Georgia Tech — production-ready command center in under 36 hours.
-            </p>
-            <div className="rounded-lg border bg-card/40 p-2 overflow-hidden">
-              <Image
-                src="/images/projects/insight-for-impact-team.png"
-                alt="Insight for Impact team at Hacklytics 2026"
-                width={800}
-                height={533}
-                className="w-full h-auto rounded-md"
-              />
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mt-auto pt-2">
-              <a
-                href="https://github.com/Nikil456/Insight-for-Impact"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
-              >
-                <GitHubIcon className="h-5 w-5 flex-shrink-0" />
-                Nikil456/Insight-for-Impact
-              </a>
-              <a
-                href="https://devpost.com/software/insight-for-impact?ref_content=my-projects-tab&ref_feature=my_projects"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground underline underline-offset-4 decoration-dotted hover:decoration-solid transition-colors"
-              >
-                Devpost
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+            )}
+          </article>
+        ))}
+      </div>
+    </Container>
   )
 }
