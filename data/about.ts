@@ -1,15 +1,4 @@
-/**
- * Everything you say about yourself on the home page lives here.
- *
- * ── How the prose works ────────────────────────────────────────────────
- * Inside `body` and `text`, wrap a phrase in [[id|Label]] to make it an
- * expandable keyword:
- *
- *     'I came to [[isye|Georgia Tech]] for industrial engineering.'
- *
- * The `id` must match a key in that block's `details` object. The `Label`
- * is what readers see. Plain text around it renders as normal prose.
- *
+/*
  * ── Marking something unfinished ───────────────────────────────────────
  * Add `todo: 'what is missing'` to any block or detail. Run
  * `npm run content:check` to list everything still outstanding, and in
@@ -35,7 +24,7 @@ export type AboutBlock = {
 }
 
 export const intro = {
-  name: 'Elias Zarco.',
+  name: 'Elias Zarco',
   tagline: 'AI, Optimization & Systems',
   photo: {
     src: '/images/profile/avatar.jpg',
@@ -45,62 +34,67 @@ export const intro = {
 
 export const about: AboutBlock[] = [
   {
-    body: 'Born and raised in [[toluca|Toluca]] — an hour outside Mexico City, which is the answer I give when nobody has heard of Toluca.',
+    body: 'Born and raised in [[toluca|Toluca]], Mexico a city an hour away from CDMX.',
     details: {
       toluca: {
-        todo: 'Replace the encyclopedia facts with what growing up there was actually like. Add a photo.',
         text: [
-          'It sits at about 2,660 metres, which makes it the highest major city in Mexico and colder than anyone expects Mexico to be. Close enough to CDMX to feel its pull, far enough to be its own place.',
+          'Toluca is known for its altitude, red chorizo and one of the best football teams in Mexico. This city was my home for the first 18 years of my life. Had to leave to discover who I was.'
         ],
-        // image: { src: '/images/story/toluca.jpg', alt: 'Toluca' },
+        image: { src: '/public/images/story/toluca.jpg', alt: 'Toluca' },
       },
     },
   },
   {
-    body: 'For most of high school I was convinced [[policy|public policy]] was how you fixed things, and I spent my weekends in debate rounds arguing about it. It took me longer than it should have to notice that the people actually changing anything were the ones building.',
+    body: 'Early on, I was convinced that [[policy|public policy]] was the best way to change the world, so I focused on competitive debate and preparing to study for an humanities degree during highschool. On my senior year, I realized that if I wanted to create I had to learn how to build things and systems.',
     details: {
       policy: {
         text: [
-          'Competitive debate taught me how to construct an argument and how to lose one in front of an audience. It is still why I care about problems with people on the other end of them. I just stopped believing that arguing was the last step.',
+          'Before doing competitive debate, I rarely voiced my opinions and my concerns. Debate taught me how to be analytical and articulate during discussions.',
+          'Made a lot of friends through and learnt a lot about economics, politics and philosophy.'
         ],
+        image : {src : '/public/images/story'}
       },
     },
   },
   {
-    body: 'So I went the other way. I came to Georgia Tech for [[isye|industrial engineering]] — the best program in the world for it — and somewhere in the middle I found software and fell for it completely.',
+    body: ['Not sure which Engineering degree to study, I chose the most general one. I came to Georgia Tech for [[isye|industrial engineering]] which is the best place on the world to study this.',
+          'I ended up finding my focus after taking two introductory Computer Science classes that made me realize that software was the tool to build and bring my ideas to life.'
+    ]
     details: {
       isye: {
         text: [
           'Industrial & Systems Engineering, Data Science & Analytics concentration, with a CS minor in Intelligence.',
-          'People ask why an industrial engineer wants to write software. ISYE turns out to be the same material from a different angle, and it trains you to define a problem precisely before you touch it — which has mattered more than knowing one more framework.',
+          'People ask why an industrial engineer would do well in software or AI role. ISYE teaches the math you need to understand Machine Learning and AI from a first principles perspective.',
+          'The best about IEs is that they can do anything, all my peers worked/work in different fields ranging from supply chain, banking, operations, consulting, and technology.'
         ],
       },
     },
   },
   {
-    body: 'I have kept one foot in business. Through [[clubs|clubs]] I have been building the consulting and banking side of things, mostly because I would rather understand a problem commercially before I model it.',
+    body: 'I have always been interested in the business side of things too. Through [[clubs|clubs and projects]] I have been able to build solid business fundamentals that help me understand how complex financial systems work.',
     details: {
       clubs: {
         text: [
-          'Most of that has been the Georgia Tech Student Foundation, a student-managed fund of roughly $2.3M, where I work as a quantitative analyst — ARIMA, SARIMA-GARCH and XGBoost models tracking commodities volatility, plus ensemble strategies with backtesting and risk-adjusted metrics.',
+          'This interest has been sharpened by my experience in Georgia Tech Investments Committee where I helped manage a 2M doing fundamental and quantitative analysis.',
+          'I learned a ton about financial modeling, valuation methods and public presentations. I have also been part of several business and case competitions that have honed my overall consulting skills.'
         ],
         link: { href: '/experience#gtsf', label: 'More on that' },
       },
     },
   },
   {
-    body: 'In 2025 I was at [[google|Google]], building AI tools for learning. That is where software engineering stopped being coursework and became systems: pipelines, latency, and the distance between a demo and something people actually use.',
+    body: 'In the summer of 2025, I had the incredible opportunity of working at [[google|Google]] on the Gemini Education team. My project focused on creating interactive AI tools to help kids learn school subjects.',
     details: {
       google: {
         text: [
-          'Summer 2025, on the LearnX team. I built agentic AI pipelines and interactive TypeScript game templates, and cut latency on our Gemini workflows by about 95%.',
+          'Learnt how to be a full stack engineer and built AI systems. Owned my product end to end, from conception to platform integration. Worked mostly with Kotlin for the backend and TypeScript for the frontend.',
         ],
         link: { href: '/experience#google-learnx', label: 'More on that' },
       },
     },
   },
   {
-    body: 'Around then the classes and the projects started rhyming. [[ie-ml|Industrial engineering and machine learning]] are largely the same subject in different clothes — probability, optimization, and modeling systems that refuse to hold still.',
+    body: 'In my last two years of my undergrad career I felt in love with the fundamentals of [[ie-ml| Modern Machine Learning and AI]] as I realized that is what the ultimate intersection of all the skills I had been developing during my previous professional and academic experiences.',
     details: {
       'ie-ml': {
         text: [
@@ -111,13 +105,11 @@ export const about: AboutBlock[] = [
     },
   },
   {
-    todo: 'The bank: name, country, your title, and the dates. This text ships broken until it is filled in.',
-    body: 'The summer after, I was at [[bank|a bank in {country}]], implementing AI rather than building it. Getting a model adopted inside an organization is a different problem from getting it to work, and it taught me more about people than about models.',
+    body: 'The summer after, I was at [[bank| HSBC Mexico]], implementing AI rather than building it. Getting a model adopted inside an organization is a different problem from getting it to work, and it taught me more about people than about models.',
     details: {
       bank: {
-        todo: 'Bank name, country, role, dates — plus one concrete thing you shipped or changed there.',
         text: [
-          '[Placeholder — bank name, country, role, and dates still to fill in.]',
+          'AI Project Manager at HSBC\'s Transformation Department.',
           'The short version: the hard part was never the modeling. It was the people who had to trust the output, the processes that had to bend around it, and the gap between what a system can do and what an institution is ready to let it do.',
         ],
       },
@@ -128,7 +120,7 @@ export const about: AboutBlock[] = [
     details: {
       'ai-optimization': {
         text: [
-          'Learned models are good at prediction and bad at guarantees; optimization is the reverse. The interesting work is in the seam — using one to inform the other, and being honest about which half of a decision each is responsible for.',
+          ' I am currently exploring the applications of optimization theory in Modern AI , particularly the intersection of Difussion Models and Optimization. ',
         ],
       },
       domains: {
@@ -139,12 +131,13 @@ export const about: AboutBlock[] = [
     },
   },
   {
-    body: 'Away from all of it: [[hobbies|soccer, history and music]].',
+    body: 'On a more personal note, I am passionate about the following thins: [[hobbies|futból, history, startups(coming soon), music, politics, traveling]].',
     details: {
       hobbies: {
-        todo: 'Needs your voice: the team, the era of history you fall into, what you listen to or play.',
         text: [
-          '[Placeholder — worth a sentence in your own voice: the team you follow, the corner of history you fall into, what you listen to or play.]',
+          'Pretty decent goalkeeper. Avid Toluca FC(best team in Mexico btw) and Bayern Munich fan. Interested in building AI solutions for developing countries.',
+          'Closely following geopolitical and ideological developments in Latin America. My favorite three albums - Channel Orange(Frank Ocean), Bocanada(Cerati), Discovery(Daft Punk).',
+          'I love spontaneuos traveling, some of my favorite places I have visited have been: Athens, Ibiza, Lindau, Santa Teresa (CR) and Chiapas, Mexico,'
         ],
       },
     },
