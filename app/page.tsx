@@ -19,23 +19,26 @@ export default function HomePage() {
   return (
     <Container className="pb-4 pt-10 sm:pt-16">
       {/* ——— Name ——— */}
-      <header className="flex items-center gap-5 animate-rise">
-        <Image
-          src={intro.photo.src}
-          alt={intro.photo.alt}
-          width={320}
-          height={320}
-          priority
-          className="h-16 w-16 flex-none rounded-full object-cover ring-1 ring-line"
-        />
+      <header className="flex items-center justify-between gap-6 animate-rise">
         <div>
-          <h1 className="text-[clamp(2.25rem,9vw,3rem)] font-extrabold leading-[0.95] tracking-[-0.03em]">
+          <h1 className="text-[clamp(1.5rem,7vw,2rem)] font-extrabold leading-[0.95] tracking-[-0.03em]">
             {intro.name}
           </h1>
           <p className="mt-3 font-mono text-2xs uppercase tracking-label text-faint">
             {intro.tagline}
           </p>
         </div>
+
+        {/* portrait oval: narrower on small screens so the name never gets squeezed */}
+        <Image
+          src={intro.photo.src}
+          alt={intro.photo.alt}
+          width={600}
+          height={800}
+          priority
+          sizes="(max-width: 640px) 84px, 100px"
+          className="h-28 w-[5.25rem] flex-none rounded-[999px] object-cover ring-1 ring-line sm:h-[8.5rem] sm:w-[6.25rem]"
+        />
       </header>
 
       {/* ——— The story. Copy lives in data/about.ts ——— */}
