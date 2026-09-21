@@ -27,7 +27,7 @@ export const intro = {
   name: 'Elias Zarco',
   tagline: 'AI, Optimization & Systems',
   photo: {
-    src: '/images/profile/avatar.jpg',
+    src: '/images/profile/portrait.jpg',
     alt: 'Elias Zarco Gonzalez',
   },
 }
