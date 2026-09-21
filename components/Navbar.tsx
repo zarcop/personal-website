@@ -1,28 +1,45 @@
 'use client'
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/why-isye', label: 'Why ISYE?' },
   { href: '/experience', label: 'Experience' },
   { href: '/projects', label: 'Projects' },
-  { href: '/lab', label: 'Lab' },
 ]
 
 export default function Navbar() {
   const pathname = usePathname()
+
   return (
-    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="mx-auto flex max-w-5xl items-center justify-between py-4 px-6">
-        <Link href="/" className="font-mono text-sm">elias.dev</Link>
-        <div className="flex flex-wrap items-center justify-end gap-4 sm:gap-6">
-          {links.map(l => (
-            <Link key={l.href} href={l.href}
-              className={`text-sm transition-opacity hover:opacity-100 ${pathname === l.href ? 'opacity-100' : 'opacity-70'}`}>
-              {l.label}
-            </Link>
-          ))}
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md">
+      <nav className="mx-auto flex max-w-reading items-center justify-between px-6 py-5 sm:px-0">
+        <Link
+          href="/"
+          className="font-mono text-2xs uppercase tracking-label text-faint transition-colors duration-200 hover:text-foreground"
+        >
+          EZ
+        </Link>
+
+        <div className="flex items-center gap-5">
+          {links.map((link) => {
+            const active = pathname === link.href
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? 'page' : undefined}
+                className={[
+                  'font-mono text-2xs uppercase tracking-label transition-colors duration-200',
+                  active ? 'text-foreground' : 'text-faint hover:text-foreground',
+                ].join(' ')}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
+          <ThemeToggle />
         </div>
       </nav>
     </header>

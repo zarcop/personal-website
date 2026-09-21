@@ -2,6 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --radius: 1rem; }
-html { scroll-behavior: smooth; }
-.prose img { border-radius: 0.75rem; }
+@layer base {
+  :root {
+    /* warm off-white, near-black ink */
+    --background: 40 22% 99%;
+    --surface:    36 20% 96%;
+    --foreground: 30 7% 11%;
+    --muted:      30 5% 42%;
+    --faint:      30 6% 60%;
+    --line:       32 10% 88%;
+    --accent:     22 62% 42%;
+  }
+
+  .dark {
+    --background: 30 6% 8%;
+    --surface:    30 5% 13%;
+    --foreground: 40 14% 92%;
+    --muted:      35 7% 63%;
+    --faint:      35 6% 44%;
+    --line:       30 5% 20%;
+    --accent:     28 70% 63%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: hsl(var(--accent) / 0.18);
+  }
+
+  /* keyboard users get a visible ring; mouse users never see it */
+  :focus-visible {
+    outline: 2px solid hsl(var(--accent) / 0.55);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  /* anchored sections clear the sticky header */
+  .scroll-offset {
+    scroll-margin-top: 6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
