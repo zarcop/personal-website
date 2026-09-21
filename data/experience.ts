@@ -2,6 +2,20 @@ import type { Experience } from '@/lib/types'
 
 export const experience: Experience[] = [
   {
+    slug: 'hsbc',
+    org: 'HSBC Mexico',
+    role: 'AI Project Manager',
+    period: 'Summer 2026',
+    shortPeriod: '2026',
+    summary: 'Implementing AI inside the bank\'s Transformation Department.',
+    // TODO(elias): add 1-2 concrete bullets — what you shipped, what changed because of it.
+    tech: ['Python'],
+    bullets: [
+      "Worked in HSBC's Transformation Department on implementing AI rather than building it",
+      'Focused on adoption: the people who had to trust the output and the processes that had to bend around it',
+    ],
+  },
+  {
     slug: 'google-learnx',
     org: 'Google',
     role: 'Software Engineer Intern',

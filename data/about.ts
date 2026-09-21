@@ -34,38 +34,37 @@ export const intro = {
 
 export const about: AboutBlock[] = [
   {
-    body: 'Born and raised in [[toluca|Toluca]], Mexico a city an hour away from CDMX.',
+    body: 'Born and raised in [[toluca|Toluca]], Mexico — a city an hour away from CDMX.',
     details: {
       toluca: {
         text: [
-          'Toluca is known for its altitude, red chorizo and one of the best football teams in Mexico. This city was my home for the first 18 years of my life. Had to leave to discover who I was.'
+          'Toluca is known for its altitude, red chorizo and one of the best football teams in Mexico. This city was my home for the first 18 years of my life. Had to leave to discover who I was.',
         ],
-        image: { src: '/public/images/story/toluca.jpg', alt: 'Toluca' },
+        image: { src: '/images/story/toluca.jpg', alt: 'Toluca, Mexico' },
       },
     },
   },
   {
-    body: 'Early on, I was convinced that [[policy|public policy]] was the best way to change the world, so I focused on competitive debate and preparing to study for an humanities degree during highschool. On my senior year, I realized that if I wanted to create I had to learn how to build things and systems.',
+    body: 'Early on, I was convinced that [[policy|public policy]] was the best way to change the world, so I focused on competitive debate and prepared to study a humanities degree in high school. In my senior year, I realized that if I wanted to create, I had to learn how to build things and systems.',
     details: {
       policy: {
         text: [
           'Before doing competitive debate, I rarely voiced my opinions and my concerns. Debate taught me how to be analytical and articulate during discussions.',
-          'Made a lot of friends through and learnt a lot about economics, politics and philosophy.'
+          'Made a lot of friends through it and learnt a lot about economics, politics and philosophy.',
         ],
-        image : {src : '/public/images/story'}
+        // add a debate photo here when you have one:
+        // image: { src: '/images/story/debate.jpg', alt: 'Debate tournament' },
       },
     },
   },
   {
-    body: ['Not sure which Engineering degree to study, I chose the most general one. I came to Georgia Tech for [[isye|industrial engineering]] which is the best place on the world to study this.',
-          'I ended up finding my focus after taking two introductory Computer Science classes that made me realize that software was the tool to build and bring my ideas to life.'
-    ]
+    body: 'Not sure which engineering degree to study, I chose the most general one. I came to Georgia Tech for [[isye|industrial engineering]], the best place in the world to study it. I found my focus after two introductory Computer Science classes made me realize software was the tool to bring my ideas to life.',
     details: {
       isye: {
         text: [
           'Industrial & Systems Engineering, Data Science & Analytics concentration, with a CS minor in Intelligence.',
-          'People ask why an industrial engineer would do well in software or AI role. ISYE teaches the math you need to understand Machine Learning and AI from a first principles perspective.',
-          'The best about IEs is that they can do anything, all my peers worked/work in different fields ranging from supply chain, banking, operations, consulting, and technology.'
+          'People ask why an industrial engineer would do well in a software or AI role. ISYE teaches the math you need to understand Machine Learning and AI from a first-principles perspective.',
+          'The best thing about IEs is that they can do anything — my peers work in fields ranging from supply chain to banking, operations, consulting and technology.',
         ],
       },
     },
@@ -75,8 +74,8 @@ export const about: AboutBlock[] = [
     details: {
       clubs: {
         text: [
-          'This interest has been sharpened by my experience in Georgia Tech Investments Committee where I helped manage a 2M doing fundamental and quantitative analysis.',
-          'I learned a ton about financial modeling, valuation methods and public presentations. I have also been part of several business and case competitions that have honed my overall consulting skills.'
+          'This interest has been sharpened by my experience in the Georgia Tech Investments Committee, where I helped manage $2M doing fundamental and quantitative analysis.',
+          'I learned a ton about financial modeling, valuation methods and public presentations. I have also been part of several business and case competitions that have honed my overall consulting skills.',
         ],
         link: { href: '/experience#gtsf', label: 'More on that' },
       },
@@ -94,7 +93,7 @@ export const about: AboutBlock[] = [
     },
   },
   {
-    body: 'In my last two years of my undergrad career I felt in love with the fundamentals of [[ie-ml| Modern Machine Learning and AI]] as I realized that is what the ultimate intersection of all the skills I had been developing during my previous professional and academic experiences.',
+    body: 'In my last two years of undergrad I fell in love with the fundamentals of [[ie-ml|modern machine learning and AI]], when I realized it was the ultimate intersection of all the skills I had been developing across my professional and academic experiences.',
     details: {
       'ie-ml': {
         text: [
@@ -105,13 +104,14 @@ export const about: AboutBlock[] = [
     },
   },
   {
-    body: 'The summer after, I was at [[bank| HSBC Mexico]], implementing AI rather than building it. Getting a model adopted inside an organization is a different problem from getting it to work, and it taught me more about people than about models.',
+    body: 'The summer after, I was at [[bank|HSBC Mexico]], implementing AI rather than building it. Getting a model adopted inside an organization is a different problem from getting it to work, and it taught me more about people than about models.',
     details: {
       bank: {
         text: [
-          'AI Project Manager at HSBC\'s Transformation Department.',
+          "AI Project Manager at HSBC's Transformation Department.",
           'The short version: the hard part was never the modeling. It was the people who had to trust the output, the processes that had to bend around it, and the gap between what a system can do and what an institution is ready to let it do.',
         ],
+        link: { href: '/experience#hsbc', label: 'More on that' },
       },
     },
   },
@@ -120,7 +120,7 @@ export const about: AboutBlock[] = [
     details: {
       'ai-optimization': {
         text: [
-          ' I am currently exploring the applications of optimization theory in Modern AI , particularly the intersection of Difussion Models and Optimization. ',
+          'I am currently exploring the applications of optimization theory in modern AI, particularly the intersection of diffusion models and optimization.',
         ],
       },
       domains: {
@@ -131,13 +131,13 @@ export const about: AboutBlock[] = [
     },
   },
   {
-    body: 'On a more personal note, I am passionate about the following thins: [[hobbies|futból, history, startups(coming soon), music, politics, traveling]].',
+    body: 'On a more personal note, I am passionate about the following things: [[hobbies|fútbol, history, startups, music, politics and traveling]].',
     details: {
       hobbies: {
         text: [
-          'Pretty decent goalkeeper. Avid Toluca FC(best team in Mexico btw) and Bayern Munich fan. Interested in building AI solutions for developing countries.',
-          'Closely following geopolitical and ideological developments in Latin America. My favorite three albums - Channel Orange(Frank Ocean), Bocanada(Cerati), Discovery(Daft Punk).',
-          'I love spontaneuos traveling, some of my favorite places I have visited have been: Athens, Ibiza, Lindau, Santa Teresa (CR) and Chiapas, Mexico,'
+          'Pretty decent goalkeeper. Avid Toluca FC (best team in Mexico btw) and Bayern Munich fan. Interested in building AI solutions for developing countries.',
+          'Closely following geopolitical and ideological developments in Latin America. My favorite three albums — Channel Orange (Frank Ocean), Bocanada (Cerati), Discovery (Daft Punk).',
+          'I love spontaneous traveling. Some of my favorite places I have visited: Athens, Ibiza, Lindau, Santa Teresa (CR) and Chiapas, Mexico.',
         ],
       },
     },
