@@ -89,7 +89,7 @@ export const hotspots: Hotspot[] = [
     label: 'The bookcase',
     kicker: 'Economics, history, and what I am reading',
     mesh: 'bookcase',
-    camera: { position: [-2.45, 1.5, -1.1], target: [-2.45, 0.8, -3.7] },
+    camera: { position: [-2.45, 1.45, -0.2], target: [-2.45, 0.85, -3.7] },
     todo: 'Needs the actual shelf: 4-6 books with a line each on why they stuck.',
     body: [
       'Mostly economics and history, with a bias toward Latin America.',

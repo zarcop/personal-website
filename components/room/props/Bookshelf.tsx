@@ -3,9 +3,11 @@
 import { useMemo } from 'react'
 import { RoundedBox } from '@react-three/drei'
 
-const W = 0.45 // depth, into the wall (x)
+// Authored facing +Z, like every other prop, so a Blender model drops in
+// without having to be built sideways.
+const W = 1.6 // width along the wall (x)
 const H = 2.0 // height (y)
-const D = 1.6 // width along the wall (z)
+const D = 0.45 // depth, into the wall (z)
 const PANEL = 0.04
 const SHELVES = 4
 
@@ -17,31 +19,31 @@ function rand(seed: number) {
   return x - Math.floor(x)
 }
 
-type Book = { z: number; width: number; height: number; colour: string; lean: number }
+type Book = { x: number; width: number; height: number; colour: string; lean: number }
 
 function shelfBooks(shelfIndex: number): Book[] {
   const books: Book[] = []
-  let z = -D / 2 + 0.08
+  let x = -W / 2 + 0.1
   let i = 0
 
-  while (z < D / 2 - 0.12) {
+  while (x < W / 2 - 0.14) {
     const r = rand(shelfIndex * 31 + i)
     const width = 0.025 + r * 0.035
     const height = 0.22 + rand(shelfIndex * 71 + i) * 0.1
     // leave the odd gap so it reads as a used shelf rather than a solid block
     if (rand(shelfIndex * 17 + i) > 0.88) {
-      z += 0.05
+      x += 0.05
       i += 1
       continue
     }
     books.push({
-      z: z + width / 2,
+      x: x + width / 2,
       width,
       height,
       colour: BOOK_COLOURS[Math.floor(rand(shelfIndex * 53 + i) * BOOK_COLOURS.length)],
       lean: rand(shelfIndex * 91 + i) > 0.93 ? 0.18 : 0,
     })
-    z += width + 0.004
+    x += width + 0.004
     i += 1
   }
 
@@ -64,14 +66,14 @@ export default function Bookshelf({ accent }: { accent: string }) {
 
   return (
     <group>
-      {/* carcass: back and two sides */}
-      <mesh position={[-W / 2 + PANEL / 2, 0, 0]} castShadow receiveShadow>
-        <boxGeometry args={[PANEL, H, D]} />
+      {/* carcass: back panel against the wall, two side panels */}
+      <mesh position={[0, 0, -D / 2 + PANEL / 2]} castShadow receiveShadow>
+        <boxGeometry args={[W, H, PANEL]} />
         <meshStandardMaterial color={accent} roughness={0.8} />
       </mesh>
-      {[-D / 2 + PANEL / 2, D / 2 - PANEL / 2].map((z) => (
-        <mesh key={z} position={[0, 0, z]} castShadow receiveShadow>
-          <boxGeometry args={[W, H, PANEL]} />
+      {[-W / 2 + PANEL / 2, W / 2 - PANEL / 2].map((x) => (
+        <mesh key={x} position={[x, 0, 0]} castShadow receiveShadow>
+          <boxGeometry args={[PANEL, H, D]} />
           <meshStandardMaterial color={accent} roughness={0.8} />
         </mesh>
       ))}
@@ -90,18 +92,18 @@ export default function Bookshelf({ accent }: { accent: string }) {
           <group key={shelfIndex}>
             {shelfIndex < SHELVES - 1 && (
               <mesh position={[0, shelfY, 0]} castShadow receiveShadow>
-                <boxGeometry args={[W - PANEL, 0.025, D - PANEL * 2]} />
+                <boxGeometry args={[W - PANEL * 2, 0.025, D - PANEL]} />
                 <meshStandardMaterial color={accent} roughness={0.8} />
               </mesh>
             )}
             {books.map((book, i) => (
               <mesh
                 key={i}
-                position={[0.03, shelfY - gap + 0.0125 + book.height / 2, book.z]}
-                rotation={[book.lean, 0, 0]}
+                position={[book.x, shelfY - gap + 0.0125 + book.height / 2, 0.03]}
+                rotation={[0, 0, book.lean]}
                 castShadow
               >
-                <boxGeometry args={[0.2, book.height, book.width]} />
+                <boxGeometry args={[book.width, book.height, 0.2]} />
                 <meshStandardMaterial color={book.colour} roughness={0.85} />
               </mesh>
             ))}

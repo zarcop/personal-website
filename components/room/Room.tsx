@@ -33,10 +33,9 @@ function tint(hovered: boolean, active: boolean, base: string) {
 type Placement = { position: [number, number, number]; rotation?: [number, number, number] }
 
 const PLACEMENT: Record<string, Placement> = {
-  // the bookcase is authored facing +X; turn it to face the room off the back wall
-  bookcase: { position: [-2.45, 1.0, WALL_Z + 0.24], rotation: [0, -Math.PI / 2, 0] },
+  bookcase: { position: [-2.45, 1.0, WALL_Z + 0.24] },
   photo: { position: [-0.95, 2.0, WALL_Z + 0.05] },
-  monitor: { position: [0.35, 1.33, WALL_Z + 0.42] },
+  monitor: { position: [0.35, 1.3425, WALL_Z + 0.42] },
   resume: { position: [1.35, 0.805, WALL_Z + 0.52] },
   whiteboard: { position: [2.1, 1.92, WALL_Z + 0.05] },
   window: { position: [3.45, 1.72, WALL_Z + 0.06] },
