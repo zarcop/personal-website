@@ -15,8 +15,11 @@ export default function RoomPage() {
         Real text in the DOM, underneath the canvas. Crawlers and screen readers
         get this; sighted visitors see the canvas painted over it. It is also the
         no-JS experience, so it must stand on its own.
+
+        focus-within lifts it above the canvas: a keyboard user tabs into this link
+        before reaching the room, and must be able to see what they have focused.
       */}
-      <div className="absolute inset-0 -z-10 flex items-center justify-center px-6">
+      <div className="absolute inset-0 -z-10 flex items-center justify-center px-6 focus-within:z-30 focus-within:bg-background/95">
         <div className="max-w-reading">
           <h1 className="text-[clamp(1.5rem,7vw,2rem)] font-extrabold leading-[0.95] tracking-[-0.03em]">
             {intro.name}

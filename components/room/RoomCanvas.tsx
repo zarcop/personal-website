@@ -5,7 +5,9 @@ import Link from 'next/link'
 import { Canvas } from '@react-three/fiber'
 import { detectCapability, type Capability } from '@/lib/capability'
 import { useRoom } from '@/store/room'
-import SpikeScene from '@/components/room/SpikeScene'
+import Scene from '@/components/room/Scene'
+import HotspotNav from '@/components/room/HotspotNav'
+import OverlayHost from '@/components/room/overlays/OverlayHost'
 
 function Fallback({ reason }: { reason: Capability['reason'] }) {
   const message =
@@ -47,15 +49,21 @@ export default function RoomCanvas() {
   if (!capability.ok) return <Fallback reason={capability.reason} />
 
   return (
-    <Canvas
-      camera={{ position: [4, 3, 5], fov: 45 }}
-      // cap DPR: retina phones will happily render 3x and melt
-      dpr={[1, capability.quality === 'high' ? 2 : 1.5]}
-      gl={{ antialias: capability.quality === 'high', powerPreference: 'high-performance' }}
-    >
-      <Suspense fallback={null}>
-        <SpikeScene />
-      </Suspense>
-    </Canvas>
+    <div className="relative h-full w-full">
+      <Canvas
+        shadows={capability.quality === 'high'}
+        camera={{ position: [6.5, 4.2, 6.5], fov: 42 }}
+        // cap DPR: retina phones will happily render at 3x and melt
+        dpr={[1, capability.quality === 'high' ? 2 : 1.5]}
+        gl={{ antialias: capability.quality === 'high', powerPreference: 'high-performance' }}
+      >
+        <Suspense fallback={null}>
+          <Scene quality={capability.quality} />
+        </Suspense>
+      </Canvas>
+
+      <HotspotNav />
+      <OverlayHost />
+    </div>
   )
 }

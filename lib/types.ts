@@ -1,3 +1,5 @@
+export type Vec3 = [number, number, number]
+
 export type Link = { label: string; href: string }
 
 export type Figure = {
