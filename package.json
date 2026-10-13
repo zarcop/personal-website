@@ -10,15 +10,20 @@
     "content:check": "node scripts/check-content.mjs"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "next": "14.0.4",
     "next-themes": "^0.4.6",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "three": "^0.160.1",
+    "zustand": "^4.5.7"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.160.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
