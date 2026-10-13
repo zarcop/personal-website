@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import CameraRig from '@/components/room/CameraRig'
-import GreyboxRoom from '@/components/room/GreyboxRoom'
+import Room from '@/components/room/Room'
 import { useRoom } from '@/store/room'
 
 /** Everything inside the <Canvas>. Lighting here is placeholder — M2 bakes it. */
@@ -25,7 +25,7 @@ export default function Scene({ quality }: { quality: 'high' | 'low' }) {
         shadow-mapSize={[1024, 1024]}
       />
       <directionalLight position={[-4, 3, -3]} intensity={0.4} />
-      <GreyboxRoom />
+      <Room />
       <CameraRig />
     </>
   )
