@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "content:check": "node scripts/check-content.mjs"
+    "content:check": "node scripts/check-content.mjs",
+    "props:manifest": "node scripts/gen-prop-manifest.mjs",
+    "prebuild": "node scripts/gen-prop-manifest.mjs",
+    "predev": "node scripts/gen-prop-manifest.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",

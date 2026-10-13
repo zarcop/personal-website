@@ -21,3 +21,6 @@ build
 
 # vercel
 .vercel
+
+# generated from public/models/ by scripts/gen-prop-manifest.mjs
+# (tracked, not ignored — Vercel needs it before prebuild runs)
