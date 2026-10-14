@@ -1,10 +1,12 @@
 'use client'
 
+import type { ColorRepresentation } from 'three'
+
 /**
  * A sheet of A4 lying on the desk, turned slightly off-square so it reads as
  * something someone put down rather than something that was placed.
  */
-export default function Resume({ accent }: { accent: string }) {
+export default function Resume({ accent }: { accent: ColorRepresentation }) {
   const lines = [0.09, 0.055, 0.075, 0.04, 0.085, 0.05]
 
   return (

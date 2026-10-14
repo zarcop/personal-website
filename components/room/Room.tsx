@@ -1,5 +1,8 @@
 'use client'
 
+import { Color } from 'three'
+
+import HotspotLabel from '@/components/room/HotspotLabel'
 import Interactable from '@/components/room/Interactable'
 import Prop from '@/components/room/Prop'
 import Monitor from '@/components/room/props/Monitor'
@@ -10,6 +13,7 @@ import Resume from '@/components/room/props/Resume'
 import Whiteboard from '@/components/room/props/Whiteboard'
 import Window from '@/components/room/props/Window'
 import { hotspots } from '@/data/room'
+import { useRoom } from '@/store/room'
 import type { Daylight } from '@/lib/daylight'
 
 /**
@@ -24,11 +28,17 @@ const WALL_Z = -4
 const WALL = '#d6d0c6'
 const FLOOR = '#c9c2b6'
 
-/** Shared hover/active tint so every hotspot reads as one system. */
+const ACCENT = '#c2703c'
+
+/**
+ * Shared hover/active tint. Blends toward the accent rather than replacing the
+ * colour: swapping a large object to full accent made the focused monitor a
+ * solid orange slab, and each prop should keep its own material identity while
+ * still reading as selected. The floating label carries the louder signal.
+ */
 function tint(hovered: boolean, active: boolean, base: string) {
-  if (active) return '#c2703c'
-  if (hovered) return '#cf8a5c'
-  return base
+  if (!hovered && !active) return base
+  return new Color(base).lerp(new Color(ACCENT), active ? 0.42 : 0.22)
 }
 
 type Placement = { position: [number, number, number]; rotation?: [number, number, number] }
@@ -45,6 +55,8 @@ const PLACEMENT: Record<string, Placement> = {
 }
 
 export default function Room({ daylight }: { daylight: Daylight }) {
+  const playing = useRoom((s) => s.playing)
+
   return (
     <group>
       {/* ——— floor ——— */}
@@ -101,12 +113,16 @@ export default function Room({ daylight }: { daylight: Daylight }) {
         if (!place) return null
 
         return (
-          <group key={hotspot.id} position={place.position} rotation={place.rotation}>
+          <group key={hotspot.id}>
+            <HotspotLabel hotspot={hotspot} />
+            <group position={place.position} rotation={place.rotation}>
             <Interactable id={hotspot.id}>
               {({ hovered, active }) => (
                 <group name={hotspot.mesh}>
                   <Prop name={hotspot.mesh}>
-                    {hotspot.mesh === 'monitor' && <Monitor accent={tint(hovered, active, '#1d4a5c')} />}
+                    {hotspot.mesh === 'monitor' && (
+                      <Monitor accent={tint(hovered, active, '#2b2b30')} playing={playing} />
+                    )}
                     {hotspot.mesh === 'photo' && <MapFrame accent={tint(hovered, active, '#6b5540')} />}
                     {hotspot.mesh === 'bookcase' && <Bookshelf accent={tint(hovered, active, '#8a7d6b')} />}
                     {hotspot.mesh === 'football' && <Football accent={tint(hovered, active, '#efe9df')} />}
@@ -119,6 +135,7 @@ export default function Room({ daylight }: { daylight: Daylight }) {
                 </group>
               )}
             </Interactable>
+            </group>
           </group>
         )
       })}

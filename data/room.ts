@@ -16,8 +16,13 @@ import type { Vec3 } from '@/lib/types'
  */
 export type Hotspot = {
   id: string
+  /** What you get from it, not what it is. This is the floating label. */
   label: string
+  /** The object itself. Only for screen readers, so "Achievements" has a place. */
+  object: string
   kicker: string
+  /** Where the floating label hangs, in world space. */
+  anchor: Vec3
   /** glTF node name. Also the key in data/props.generated.ts. */
   mesh: string
   camera: { position: Vec3; target: Vec3 }
@@ -51,10 +56,12 @@ export const PARALLAX = 0.28
 export const hotspots: Hotspot[] = [
   {
     id: 'desk',
-    label: 'The desk',
+    label: 'Brief overview',
+    object: 'the desk',
+    anchor: [0.35, 1.82, -3.5] as Vec3,
     kicker: 'Who I am, and where to find me',
     mesh: 'monitor',
-    camera: { position: [0.35, 1.55, -1.3], target: [0.35, 1.05, -3.6] },
+    camera: { position: [0.35, 1.62, -0.35], target: [0.35, 1.0, -3.6] },
     body: [
       'Industrial engineer from Toluca, Mexico. I study Industrial & Systems Engineering and CS at Georgia Tech, and I work at the intersection of AI and optimization.',
       'Google in 2025, HSBC Mexico the summer after. Mostly interested in problems where the math and the system have to agree with each other.',
@@ -68,7 +75,9 @@ export const hotspots: Hotspot[] = [
   },
   {
     id: 'resume',
-    label: 'The résumé',
+    label: 'The one-pager',
+    object: 'the résumé',
+    anchor: [1.35, 0.95, -3.35] as Vec3,
     kicker: 'One page, the paper version',
     mesh: 'resume',
     camera: { position: [1.35, 1.4, -2.3], target: [1.35, 0.5, -3.3] },
@@ -86,7 +95,9 @@ export const hotspots: Hotspot[] = [
   },
   {
     id: 'bookcase',
-    label: 'The bookcase',
+    label: 'What I read',
+    object: 'the bookcase',
+    anchor: [-2.45, 2.18, -3.6] as Vec3,
     kicker: 'Economics, history, and what I am reading',
     mesh: 'bookcase',
     camera: { position: [-2.45, 1.45, -0.2], target: [-2.45, 0.85, -3.7] },
@@ -98,7 +109,9 @@ export const hotspots: Hotspot[] = [
   },
   {
     id: 'photo',
-    label: 'The photo',
+    label: 'Where I come from',
+    object: 'the photo',
+    anchor: [-0.95, 2.62, -3.9] as Vec3,
     kicker: 'Toluca — where this starts',
     mesh: 'photo',
     camera: { position: [-0.95, 2.05, -1.95], target: [-0.95, 1.7, -3.95] },
@@ -110,7 +123,9 @@ export const hotspots: Hotspot[] = [
   },
   {
     id: 'whiteboard',
-    label: 'The whiteboard',
+    label: 'Achievements',
+    object: 'the whiteboard',
+    anchor: [2.1, 2.5, -3.9] as Vec3,
     kicker: 'What I have actually shipped',
     mesh: 'whiteboard',
     camera: { position: [2.1, 1.95, -1.9], target: [2.1, 1.6, -3.95] },
@@ -126,7 +141,9 @@ export const hotspots: Hotspot[] = [
   },
   {
     id: 'window',
-    label: 'The window',
+    label: 'What comes next',
+    object: 'the window',
+    anchor: [3.45, 2.62, -3.9] as Vec3,
     kicker: 'Where this is going',
     mesh: 'window',
     camera: { position: [3.45, 1.8, -1.85], target: [3.45, 1.4, -3.95] },
@@ -137,7 +154,9 @@ export const hotspots: Hotspot[] = [
   },
   {
     id: 'football',
-    label: 'The ball',
+    label: 'Off the clock',
+    object: 'the ball',
+    anchor: [2.25, 0.66, -2.6] as Vec3,
     kicker: 'Toluca FC, Bayern, and a decent pair of gloves',
     mesh: 'football',
     camera: { position: [2.25, 1.05, -1.5], target: [2.25, 0.05, -2.9] },

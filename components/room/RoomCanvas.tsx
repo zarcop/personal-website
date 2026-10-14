@@ -6,17 +6,14 @@ import { Canvas } from '@react-three/fiber'
 import { detectCapability, type Capability } from '@/lib/capability'
 import { useRoom } from '@/store/room'
 import Scene from '@/components/room/Scene'
-import HotspotNav from '@/components/room/HotspotNav'
 import OverlayHost from '@/components/room/overlays/OverlayHost'
 import LoadingScreen from '@/components/room/LoadingScreen'
 
 function Fallback({ reason }: { reason: Capability['reason'] }) {
   const message =
-    reason === 'reduced-motion'
-      ? 'Your system is set to reduce motion, so the 3D room is switched off.'
-      : reason === 'no-webgl'
-        ? "This browser can't run the 3D room."
-        : 'The 3D room is unavailable on this device.'
+    reason === 'no-webgl'
+      ? "This browser can't run the 3D room."
+      : 'The 3D room is unavailable on this device.'
 
   return (
     <div className="flex h-full items-center justify-center px-6">
@@ -39,12 +36,14 @@ export default function RoomCanvas() {
   // null = not yet measured; measuring during render would desync hydration
   const [capability, setCapability] = useState<Capability | null>(null)
   const setQuality = useRoom((s) => s.setQuality)
+  const setReducedMotion = useRoom((s) => s.setReducedMotion)
 
   useEffect(() => {
     const result = detectCapability()
     setCapability(result)
+    setReducedMotion(result.reducedMotion)
     if (result.ok) setQuality(result.quality)
-  }, [setQuality])
+  }, [setQuality, setReducedMotion])
 
   if (!capability) return null
   if (!capability.ok) return <Fallback reason={capability.reason} />
@@ -63,7 +62,6 @@ export default function RoomCanvas() {
         </Suspense>
       </Canvas>
 
-      <HotspotNav />
       <OverlayHost />
       <LoadingScreen />
     </div>

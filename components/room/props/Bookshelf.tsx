@@ -1,5 +1,7 @@
 'use client'
 
+import type { ColorRepresentation } from 'three'
+
 import { useMemo } from 'react'
 import { RoundedBox } from '@react-three/drei'
 
@@ -55,7 +57,7 @@ function shelfBooks(shelfIndex: number): Book[] {
  * pseudo-random so the arrangement is stable across renders — a shelf that
  * reshuffles on every frame would be very distracting.
  */
-export default function Bookshelf({ accent }: { accent: string }) {
+export default function Bookshelf({ accent }: { accent: ColorRepresentation }) {
   const shelves = useMemo(
     () => Array.from({ length: SHELVES }, (_, i) => shelfBooks(i)),
     [],

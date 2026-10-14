@@ -1,5 +1,7 @@
 'use client'
 
+import type { ColorRepresentation } from 'three'
+
 import type { Daylight } from '@/lib/daylight'
 
 /**
@@ -20,7 +22,7 @@ const BAR = 0.1
 const OPEN_W = OUTER_W - BAR * 2
 const OPEN_H = OUTER_H - BAR * 2
 
-export default function Window({ accent, daylight }: { accent: string; daylight: Daylight }) {
+export default function Window({ accent, daylight }: { accent: ColorRepresentation; daylight: Daylight }) {
   return (
     <group>
       {/* ——— the view, set back behind the frame ——— */}

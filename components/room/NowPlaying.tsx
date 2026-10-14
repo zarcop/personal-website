@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRoom } from '@/store/room'
 
 export type NowPlaying = {
   configured: boolean
@@ -18,6 +19,7 @@ export type NowPlaying = {
  */
 export function useNowPlaying(active: boolean) {
   const [data, setData] = useState<NowPlaying | null>(null)
+  const setPlaying = useRoom((s) => s.setPlaying)
 
   useEffect(() => {
     if (!active) return
@@ -28,7 +30,10 @@ export function useNowPlaying(active: boolean) {
         const res = await fetch('/api/now-playing')
         if (!res.ok) return
         const json: NowPlaying = await res.json()
-        if (!cancelled) setData(json)
+        if (cancelled) return
+        setData(json)
+        // the monitor's screen lights its now-playing strip from this
+        setPlaying(Boolean(json.playing))
       } catch {
         // offline or blocked — leave whatever we last had
       }
@@ -40,7 +45,7 @@ export function useNowPlaying(active: boolean) {
       cancelled = true
       clearInterval(id)
     }
-  }, [active])
+  }, [active, setPlaying])
 
   return data
 }

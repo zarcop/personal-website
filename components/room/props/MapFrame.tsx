@@ -2,12 +2,13 @@
 
 import { RoundedBox, useTexture } from '@react-three/drei'
 import { SRGBColorSpace } from 'three'
+import type { ColorRepresentation } from 'three'
 
 /**
  * The framed Toluca photo. Reuses the image already in the repo for the written
  * site's Toluca panel, so this costs no new bytes.
  */
-export default function MapFrame({ accent }: { accent: string }) {
+export default function MapFrame({ accent }: { accent: ColorRepresentation }) {
   const texture = useTexture('/images/story/toluca.jpg')
   // photographic textures are authored in sRGB; without this they render washed out
   texture.colorSpace = SRGBColorSpace

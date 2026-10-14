@@ -37,6 +37,7 @@ function damp(current: Vector3, goal: Vector3, lambda: number, delta: number) {
 
 export default function CameraRig() {
   const focus = useRoom((s) => s.focus)
+  const reducedMotion = useRoom((s) => s.reducedMotion)
 
   const desiredPosition = useRef(new Vector3())
   const desiredTarget = useRef(new Vector3(...IDLE_POSE.target))
@@ -55,6 +56,14 @@ export default function CameraRig() {
     // push out along the pose's own view direction, keeping its framing intent
     offset.current.set(...pose.position).sub(desiredTarget.current).multiplyScalar(distanceScale(aspect))
     desiredPosition.current.copy(desiredTarget.current).add(offset.current)
+
+    if (reducedMotion) {
+      // cut straight to the pose: still a 3D room, just one that holds still
+      state.camera.position.copy(desiredPosition.current)
+      smoothedTarget.current.copy(desiredTarget.current)
+      state.camera.lookAt(smoothedTarget.current)
+      return
+    }
 
     // parallax leans the camera; it does not orbit it. Vertical is damped harder
     // because up/down movement reads as much stronger than sideways.

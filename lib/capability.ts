@@ -7,9 +7,15 @@
 export type Capability = {
   ok: boolean
   /** Why we bailed, for the fallback UI and for debugging. */
-  reason?: 'no-webgl' | 'reduced-motion' | 'low-power'
+  reason?: 'no-webgl' | 'low-power'
   /** Scene detail to render when ok. */
   quality: 'high' | 'low'
+  /**
+   * Viewer asked for less movement. Not a reason to withhold the room — only a
+   * reason to stop moving the camera. Bouncing these people to the text site
+   * excluded them from the whole thing over an animation preference.
+   */
+  reducedMotion: boolean
 }
 
 function hasWebGL2(): boolean {
@@ -23,19 +29,16 @@ function hasWebGL2(): boolean {
 }
 
 export function detectCapability(): Capability {
-  if (typeof window === 'undefined') return { ok: false, quality: 'low' }
+  if (typeof window === 'undefined') return { ok: false, quality: 'low', reducedMotion: false }
 
-  if (!hasWebGL2()) return { ok: false, reason: 'no-webgl', quality: 'low' }
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  // honour the OS setting: a camera that flies around is exactly what this asks us not to do
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    return { ok: false, reason: 'reduced-motion', quality: 'low' }
-  }
+  if (!hasWebGL2()) return { ok: false, reason: 'no-webgl', quality: 'low', reducedMotion }
 
   // hardwareConcurrency is a weak signal, but it's the only portable one we have.
   // Treat it as a quality hint, not a gate — plenty of capable phones report 4.
   const cores = navigator.hardwareConcurrency ?? 4
   const quality: Capability['quality'] = cores >= 8 ? 'high' : 'low'
 
-  return { ok: true, quality }
+  return { ok: true, quality, reducedMotion }
 }

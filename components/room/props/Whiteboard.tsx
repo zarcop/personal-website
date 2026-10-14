@@ -1,9 +1,11 @@
 'use client'
 
+import type { ColorRepresentation } from 'three'
+
 import { RoundedBox } from '@react-three/drei'
 
 /** Wall-mounted board. Faces +Z. */
-export default function Whiteboard({ accent }: { accent: string }) {
+export default function Whiteboard({ accent }: { accent: ColorRepresentation }) {
   return (
     <group>
       <RoundedBox args={[1.3, 0.92, 0.045]} radius={0.01} smoothness={3} castShadow>
