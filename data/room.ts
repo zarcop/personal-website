@@ -28,6 +28,11 @@ export type Hotspot = {
   camera: { position: Vec3; target: Vec3 }
   body: string[]
   links?: { label: string; href: string; external?: boolean }[]
+  /**
+   * Content lives on the object itself (a screen, a board) rather than in the
+   * bottom panel. Those objects render their own UI and OverlayHost skips them.
+   */
+  surface?: boolean
   todo?: string
 }
 
@@ -61,7 +66,9 @@ export const hotspots: Hotspot[] = [
     anchor: [0.35, 1.82, -3.5] as Vec3,
     kicker: 'Who I am, and where to find me',
     mesh: 'monitor',
-    camera: { position: [0.35, 1.62, -0.35], target: [0.35, 1.0, -3.6] },
+    surface: true,
+    // nearly flat-on: the screen carries real DOM, and an angle would soften it
+    camera: { position: [0.35, 1.44, -2.28], target: [0.35, 1.355, -3.6] },
     body: [
       'Industrial engineer from Toluca, Mexico. I study Industrial & Systems Engineering and CS at Georgia Tech, and I work at the intersection of AI and optimization.',
       'Google in 2025, HSBC Mexico the summer after. Mostly interested in problems where the math and the system have to agree with each other.',
@@ -128,7 +135,9 @@ export const hotspots: Hotspot[] = [
     anchor: [2.1, 2.5, -3.9] as Vec3,
     kicker: 'What I have actually shipped',
     mesh: 'whiteboard',
-    camera: { position: [2.1, 1.95, -1.9], target: [2.1, 1.6, -3.95] },
+    surface: true,
+    // flat-on for the same reason as the desk
+    camera: { position: [2.1, 2.0, -2.62], target: [2.1, 1.93, -3.95] },
     body: [
       'Google, LearnX — agentic AI pipelines and interactive TypeScript templates. Cut Gemini workflow latency by about 95%.',
       'HSBC Mexico — AI Project Manager in the Transformation Department, implementing AI rather than building it.',

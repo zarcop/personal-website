@@ -1,10 +1,14 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Color } from 'three'
 
 import HotspotLabel from '@/components/room/HotspotLabel'
 import Interactable from '@/components/room/Interactable'
 import Prop from '@/components/room/Prop'
+import SurfaceUI from '@/components/room/SurfaceUI'
+import DesktopOS from '@/components/room/surfaces/DesktopOS'
+import BoardContent from '@/components/room/surfaces/BoardContent'
 import Monitor from '@/components/room/props/Monitor'
 import MapFrame from '@/components/room/props/MapFrame'
 import Bookshelf from '@/components/room/props/Bookshelf'
@@ -41,6 +45,17 @@ function tint(hovered: boolean, active: boolean, base: string) {
   return new Color(base).lerp(new Color(ACCENT), active ? 0.42 : 0.22)
 }
 
+/** True once `value` has held still for the length of a camera move. */
+function useSettled(value: string | null, delay = 620) {
+  const [settled, setSettled] = useState(false)
+  useEffect(() => {
+    setSettled(false)
+    const id = setTimeout(() => setSettled(true), delay)
+    return () => clearTimeout(id)
+  }, [value, delay])
+  return settled
+}
+
 type Placement = { position: [number, number, number]; rotation?: [number, number, number] }
 
 const PLACEMENT: Record<string, Placement> = {
@@ -56,6 +71,10 @@ const PLACEMENT: Record<string, Placement> = {
 
 export default function Room({ daylight }: { daylight: Daylight }) {
   const playing = useRoom((s) => s.playing)
+  const focus = useRoom((s) => s.focus)
+  // surfaces only read correctly once the camera is flat-on, and render as a
+  // skewed slab mid-flight, so wait for the move to finish before mounting
+  const settled = useSettled(focus)
 
   return (
     <group>
@@ -132,6 +151,18 @@ export default function Room({ daylight }: { daylight: Daylight }) {
                       <Window accent={tint(hovered, active, '#e6e1d8')} daylight={daylight} />
                     )}
                   </Prop>
+
+                  {/* real DOM on the object's own surface, only while focused */}
+                  {active && settled && hotspot.mesh === 'monitor' && (
+                    <SurfaceUI position={[0, 0.02, 0.034]} width={1.1} pxWidth={660} pxHeight={360}>
+                      <DesktopOS />
+                    </SurfaceUI>
+                  )}
+                  {active && settled && hotspot.mesh === 'whiteboard' && (
+                    <SurfaceUI position={[0, 0, 0.026]} width={1.2} pxWidth={600} pxHeight={410}>
+                      <BoardContent />
+                    </SurfaceUI>
+                  )}
                 </group>
               )}
             </Interactable>

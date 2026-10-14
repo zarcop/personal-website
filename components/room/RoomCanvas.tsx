@@ -8,6 +8,7 @@ import { useRoom } from '@/store/room'
 import Scene from '@/components/room/Scene'
 import OverlayHost from '@/components/room/overlays/OverlayHost'
 import LoadingScreen from '@/components/room/LoadingScreen'
+import BackToRoom from '@/components/room/BackToRoom'
 
 function Fallback({ reason }: { reason: Capability['reason'] }) {
   const message =
@@ -63,6 +64,7 @@ export default function RoomCanvas() {
       </Canvas>
 
       <OverlayHost />
+      <BackToRoom />
       <LoadingScreen />
     </div>
   )

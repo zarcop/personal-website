@@ -49,7 +49,8 @@ export default function CameraRig() {
     // portrait viewports cannot fit the whole wall at any sane distance, so they
     // idle on the desk rather than trying to show everything at once
     const idle = aspect < 1 ? IDLE_POSE_NARROW : IDLE_POSE
-    const pose = hotspotById(focus)?.camera ?? idle
+    const hotspot = hotspotById(focus)
+    const pose = hotspot?.camera ?? idle
 
     desiredTarget.current.set(...pose.target)
 
@@ -65,10 +66,16 @@ export default function CameraRig() {
       return
     }
 
-    // parallax leans the camera; it does not orbit it. Vertical is damped harder
+    // Parallax leans the camera; it does not orbit it. Vertical is damped harder
     // because up/down movement reads as much stronger than sideways.
-    desiredPosition.current.x += state.pointer.x * PARALLAX
-    desiredPosition.current.y += state.pointer.y * PARALLAX * 0.45
+    //
+    // Suppressed on surface hotspots: those mount real DOM onto the object, and
+    // any lean yaws the surface off flat-on, which skews the text and pushes the
+    // object out of frame.
+    if (!hotspot?.surface) {
+      desiredPosition.current.x += state.pointer.x * PARALLAX
+      desiredPosition.current.y += state.pointer.y * PARALLAX * 0.45
+    }
 
     // clamp delta: a backgrounded tab resumes with a huge delta and would snap
     const dt = Math.min(delta, 0.1)

@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import DraftBadge from '@/components/DraftBadge'
-import NowPlayingLine, { useNowPlaying } from '@/components/room/NowPlaying'
 import { hotspotById } from '@/data/room'
 import { useRoom } from '@/store/room'
 
@@ -18,12 +17,13 @@ import { useRoom } from '@/store/room'
 export default function OverlayHost() {
   const overlay = useRoom((s) => s.overlay)
   const close = useRoom((s) => s.closeOverlay)
-  const hotspot = hotspotById(overlay)
+  const found = hotspotById(overlay)
+  // the monitor and the whiteboard carry their own content on their surfaces
+  const hotspot = found?.surface ? undefined : found
   const panel = useRef<HTMLDivElement>(null)
   const returnFocus = useRef<HTMLElement | null>(null)
 
   // the desk panel is the only one that shows what Elias is listening to
-  const nowPlaying = useNowPlaying(overlay === 'desk')
 
   useEffect(() => {
     if (!overlay) return
@@ -98,8 +98,6 @@ export default function OverlayHost() {
               </p>
             ))}
           </div>
-
-          <NowPlayingLine data={nowPlaying} />
 
           {hotspot.links && hotspot.links.length > 0 && (
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
