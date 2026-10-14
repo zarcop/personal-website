@@ -1,5 +1,7 @@
 'use client'
 
+import type { Daylight } from '@/lib/daylight'
+
 /**
  * The brightest thing on the wall, on purpose — it pulls the eye and gives a
  * flat set some implied depth. "Outside" is a layered gradient rather than a
@@ -18,26 +20,26 @@ const BAR = 0.1
 const OPEN_W = OUTER_W - BAR * 2
 const OPEN_H = OUTER_H - BAR * 2
 
-export default function Window({ accent }: { accent: string }) {
+export default function Window({ accent, daylight }: { accent: string; daylight: Daylight }) {
   return (
     <group>
       {/* ——— the view, set back behind the frame ——— */}
       <mesh position={[0, 0.18, -0.045]}>
         <planeGeometry args={[OPEN_W, OPEN_H * 0.76]} />
-        <meshBasicMaterial color="#dceaf3" />
+        <meshBasicMaterial color={daylight.skyLow} />
       </mesh>
       <mesh position={[0, 0.5, -0.044]}>
         <planeGeometry args={[OPEN_W, OPEN_H * 0.34]} />
-        <meshBasicMaterial color="#b9d5e7" />
+        <meshBasicMaterial color={daylight.skyHigh} />
       </mesh>
       {/* a low treeline, so it reads as a view and not a lightbox */}
       <mesh position={[0, -0.47, -0.043]}>
         <planeGeometry args={[OPEN_W, OPEN_H * 0.27]} />
-        <meshBasicMaterial color="#a2b79b" />
+        <meshBasicMaterial color={daylight.ground} />
       </mesh>
       <mesh position={[0, -0.63, -0.042]}>
         <planeGeometry args={[OPEN_W, OPEN_H * 0.12]} />
-        <meshBasicMaterial color="#8da585" />
+        <meshBasicMaterial color={daylight.ground} />
       </mesh>
 
       {/* ——— frame: four bars ——— */}

@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import DraftBadge from '@/components/DraftBadge'
+import NowPlayingLine, { useNowPlaying } from '@/components/room/NowPlaying'
 import { hotspotById } from '@/data/room'
 import { useRoom } from '@/store/room'
 
@@ -18,6 +19,11 @@ export default function OverlayHost() {
   const overlay = useRoom((s) => s.overlay)
   const close = useRoom((s) => s.closeOverlay)
   const hotspot = hotspotById(overlay)
+  const panel = useRef<HTMLDivElement>(null)
+  const returnFocus = useRef<HTMLElement | null>(null)
+
+  // the desk panel is the only one that shows what Elias is listening to
+  const nowPlaying = useNowPlaying(overlay === 'desk')
 
   useEffect(() => {
     if (!overlay) return
@@ -27,6 +33,23 @@ export default function OverlayHost() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [overlay, close])
+
+  // Move focus into the panel when it opens and hand it back when it closes.
+  // Without this a keyboard user opens a dialog and their focus stays behind it
+  // on the chip, with no way to reach the links inside.
+  useEffect(() => {
+    if (!overlay) {
+      returnFocus.current?.focus()
+      returnFocus.current = null
+      return
+    }
+    returnFocus.current = document.activeElement as HTMLElement | null
+    // wait for the visibility transition, or focus lands on a hidden element
+    const id = window.setTimeout(() => {
+      panel.current?.querySelector<HTMLElement>('button, a[href]')?.focus()
+    }, 60)
+    return () => window.clearTimeout(id)
+  }, [overlay])
 
   const open = Boolean(hotspot)
 
@@ -41,7 +64,9 @@ export default function OverlayHost() {
     >
       {hotspot && (
         <div
+          ref={panel}
           role="dialog"
+          aria-modal="false"
           aria-label={hotspot.label}
           className="pointer-events-auto mx-auto w-full max-w-reading rounded-xl border border-line bg-background/95 p-6 shadow-lg backdrop-blur-md"
         >
@@ -73,6 +98,8 @@ export default function OverlayHost() {
               </p>
             ))}
           </div>
+
+          <NowPlayingLine data={nowPlaying} />
 
           {hotspot.links && hotspot.links.length > 0 && (
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">

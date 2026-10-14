@@ -10,6 +10,7 @@ import Resume from '@/components/room/props/Resume'
 import Whiteboard from '@/components/room/props/Whiteboard'
 import Window from '@/components/room/props/Window'
 import { hotspots } from '@/data/room'
+import type { Daylight } from '@/lib/daylight'
 
 /**
  * One wall, everything on it. The camera never goes behind, so the side returns
@@ -43,7 +44,7 @@ const PLACEMENT: Record<string, Placement> = {
   football: { position: [2.25, 0.26, WALL_Z + 1.35] },
 }
 
-export default function Room() {
+export default function Room({ daylight }: { daylight: Daylight }) {
   return (
     <group>
       {/* ——— floor ——— */}
@@ -111,7 +112,9 @@ export default function Room() {
                     {hotspot.mesh === 'football' && <Football accent={tint(hovered, active, '#efe9df')} />}
                     {hotspot.mesh === 'resume' && <Resume accent={tint(hovered, active, '#f6f3ee')} />}
                     {hotspot.mesh === 'whiteboard' && <Whiteboard accent={tint(hovered, active, '#8d8882')} />}
-                    {hotspot.mesh === 'window' && <Window accent={tint(hovered, active, '#e6e1d8')} />}
+                    {hotspot.mesh === 'window' && (
+                      <Window accent={tint(hovered, active, '#e6e1d8')} daylight={daylight} />
+                    )}
                   </Prop>
                 </group>
               )}

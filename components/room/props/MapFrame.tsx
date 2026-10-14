@@ -27,7 +27,7 @@ export default function MapFrame({ accent }: { accent: string }) {
       {/* the photograph itself, 3:2 inside the mount */}
       <mesh position={[0, 0, 0.023]}>
         <planeGeometry args={[1.14, 0.69]} />
-        <meshStandardMaterial map={texture} roughness={0.6} toneMapped={false} />
+        <meshStandardMaterial map={texture} roughness={0.6} />
       </mesh>
 
       {/* hover/active tint rides on a thin inner border rather than the photo */}
