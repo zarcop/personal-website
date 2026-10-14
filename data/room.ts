@@ -13,6 +13,11 @@ import type { Vec3 } from '@/lib/types'
  *   - stay far enough back that neighbouring objects stay in shot for context
  *   - aim a little BELOW the object so it rides in the upper half of the frame,
  *     clear of the overlay panel
+ *
+ * The two `surface` hotspots break the second rule on purpose: their content is
+ * mounted on the object itself, so they are framed dead flat-on and centred.
+ * Those two poses are derived from the surface size and the 42° vertical fov —
+ * change the geometry and the distance has to move with it.
  */
 export type Hotspot = {
   id: string
@@ -51,8 +56,8 @@ export const IDLE_POSE = {
  * the distance out for the actual viewport.
  */
 export const IDLE_POSE_NARROW = {
-  position: [0.5, 1.5, -1.0] as Vec3,
-  target: [0.5, 1.15, -3.8] as Vec3,
+  position: [0.45, 1.65, -1.05] as Vec3,
+  target: [0.45, 1.4, -3.8] as Vec3,
 }
 
 /** How far the pointer nudges the camera, in metres. Small on purpose. */
@@ -63,20 +68,25 @@ export const hotspots: Hotspot[] = [
     id: 'desk',
     label: 'Brief overview',
     object: 'the desk',
-    anchor: [0.35, 1.82, -3.5] as Vec3,
+    anchor: [0.35, 2.21, -3.5] as Vec3,
     kicker: 'Who I am, and where to find me',
     mesh: 'monitor',
     surface: true,
-    // nearly flat-on: the screen carries real DOM, and an angle would soften it
-    camera: { position: [0.35, 1.44, -2.28], target: [0.35, 1.355, -3.6] },
+    // dead flat-on: the screen carries real DOM, and an angle would soften it.
+    // 1.73m back puts the 1.5 x 0.88m screen at ~66% of frame height at the
+    // reference aspect — big enough to read, with the room still around it.
+    camera: { position: [0.35, 1.54, -1.82], target: [0.35, 1.535, -3.6] },
     body: [
-      'Industrial engineer from Toluca, Mexico. I study Industrial & Systems Engineering and CS at Georgia Tech, and I work at the intersection of AI and optimization.',
-      'Google in 2025, HSBC Mexico the summer after. Mostly interested in problems where the math and the system have to agree with each other.',
+      'Industrial engineer from Toluca, Mexico. I am at Georgia Tech for Industrial & Systems Engineering and CS, with a master’s in computational science and engineering running alongside it.',
+      'I have built at Google in California and worked inside HSBC in Mexico City. Big tech and a bank, two countries, two very different ideas of what finished means.',
+      'What carried over was not the stack. It was taking something messy apart, finding the piece that actually matters, and building the smallest thing that moves it.',
+      'Right now that is research and startups. At AI4OPT I work on diffusion models for large-scale optimization; the rest of my time goes to things I am building myself.',
+      'Where I want to point it: healthcare, economics and retail. In those three a better decision stops being a number on a slide. It is a shorter wait, a clinic that does not run out, a shelf that is not empty.',
     ],
     links: [
       { label: 'The written version', href: '/' },
-      { label: 'GitHub', href: 'https://github.com/zarcop', external: true },
-      { label: 'LinkedIn', href: 'https://linkedin.com/in/eliaszarcog', external: true },
+      { label: 'Experience', href: '/experience' },
+      { label: 'Projects', href: '/projects' },
       { label: 'Email', href: 'mailto:eliaszarco@gmail.com', external: true },
     ],
   },
@@ -84,10 +94,10 @@ export const hotspots: Hotspot[] = [
     id: 'resume',
     label: 'The one-pager',
     object: 'the résumé',
-    anchor: [1.35, 0.95, -3.35] as Vec3,
+    anchor: [1.45, 0.95, -3.35] as Vec3,
     kicker: 'One page, the paper version',
     mesh: 'resume',
-    camera: { position: [1.35, 1.4, -2.3], target: [1.35, 0.5, -3.3] },
+    camera: { position: [1.45, 1.4, -2.3], target: [1.45, 0.5, -3.3] },
     body: [
       'The one-page version, if you would rather skim than scroll.',
     ],
@@ -132,30 +142,32 @@ export const hotspots: Hotspot[] = [
     id: 'whiteboard',
     label: 'Achievements',
     object: 'the whiteboard',
-    anchor: [2.1, 2.5, -3.9] as Vec3,
-    kicker: 'What I have actually shipped',
+    anchor: [2.15, 2.72, -3.9] as Vec3,
+    kicker: 'Newest first',
     mesh: 'whiteboard',
     surface: true,
-    // flat-on for the same reason as the desk
-    camera: { position: [2.1, 2.0, -2.62], target: [2.1, 1.93, -3.95] },
+    // flat-on for the same reason as the desk; 1.88m back for a 1.3 x 1.0m board
+    camera: { position: [2.15, 2.0, -2.02], target: [2.15, 1.985, -3.95] },
+    /**
+     * The entries themselves come from data/experience.ts so the board and the
+     * written /experience page can never disagree. This is only the lead line.
+     */
     body: [
-      'Google, LearnX — agentic AI pipelines and interactive TypeScript templates. Cut Gemini workflow latency by about 95%.',
-      'HSBC Mexico — AI Project Manager in the Transformation Department, implementing AI rather than building it.',
-      'GTSF — quantitative analyst on a student-managed fund. ARIMA, SARIMA-GARCH and XGBoost against commodities volatility.',
+      'Research, a bank, big tech, a classroom and a student-run fund.',
     ],
     links: [
-      { label: 'Projects', href: '/projects' },
       { label: 'Experience', href: '/experience' },
+      { label: 'Projects', href: '/projects' },
     ],
   },
   {
     id: 'window',
     label: 'What comes next',
     object: 'the window',
-    anchor: [3.45, 2.62, -3.9] as Vec3,
+    anchor: [3.62, 2.62, -3.9] as Vec3,
     kicker: 'Where this is going',
     mesh: 'window',
-    camera: { position: [3.45, 1.8, -1.85], target: [3.45, 1.4, -3.95] },
+    camera: { position: [3.62, 1.8, -1.85], target: [3.62, 1.4, -3.95] },
     body: [
       'Deepening the technical foundation in AI and ML, and pointing it at problems that are worth the effort.',
       'Right now that means the intersection of AI and optimization — particularly diffusion models — and what both look like applied to healthcare and manufacturing.',

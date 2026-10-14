@@ -19,12 +19,15 @@ import type { Vec3 } from '@/lib/types'
  *
  * CSS_UNITS is drei's transform-mode convention: in that mode the DOM is laid
  * out in its own pixel space and mapped through a CSS matrix, so one world unit
- * is not one pixel. 1/39 was measured against this scene rather than derived —
- * if the surface ever drifts off its object, re-measure rather than nudge it.
+ * is not one pixel. This is measured against this scene, not derived: render a
+ * surface, compare its getBoundingClientRect width against the width the camera
+ * distance and fov say it should be, and divide. If it ever drifts off its
+ * object, re-measure the same way rather than nudging it by eye.
  */
-const CSS_UNITS = 38.1
+const CSS_UNITS = 40
 
 export default function SurfaceUI({
+  id,
   position,
   rotation,
   width,
@@ -32,6 +35,8 @@ export default function SurfaceUI({
   pxHeight,
   children,
 }: {
+  /** Which object this is mounted on. Also the handle the render checks use. */
+  id: string
   position: Vec3
   rotation?: Vec3
   /** Width of the surface in world units. */
@@ -52,6 +57,7 @@ export default function SurfaceUI({
       style={{ width: pxWidth, height: pxHeight }}
     >
       <div
+        data-surface={id}
         style={{ width: pxWidth, height: pxHeight }}
         className="overflow-hidden font-sans"
       >

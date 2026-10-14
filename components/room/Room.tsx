@@ -9,14 +9,15 @@ import Prop from '@/components/room/Prop'
 import SurfaceUI from '@/components/room/SurfaceUI'
 import DesktopOS from '@/components/room/surfaces/DesktopOS'
 import BoardContent from '@/components/room/surfaces/BoardContent'
-import Monitor from '@/components/room/props/Monitor'
+import Monitor, { BASE_DROP, SCREEN_ANCHOR, SCREEN_W } from '@/components/room/props/Monitor'
 import MapFrame from '@/components/room/props/MapFrame'
 import Bookshelf from '@/components/room/props/Bookshelf'
 import Football from '@/components/room/props/Football'
 import Resume from '@/components/room/props/Resume'
-import Whiteboard from '@/components/room/props/Whiteboard'
+import Whiteboard, { SURFACE_W, SURFACE_Z } from '@/components/room/props/Whiteboard'
 import Window from '@/components/room/props/Window'
 import { hotspots } from '@/data/room'
+import { useNarrowViewport } from '@/lib/useNarrow'
 import { useRoom } from '@/store/room'
 import type { Daylight } from '@/lib/daylight'
 
@@ -29,6 +30,8 @@ import type { Daylight } from '@/lib/daylight'
  */
 
 const WALL_Z = -4
+/** Top face of the desk. The monitor hangs off this rather than a tuned Y. */
+const DESK_TOP = 0.805
 const WALL = '#d6d0c6'
 const FLOOR = '#c9c2b6'
 
@@ -61,10 +64,13 @@ type Placement = { position: [number, number, number]; rotation?: [number, numbe
 const PLACEMENT: Record<string, Placement> = {
   bookcase: { position: [-2.45, 1.0, WALL_Z + 0.24] },
   photo: { position: [-0.95, 2.0, WALL_Z + 0.05] },
-  monitor: { position: [0.35, 1.3425, WALL_Z + 0.42] },
-  resume: { position: [1.35, 0.805, WALL_Z + 0.52] },
-  whiteboard: { position: [2.1, 1.92, WALL_Z + 0.05] },
-  window: { position: [3.45, 1.72, WALL_Z + 0.06] },
+  // BASE_DROP is the monitor's own reach from screen centre to the underside of
+  // its base, so the stand always lands on the desk however the panel is sized
+  monitor: { position: [0.35, DESK_TOP + BASE_DROP, WALL_Z + 0.42] },
+  resume: { position: [1.45, DESK_TOP, WALL_Z + 0.52] },
+  whiteboard: { position: [2.15, 2.0, WALL_Z + 0.05] },
+  // pushed right to clear the wider board — they were 3cm apart before
+  window: { position: [3.62, 1.72, WALL_Z + 0.06] },
   // clear of the desk leg, slightly forward so it reads as sitting in the room
   football: { position: [2.25, 0.26, WALL_Z + 1.35] },
 }
@@ -75,6 +81,10 @@ export default function Room({ daylight }: { daylight: Daylight }) {
   // surfaces only read correctly once the camera is flat-on, and render as a
   // skewed slab mid-flight, so wait for the move to finish before mounting
   const settled = useSettled(focus)
+  // on a phone the surface would be unreadable at any size; OverlayHost takes
+  // over and renders the same content in the bottom panel instead
+  const narrow = useNarrowViewport()
+  const mountSurface = settled && !narrow
 
   return (
     <group>
@@ -153,13 +163,19 @@ export default function Room({ daylight }: { daylight: Daylight }) {
                   </Prop>
 
                   {/* real DOM on the object's own surface, only while focused */}
-                  {active && settled && hotspot.mesh === 'monitor' && (
-                    <SurfaceUI position={[0, 0.02, 0.034]} width={1.1} pxWidth={660} pxHeight={360}>
+                  {active && mountSurface && hotspot.mesh === 'monitor' && (
+                    <SurfaceUI id="desk" position={SCREEN_ANCHOR} width={SCREEN_W} pxWidth={900} pxHeight={528}>
                       <DesktopOS />
                     </SurfaceUI>
                   )}
-                  {active && settled && hotspot.mesh === 'whiteboard' && (
-                    <SurfaceUI position={[0, 0, 0.026]} width={1.2} pxWidth={600} pxHeight={410}>
+                  {active && mountSurface && hotspot.mesh === 'whiteboard' && (
+                    <SurfaceUI
+                      id="whiteboard"
+                      position={[0, 0, SURFACE_Z]}
+                      width={SURFACE_W}
+                      pxWidth={700}
+                      pxHeight={538}
+                    >
                       <BoardContent />
                     </SurfaceUI>
                   )}

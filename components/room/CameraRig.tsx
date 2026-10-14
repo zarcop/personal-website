@@ -54,8 +54,13 @@ export default function CameraRig() {
 
     desiredTarget.current.set(...pose.target)
 
-    // push out along the pose's own view direction, keeping its framing intent
-    offset.current.set(...pose.position).sub(desiredTarget.current).multiplyScalar(distanceScale(aspect))
+    // push out along the pose's own view direction, keeping its framing intent.
+    // Surface poses are capped on portrait: their content moves to the bottom
+    // panel there, so letting the object crop at the sides beats backing off far
+    // enough to fit all of it and leaving a postage stamp in the middle.
+    let scale = distanceScale(aspect)
+    if (hotspot?.surface && aspect < 1) scale = Math.min(scale, 2.4)
+    offset.current.set(...pose.position).sub(desiredTarget.current).multiplyScalar(scale)
     desiredPosition.current.copy(desiredTarget.current).add(offset.current)
 
     if (reducedMotion) {
