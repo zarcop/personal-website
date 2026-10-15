@@ -1,6 +1,6 @@
 # Modelling the room props in Blender
 
-A guide for **the seven objects in this room**, not a general Blender course.
+A guide for **the ten objects in this room**, not a general Blender course.
 Everything here is box modelling. If a tutorial starts talking about sculpting,
 retopology or rigging, you are in the wrong tutorial.
 
@@ -12,18 +12,90 @@ a stand-in whose exact dimensions are written down below. Beat it, and drop it i
 
 ## Contents
 
+- [Connecting Blender to the repo](#connecting-blender-to-the-repo) — **set this up first**
 - [Before you start](#before-you-start)
 - [The five things you need to learn](#the-five-things-you-need-to-learn)
 - [Rules that apply to every prop](#rules-that-apply-to-every-prop)
 - [The contract](#the-contract)
 - **Per-prop walkthroughs:** [photo](#1-photo) · [whiteboard](#2-whiteboard) ·
   [monitor](#3-monitor) · [resume](#4-resume) · [window](#5-window) ·
-  [bookcase](#6-bookcase) · [football](#7-football)
+  [bookcase](#6-bookcase) · [football](#7-football) · [tower](#8-tower) ·
+  [desk](#9-desk) · [room](#10-room)
 - [Materials and colour](#materials-and-colour)
 - [Export settings](#export-settings)
-- [Dropping it in](#dropping-it-in)
 - [Troubleshooting](#troubleshooting)
 - [Keeping it small](#keeping-it-small)
+
+---
+
+## Connecting Blender to the repo
+
+Do this once. After it, modelling and seeing the result are the same action:
+export from Blender, look at the browser.
+
+### 1. Get the site running on your machine
+
+You need [Node](https://nodejs.org) 18 or newer. Then, in a terminal:
+
+```bash
+git clone https://github.com/zarcop/personal-website.git
+cd personal-website
+npm install
+npm run dev
+```
+
+Open <http://localhost:3000/room>. That is the room, running off your own
+machine, reading the files in this folder.
+
+### 2. Start the watcher
+
+In a **second** terminal, in the same folder:
+
+```bash
+npm run props:watch
+```
+
+Leave both running. The watcher is what makes the loop instant: without it the
+prop list is only read when `npm run dev` starts, so an export made while the
+server is already up changes nothing until you restart it — which looks exactly
+like a model that does not work.
+
+### 3. Point Blender's exporter at the right folder
+
+`File → Export → glTF 2.0`, and navigate once to:
+
+```
+<wherever you cloned it>/personal-website/public/models/
+```
+
+Name the file after the object — `monitor.glb`, `desk.glb` — and export. Blender
+remembers the folder, so every export after the first is two clicks.
+
+**That is the whole loop.** Export, and the browser reloads with your model in
+place of the code one. If it looks wrong, fix it in Blender and export again
+over the top.
+
+### Where to keep the .blend files
+
+Anywhere you like. A `blender/` folder inside the project is convenient and is
+already gitignored, along with `*.blend` — those files run to tens of megabytes
+and only the exported `.glb` needs to ship.
+
+### Backing out
+
+Delete the `.glb`. The watcher notices, and the code-authored prop comes back.
+Nothing else to undo.
+
+### Before you commit
+
+```bash
+npm run build     # confirms the manifest picked it up, and prints the page weight
+npm run lint
+```
+
+Then commit the `.glb` and the regenerated `data/props.generated.ts` together.
+They belong in the same commit — the manifest is what tells the site your model
+exists.
 
 ---
 
@@ -84,7 +156,8 @@ These are the ones that actually cause problems. Read them once, properly.
 **1. Model at the world origin.** Put the object at `(0, 0, 0)` in Blender. The
 site positions it — `PLACEMENT` in `components/room/Room.tsx` holds every
 coordinate. If you model it where it sits in the room, it gets offset twice and
-ends up floating in the middle of the floor.
+ends up floating in the middle of the floor. The one exception is the room shell
+itself (§10), which *is* the world and so is modelled where it goes.
 
 **2. Every prop faces `+Z`.** The wall is behind the props and the camera is in
 front. In Blender's front view (`Numpad 1`), the direction pointing *at you* is
@@ -119,9 +192,15 @@ main body. The monitor is the exception. The table says which.
 | Bookcase | `bookcase` | 1.60 × 2.00 × 0.45 | Centre of the carcass |
 | Football | `football` | ⌀ 0.52 | Centre of the ball |
 | Tower | `tower` | 0.21 × 0.48 × 0.45 | Centre of the case |
+| Desk | `desk` | 2.60 × 0.805 × 1.00 | Centre of the footprint, **at floor level** |
+| Room shell | `room` | ≥ 14 wide × 5 tall, wall at z = −4 | World origin — see §10 |
 
 Overshoot the stated depth and the prop pokes through the wall. Undershoot the
 monitor's stand length and it floats above the desk.
+
+The desk and the room shell are not clickable — they are scenery — but they go
+through the same drop-in slot as everything else, so a `desk.glb` replaces the
+code desk exactly the way a `monitor.glb` replaces the code monitor.
 
 ---
 
@@ -331,6 +410,59 @@ visitors who ask for reduced motion. Model the case; it will light itself.
 
 ---
 
+## 9. `desk`
+
+**Target:** 2.60 × 0.805 × 1.00 · origin at the centre of the footprint, **at
+floor level** so the desk stands on y = 0.
+
+1. **Top:** cube `2.6 × 1.0 × 0.05`, its underside at `0.755` so the top surface
+   lands at `0.805`.
+2. **Legs:** two cubes `0.07 × 0.9 × 0.755`, at x `±1.2`, running floor to
+   underside. Or model a trestle, or a pedestal with drawers — the code version
+   is a plain table only because it was quick.
+3. Bevel `0.004`, Segments `2`. Join, rename `desk`, apply transforms, export.
+
+> **0.805 is load-bearing.** The monitor and the résumé are both placed from
+> `DESK_TOP` in `components/room/Room.tsx`, not from the desk mesh. A desk of a
+> different height leaves them hanging in the air at the old one. If you want a
+> taller desk, change `DESK_TOP` to match and the things on it will follow.
+
+Keep a clear span between the legs: the tower stands on the floor underneath at
+x `0.9`, and the camera looks under the desk at it.
+
+---
+
+## 10. `room`
+
+The shell: floor, back wall, skirting, and the two side returns that stop the
+wall reading as a floating panel at the edges of frame.
+
+**Target:** wall face at `z = −4`, floor at `y = 0`, at least 14 m wide and 5 m
+tall.
+
+**This one breaks rule 1.** Every other prop is modelled at the origin and
+positioned by the code; the shell *is* the world, so model it where it actually
+goes — floor at y = 0, back wall at z = −4 — and the code places it at the
+origin unchanged.
+
+1. **Floor:** plane 16 × 9, centred about `(0.4, 0, −1)`.
+2. **Back wall:** plane 16 × 5.6 at `z = −4`, facing `+Z`. It runs well past the
+   top of frame on purpose; a visible ceiling line makes the room feel like a box.
+3. **Skirting:** a long thin box along the base of the wall. Small, and it is
+   most of what stops wall and floor reading as two flat planes meeting.
+4. **Side returns:** two planes at about `x = −6.4` and `x = 7.2`, turned to face
+   inward. They only exist to close the frame edges.
+5. Join, rename `room`, apply transforms, export.
+
+> **Do not model a ceiling or a fourth wall.** The camera never leaves the front
+> of the room, so both are pure cost. Anything facing away from `+Z` is waste.
+
+> **Watch the budget here.** The shell is the largest surface area in the scene
+> and the easiest place to accidentally spend a megabyte. Flat planes with one
+> material each; if you want texture, a single tiling image beats geometry.
+
+---
+
 ## Materials and colour
 
 **Do not bake lighting into your props.** The scene lights them with its own
@@ -384,31 +516,20 @@ Save as `public/models/<name>.glb`, so `public/models/monitor.glb`.
 
 ---
 
-## Dropping it in
+## How the drop-in actually works
 
-```bash
-cp ~/Desktop/monitor.glb public/models/
-npm run dev
-```
+Worth knowing, in case it misbehaves. `scripts/gen-prop-manifest.mjs` reads
+`public/models/` and writes `data/props.generated.ts`, a list of
+`name -> /models/name.glb`. `components/room/Prop.tsx` looks each prop up in that
+list and renders your model if it finds one, the code-authored version if it does
+not — and sets shadows on everything it imports, since glTF does not carry them.
 
-That is the whole workflow. `scripts/gen-prop-manifest.mjs` reads
-`public/models/` and writes `data/props.generated.ts`;
-`components/room/Prop.tsx` renders your model if one exists and the
-code-authored version if it does not. You can replace props one at a time, in any
-order, and the room looks finished the entire way through.
+So the object name in Blender is the whole contract. Nothing else needs editing,
+and you can replace props one at a time, in any order, with the room looking
+finished the entire way through.
 
-To revert to the code version, delete the `.glb` and rebuild.
-
-### Check it properly
-
-```bash
-npm run dev          # look at it at /room
-npm run build        # confirms the manifest picked it up
-npm run content:check
-```
-
-Then click the hotspot. If the camera flies to the right place and your model is
-there at the right size, you are done.
+The manifest is regenerated before every `npm run dev` and `npm run build`, and
+continuously by `npm run props:watch`.
 
 ---
 
@@ -422,9 +543,11 @@ there at the right size, you are done.
 | Black, or lit from inside | Normals inverted. Edit Mode → `A` → `Shift+N` |
 | Bevel looks like black shards | Non-uniform object scale. `Ctrl+A → Scale` |
 | Pokes through the wall | Depth exceeds the contract. Check the `D` column |
-| Monitor floats above / sinks into the desk | Stand length ≠ 0.5375 below the screen centre |
+| Monitor floats above / sinks into the desk | Stand length ≠ `BASE_DROP` (0.705) below the screen centre |
 | Window is a blank panel | You modelled glass or a backdrop inside the opening. Remove it |
 | Hotspot still highlights the old shape | Hard-refresh; the manifest is cached until the next build |
+| Export landed but nothing changed | `npm run props:watch` is not running. Start it, or restart `npm run dev` |
+| Things on the desk now float | Your desk is not 0.805 tall. Match it, or change `DESK_TOP` |
 | File is over 500 KB | Too many polygons, or a texture crept in. See below |
 
 ---
@@ -436,9 +559,11 @@ The whole room has a **2 MB budget** for models. Per prop, aim for:
 | | Triangles | File size |
 | --- | --- | --- |
 | photo, whiteboard, resume | < 500 | < 30 KB |
-| monitor, window | < 2,000 | < 60 KB |
+| monitor, window, tower | < 2,000 | < 60 KB |
+| desk | < 2,000 | < 60 KB |
 | bookcase | < 8,000 | < 200 KB |
 | football | < 1,000 | < 40 KB |
+| room shell | < 1,000 | < 40 KB |
 
 Check in Blender with the Statistics overlay (viewport overlays dropdown →
 Statistics).
@@ -460,5 +585,6 @@ Once a prop is in, re-measure the route:
 npm run build
 ```
 
-and compare `/room` against its current 661 KB. If one prop adds more than a few
+and compare `/room` against its current 692 KB over the wire — that is the
+figure with no models in play at all. If one prop adds more than a couple of
 hundred KB, open it in Blender and find out why before adding the next.

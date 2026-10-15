@@ -74,7 +74,7 @@ function MusicCard({ data }: { data: NowPlaying | null }) {
       <div className="flex items-center gap-3.5">
         <span
           className="grid h-[52px] w-[52px] flex-none place-items-center overflow-hidden rounded-lg bg-[#1db954]/15 text-[#1db954]"
-          style={data.art ? { backgroundImage: `url(${data.art})`, backgroundSize: 'cover' } : undefined}
+          style={data.art ? { backgroundImage: `url("${data.art}")`, backgroundSize: 'cover' } : undefined}
         >
           {!data.art && <SpotifyIcon className="h-6 w-6" />}
         </span>

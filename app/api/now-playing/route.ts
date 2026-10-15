@@ -18,6 +18,14 @@ const TOKEN_URL = 'https://accounts.spotify.com/api/token'
 const NOW_PLAYING_URL = 'https://api.spotify.com/v1/me/player/currently-playing'
 const RECENT_URL = 'https://api.spotify.com/v1/me/player/recently-played?limit=1'
 
+/** Only the corner of Spotify's response this route reads. */
+type SpotifyTrack = {
+  name?: string
+  artists?: { name?: string }[]
+  album?: { name?: string; images?: { url?: string }[] }
+  external_urls?: { spotify?: string }
+}
+
 type Payload = {
   configured: boolean
   /** True only when something is playing right now. */
@@ -31,17 +39,34 @@ type Payload = {
 
 const OFF: Payload = { configured: false, playing: false }
 
-/** Spotify returns a lot; we want four fields. */
-function shape(track: any, playing: boolean): Payload | null {
+/**
+ * Both URLs are third-party strings that end up in the browser — the album art
+ * in a CSS `url()`, the track link in an href. Pin them to the hosts they are
+ * supposed to come from so neither can carry anything else.
+ */
+function safeUrl(value: unknown, hosts: string[]): string | undefined {
+  if (typeof value !== 'string') return undefined
+  try {
+    const url = new URL(value)
+    if (url.protocol !== 'https:') return undefined
+    if (!hosts.some((h) => url.hostname === h || url.hostname.endsWith(`.${h}`))) return undefined
+    return url.toString()
+  } catch {
+    return undefined
+  }
+}
+
+/** Spotify returns a lot; we want five fields. */
+function shape(track: SpotifyTrack | undefined, playing: boolean): Payload | null {
   if (!track?.name) return null
   return {
     configured: true,
     playing,
     title: track.name,
-    artist: (track.artists ?? []).map((a: any) => a?.name).filter(Boolean).join(', '),
+    artist: (track.artists ?? []).map((a) => a?.name).filter(Boolean).join(', '),
     album: track.album?.name,
-    url: track.external_urls?.spotify,
-    art: track.album?.images?.at(-1)?.url,
+    url: safeUrl(track.external_urls?.spotify, ['spotify.com']),
+    art: safeUrl(track.album?.images?.at(-1)?.url, ['scdn.co']),
   }
 }
 
@@ -65,11 +90,11 @@ export async function GET() {
   const secret = process.env.SPOTIFY_CLIENT_SECRET
   const refresh = process.env.SPOTIFY_REFRESH_TOKEN
 
-  if (!id || !secret || !refresh) return NextResponse.json(OFF)
+  if (!id || !secret || !refresh) return cached(OFF)
 
   try {
     const token = await accessToken(id, secret, refresh)
-    if (!token) return NextResponse.json(OFF)
+    if (!token) return cached(OFF)
 
     const headers = { Authorization: `Bearer ${token}` }
 
@@ -89,17 +114,19 @@ export async function GET() {
       if (shaped) return cached(shaped)
     }
 
-    return NextResponse.json({ configured: true, playing: false } satisfies Payload)
+    return cached({ configured: true, playing: false })
   } catch {
     // network blip, revoked token, Spotify outage — the room just hides the line
-    return NextResponse.json(OFF)
+    return cached(OFF)
   }
 }
 
 function cached(payload: Payload) {
   const res = NextResponse.json(payload)
-  // short CDN cache keeps us well inside Spotify's rate limit without the line
-  // ever feeling stale
+  // Short CDN cache keeps us well inside Spotify's rate limit without the line
+  // ever feeling stale. Every exit from GET goes through here, including the
+  // empty ones: a visitor polling a room where nothing is playing was otherwise
+  // reaching Spotify twice per request.
   res.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=90')
   return res
 }

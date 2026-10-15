@@ -40,6 +40,46 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: 'deadlight-harness',
+    title: 'AI Safety Sandbox for Navy Agents',
+    // TODO(elias): confirm year
+    summary: 'Simulates every command an AI agent sends to a naval drone, and blocks the unsafe ones.',
+    description:
+      'An offline safety layer between an AI agent and a naval drone. Every command is simulated before it is allowed through, combining hard rules for the things that are never permitted with anomaly detection over ONNX embeddings and a FAISS index for the things that merely look wrong.',
+    tech: ['Python', 'ONNX', 'FAISS'],
+    highlights: [
+      '35 of 35 dangerous commands stopped across 21 simulated scenarios',
+      'About 8 ms per decision, at a 0.4% false-alarm rate',
+      'Hard rules for the absolutes, anomaly detection for everything else',
+      'Offline by design — no network call sits inside the safety path',
+    ],
+    links: [{ label: 'GitHub', href: 'https://github.com/zarcop/deadlight-harness' }],
+  },
+  {
+    slug: 'vision-benchmark',
+    title: 'Vision Model Benchmark',
+    // TODO(elias): confirm year
+    summary: 'LeNet, AlexNet and a Vision Transformer, compared on equal compute.',
+    description:
+      'A controlled PyTorch benchmark of LeNet-5, a custom AlexNet and a custom Vision Transformer. Each was trained to a fixed A100 wall-clock budget rather than a fixed number of epochs, so the comparison is compute-for-compute: what does each architecture do with the same hour?',
+    tech: ['Python', 'PyTorch'],
+    highlights: [
+      'Fixed wall-clock budget instead of fixed epochs, so the three are compared on equal compute',
+      'Stratified k-fold tuning across all three architectures',
+      'Accuracy per GFLOP as the headline metric — the ViT comes out ahead of AlexNet',
+    ],
+    links: [
+      {
+        label: 'GitHub',
+        href: 'https://github.com/zarcop/4803_project_advanced_neural_networks',
+      },
+      {
+        label: 'White paper',
+        href: 'https://drive.google.com/file/d/1aMVNbAwdfhnp0odzNY_4aSZ39a8U7nYY/view?usp=sharing',
+      },
+    ],
+  },
+  {
     slug: 'order-entry-system',
     title: 'Order Entry System',
     year: '2024',

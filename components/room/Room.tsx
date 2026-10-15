@@ -92,6 +92,14 @@ export default function Room({ daylight }: { daylight: Daylight }) {
 
   return (
     <group>
+      {/*
+        The shell and the desk go through <Prop> like everything else, so a
+        room.glb or a desk.glb replaces them with no code edit. They are not
+        hotspots — nothing here is clickable — but "only the things you can
+        click are modellable" would have left the two largest objects in frame
+        stuck as code forever.
+      */}
+      <Prop name="room">
       {/* ——— floor ——— */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0.4, 0, -1]} receiveShadow>
         <planeGeometry args={[16, 9]} />
@@ -128,17 +136,25 @@ export default function Room({ daylight }: { daylight: Daylight }) {
         </mesh>
       ))}
 
-      {/* ——— desk: furniture, not a hotspot ——— */}
-      <mesh position={[0.6, 0.78, WALL_Z + 0.55]} castShadow receiveShadow>
-        <boxGeometry args={[2.6, 0.05, 1.0]} />
-        <meshStandardMaterial color="#b3a794" roughness={0.75} />
-      </mesh>
-      {[-0.6, 1.8].map((x) => (
-        <mesh key={x} position={[x, 0.39, WALL_Z + 0.55]} castShadow>
-          <boxGeometry args={[0.07, 0.76, 0.9]} />
-          <meshStandardMaterial color="#a0957f" roughness={0.8} />
-        </mesh>
-      ))}
+      </Prop>
+
+      {/* ——— desk ——— */}
+      {/* placed from the floor up, so a modelled desk only has to be the right
+          height: DESK_TOP is what the monitor and the résumé sit on */}
+      <group position={[0.6, 0, WALL_Z + 0.55]}>
+        <Prop name="desk">
+          <mesh position={[0, DESK_TOP - 0.025, 0]} castShadow receiveShadow>
+            <boxGeometry args={[2.6, 0.05, 1.0]} />
+            <meshStandardMaterial color="#b3a794" roughness={0.75} />
+          </mesh>
+          {[-1.2, 1.2].map((x) => (
+            <mesh key={x} position={[x, (DESK_TOP - 0.05) / 2, 0]} castShadow>
+              <boxGeometry args={[0.07, DESK_TOP - 0.05, 0.9]} />
+              <meshStandardMaterial color="#a0957f" roughness={0.8} />
+            </mesh>
+          ))}
+        </Prop>
+      </group>
 
       {/* ——— hotspots ——— */}
       {hotspots.map((hotspot) => {

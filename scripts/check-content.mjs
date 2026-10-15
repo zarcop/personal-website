@@ -17,7 +17,8 @@ for (const FILE of FILES) {
   if (todo) todos.push({ where, text: todo[1] })
 
   // {country} and [Placeholder …] style gaps, but not [[id|Label]] keywords
-  for (const m of line.matchAll(/\{[a-z][^}]*\}|\[[A-Z][^\]]*\]/g)) {
+  // and not ${template} interpolation, which is code rather than a gap
+  for (const m of line.matchAll(/(?<!\$)\{[a-z][^}]*\}|\[[A-Z][^\]]*\]/g)) {
     placeholders.push({ where, text: m[0].slice(0, 72) })
   }
   })

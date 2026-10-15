@@ -1,3 +1,4 @@
+import { email, resumePdf } from '@/data/socials'
 import type { Vec3 } from '@/lib/types'
 
 /**
@@ -87,7 +88,7 @@ export const hotspots: Hotspot[] = [
       { label: 'The written version', href: '/' },
       { label: 'Experience', href: '/experience' },
       { label: 'Projects', href: '/projects' },
-      { label: 'Email', href: 'mailto:eliaszarco@gmail.com', external: true },
+      { label: 'Email', href: `mailto:${email}`, external: true },
     ],
   },
   {
@@ -102,11 +103,7 @@ export const hotspots: Hotspot[] = [
       'The one-page version, if you would rather skim than scroll.',
     ],
     links: [
-      {
-        label: 'Download PDF',
-        href: 'https://drive.google.com/file/d/1W8xRdizQGlmWFm8Wq9meKZAKcCrNzWpX/view?usp=sharing',
-        external: true,
-      },
+      { label: 'Download PDF', href: resumePdf, external: true },
       { label: 'Or read the long version', href: '/' },
     ],
   },

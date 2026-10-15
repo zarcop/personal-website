@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-const EMAIL = 'eliaszarco@gmail.com'
+import { email as EMAIL, resumePdf, socialById } from '@/data/socials'
 
 const rowClass =
   'group grid grid-cols-[3.75rem_1fr_auto] items-baseline gap-x-4 py-2 text-left sm:grid-cols-[5rem_1fr_auto]'
@@ -12,14 +12,17 @@ const valueClass =
 const glyphClass =
   'font-mono text-xs text-faint opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent group-hover:opacity-100'
 
+/**
+ * Drawn from data/socials.ts rather than written out again here. The two copies
+ * had already drifted — this file still had an older LinkedIn URL — and the
+ * résumé link was duplicated in data/room.ts as well.
+ */
 const links = [
-  { label: 'GitHub', value: 'zarcop', href: 'https://github.com/zarcop' },
-  { label: 'LinkedIn', value: 'eliaszarcog', href: 'https://linkedin.com/in/eliaszarcog' },
-  {
-    label: 'Resume',
-    value: 'PDF',
-    href: 'https://drive.google.com/file/d/1W8xRdizQGlmWFm8Wq9meKZAKcCrNzWpX/view?usp=sharing',
-  },
+  ...(['github', 'linkedin', 'x'] as const).flatMap((id) => {
+    const social = socialById(id)
+    return social ? [{ label: social.label, value: social.handle ?? social.label, href: social.href }] : []
+  }),
+  { label: 'Resume', value: 'PDF', href: resumePdf },
 ]
 
 export default function Elsewhere() {

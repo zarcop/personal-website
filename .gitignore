@@ -24,3 +24,9 @@ build
 
 # generated from public/models/ by scripts/gen-prop-manifest.mjs
 # (tracked, not ignored — Vercel needs it before prebuild runs)
+
+# Blender working files. Keep them next to the project if you like, but .blend
+# files are tens of megabytes and only the exported .glb needs to ship.
+blender/
+*.blend
+*.blend[0-9]
