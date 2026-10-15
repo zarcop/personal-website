@@ -5,6 +5,7 @@ import Link from 'next/link'
 import DraftBadge from '@/components/DraftBadge'
 import NowPlayingLine, { useNowPlaying } from '@/components/room/NowPlaying'
 import { experience } from '@/data/experience'
+import { projects } from '@/data/projects'
 import { hotspotById } from '@/data/room'
 import { useNarrowViewport } from '@/lib/useNarrow'
 import { useRoom } from '@/store/room'
@@ -121,6 +122,26 @@ export default function OverlayHost() {
                     {role.role} · {role.period}
                   </p>
                   <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">{role.summary}</p>
+                </li>
+              ))}
+            </ol>
+          )}
+
+          {hotspot.id === 'projects' && (
+            <ol className="mt-4 space-y-4">
+              {projects.slice(0, 4).map((project) => (
+                <li key={project.slug} className="border-l border-line pl-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="text-[0.9375rem] font-medium leading-snug text-foreground">
+                      {project.title}
+                    </p>
+                    <p className="flex-none font-mono text-2xs uppercase tracking-label text-faint">
+                      {project.year ?? '—'}
+                    </p>
+                  </div>
+                  <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
+                    {project.summary}
+                  </p>
                 </li>
               ))}
             </ol>

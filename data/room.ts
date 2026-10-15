@@ -111,6 +111,27 @@ export const hotspots: Hotspot[] = [
     ],
   },
   {
+    id: 'projects',
+    label: 'Projects',
+    object: 'the tower under the desk',
+    anchor: [0.9, 0.58, -3.3] as Vec3,
+    kicker: 'What I have actually built',
+    mesh: 'tower',
+    // Looks down and under the desk from in front of it. A floor-standing object
+    // cannot ride above the overlay panel without a steep angle, and the angle
+    // has to clear the desk's front edge on the way in — hence the distance.
+    // Puts the case between 9% and 37% of frame height.
+    camera: { position: [0.9, 1.05, -1.15], target: [0.9, -0.35, -3.35] },
+    body: [
+      'The ones worth showing. Most began as a class project or a hackathon and then kept going.',
+      'The constraint is usually the interesting part — 36 hours, 50 milliseconds, a million rows.',
+    ],
+    links: [
+      { label: 'All of them', href: '/projects' },
+      { label: 'GitHub', href: 'https://github.com/zarcop', external: true },
+    ],
+  },
+  {
     id: 'bookcase',
     label: 'What I read',
     object: 'the bookcase',

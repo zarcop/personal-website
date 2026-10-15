@@ -14,6 +14,7 @@ import MapFrame from '@/components/room/props/MapFrame'
 import Bookshelf from '@/components/room/props/Bookshelf'
 import Football from '@/components/room/props/Football'
 import Resume from '@/components/room/props/Resume'
+import Tower, { FLOOR_DROP } from '@/components/room/props/Tower'
 import Whiteboard, { SURFACE_W, SURFACE_Z } from '@/components/room/props/Whiteboard'
 import Window from '@/components/room/props/Window'
 import { hotspots } from '@/data/room'
@@ -69,6 +70,8 @@ const PLACEMENT: Record<string, Placement> = {
   // its base, so the stand always lands on the desk however the panel is sized
   monitor: { position: [0.35, DESK_TOP + BASE_DROP, WALL_Z + 0.42] },
   resume: { position: [1.45, DESK_TOP, WALL_Z + 0.52] },
+  // on the floor under the desk, clear of both legs and of the ball
+  tower: { position: [0.9, FLOOR_DROP, WALL_Z + 0.55] },
   whiteboard: { position: [2.15, 2.0, WALL_Z + 0.05] },
   // pushed right to clear the wider board — they were 3cm apart before
   window: { position: [3.62, 1.72, WALL_Z + 0.06] },
@@ -157,6 +160,7 @@ export default function Room({ daylight }: { daylight: Daylight }) {
                     {hotspot.mesh === 'bookcase' && <Bookshelf accent={tint(hovered, active, '#8a7d6b')} />}
                     {hotspot.mesh === 'football' && <Football accent={tint(hovered, active, '#efe9df')} />}
                     {hotspot.mesh === 'resume' && <Resume accent={tint(hovered, active, '#f6f3ee')} />}
+                    {hotspot.mesh === 'tower' && <Tower accent={tint(hovered, active, '#3c424a')} />}
                     {hotspot.mesh === 'whiteboard' && <Whiteboard accent={tint(hovered, active, '#8d8882')} />}
                     {hotspot.mesh === 'window' && (
                       <Window accent={tint(hovered, active, '#e6e1d8')} daylight={daylight} />

@@ -112,12 +112,13 @@ main body. The monitor is the exception. The table says which.
 | Prop | Object name | Size (m, W × H × D) | Origin |
 | --- | --- | --- | --- |
 | Photo | `photo` | 1.40 × 0.95 × 0.04 | Centre of the frame |
-| Whiteboard | `whiteboard` | 1.30 × 0.92 × 0.045 | Centre of the board |
-| Monitor | `monitor` | 1.20 × 0.72 × 0.06 | **Centre of the screen** — stand hangs below |
+| Whiteboard | `whiteboard` | 1.40 × 1.10 × 0.045 | Centre of the board |
+| Monitor | `monitor` | 1.62 × 1.00 × 0.06 | **Centre of the screen** — stand hangs below |
 | Résumé | `resume` | 0.21 × 0.004 × 0.297 | Centre of the sheet |
 | Window | `window` | 1.08 × 1.55 × 0.12 | Centre of the frame |
 | Bookcase | `bookcase` | 1.60 × 2.00 × 0.45 | Centre of the carcass |
 | Football | `football` | ⌀ 0.52 | Centre of the ball |
+| Tower | `tower` | 0.21 × 0.48 × 0.45 | Centre of the case |
 
 Overshoot the stated depth and the prop pokes through the wall. Undershoot the
 monitor's stand length and it floats above the desk.
@@ -156,21 +157,22 @@ flat plane is the trivial case.
 
 Same shape as the photo, different proportions and a tray.
 
-**Target:** 1.30 × 0.92 × 0.045 · writing surface inset · marker tray below.
+**Target:** 1.40 × 1.10 × 0.045 · writing surface inset · marker tray below.
 
-1. Cube, Dimensions `1.3, 0.045, 0.92`.
+1. Cube, Dimensions `1.4, 0.045, 1.1`.
 2. Inset the front face by `0.04`, extrude inward `-0.01`. That lip is the
    aluminium trim.
 3. Tray: a second cube, `0.5 × 0.025 × 0.06`, positioned at the bottom edge about
-   `0.52` below centre and `0.04` proud of the board face. `Ctrl+J` to join.
+   `0.5675` below centre and `0.04` proud of the board face. `Ctrl+J` to join.
 4. Bevel `0.002`, Segments `2`. Keep it tight — trim is sharp in real life.
 5. Rename `whiteboard`, apply transforms, export.
 
-**Making it look used:** the code version fakes marker strokes with coloured
-planes and it reads more like a code editor than handwriting. If you want real
-writing, draw it in any image editor on a white background, save as a PNG, and
-apply it as the surface texture the same way as the photo. That single change
-would lift this prop more than any amount of geometry.
+**Leave the surface blank.** Unlike the photo, this one is not decoration: the
+code draws a timeline onto it — a rail, a dot and a logo tile per role, read
+straight out of `data/experience.ts` — and mounts a live, readable version of
+the same timeline on top when the board is focused. Anything you paint on the
+writing surface will sit underneath that. Model the frame and the tray; the
+board's contents are not yours to supply.
 
 ---
 
@@ -178,14 +180,15 @@ would lift this prop more than any amount of geometry.
 
 Four boxes. The origin rule matters here.
 
-**Target:** screen body 1.20 × 0.72 × 0.06 · **origin at the screen centre** ·
-stand reaching down `0.5375` to meet the desk.
+**Target:** screen body 1.62 × 1.00 × 0.06 · **origin at the screen centre** ·
+stand reaching down `0.705` to meet the desk.
 
-1. **Bezel:** cube, Dimensions `1.2, 0.06, 0.72`. Inset the front face by `0.05`,
+1. **Bezel:** cube, Dimensions `1.62, 0.06, 1.0`. Inset the front face by `0.05`,
    extrude inward `-0.008`.
-2. **Screen:** plane 1.10 × 0.60, sitting `0.002` proud of the recess.
-3. **Neck:** cube `0.10 × 0.07 × 0.16`, centred `0.44` below the screen centre.
-4. **Base:** cube `0.42 × 0.22 × 0.025`, centred `0.525` below the screen centre.
+2. **Screen:** plane 1.50 × 0.88, sitting `0.002` proud of the recess, centred
+   `0.03` **above** the body centre — monitors have a chin.
+3. **Neck:** cube `0.11 × 0.07 × 0.18`, centred `0.59` below the screen centre.
+4. **Base:** cube `0.46 × 0.24 × 0.025`, centred `0.6925` below the screen centre.
 5. Join all four (`Ctrl+J`). Bevel `0.004`, Segments `2` — monitors have
    noticeably rounded bezels.
 6. **Set the origin to the screen centre, not the combined centre.** Select the
@@ -194,9 +197,15 @@ stand reaching down `0.5375` to meet the desk.
 7. Rename `monitor`, apply transforms, export.
 
 > **Why the origin is odd here:** the desk surface sits at y = 0.805 in the room
-> and the monitor is placed by its screen centre at y = 1.3425. That leaves
-> exactly 0.5375 for the stand. If your stand is shorter the monitor floats; if
-> it is longer it sinks into the desk. Measure it.
+> and the code places the monitor by its screen centre, at the desk height plus
+> whatever the stand reaches down. That number is `BASE_DROP` in
+> `components/room/props/Monitor.tsx`, currently `0.705`. If your stand is
+> shorter the monitor floats; if it is longer it sinks into the desk. Measure it,
+> and if you change it, change `BASE_DROP` to match.
+
+> **Leave the screen blank too.** Like the whiteboard, the screen is a mount
+> point: the code paints a browser window and a dock onto it, and swaps in a
+> live, clickable one when the desk is focused.
 
 ---
 
@@ -288,6 +297,37 @@ Subdivision Surface — but honestly, the better route is to keep the sphere and
 paint the panel pattern as a texture. Search for a free football UV texture, apply
 it to a UV Sphere with a Smart UV Project, done in fifteen minutes instead of three
 hours.
+
+---
+
+## 8. `tower`
+
+The easiest prop in the guide. One box and some slots.
+
+**Target:** 0.21 × 0.48 × 0.45 · origin at the centre of the case · feet reaching
+down `0.255` from that centre to the floor.
+
+1. Cube, Dimensions `0.21, 0.45, 0.48` (W, D, H). Bevel `0.008`, Segments `2`.
+2. **Front face:** inset by `0.015`, extrude inward `-0.004`. That recess is the
+   front panel.
+3. **Grille:** in the recess, inset a strip across the upper half and use an
+   Array modifier to repeat it six times downward, `0.025` apart. These are
+   shallow — `0.003` deep is plenty.
+4. **Top vents:** same trick on the top face, nine slots running front to back.
+   The camera pose for this hotspot looks down at the case from in front of the
+   desk, so the lid is on show; do not leave it flat.
+5. **Feet:** four cubes `0.038 × 0.038 × 0.015` at the bottom corners, inset
+   about `0.07` in X and `0.175` in Z. `Ctrl+J` to join.
+6. Rename `tower`, apply transforms, export.
+
+**Leave the lights to the code.** The power LED, the drive light that flickers,
+the accent strip down the front edge and the glow it throws on the floor are all
+driven at runtime — the drive light is tied to the clock and stops flickering for
+visitors who ask for reduced motion. Model the case; it will light itself.
+
+> **It lives in the desk's shadow,** which means a plain dark material renders as
+> a black slab at night. Give it a mid-grey base colour, around `#3c424a`, and
+> let the code's emissive do the rest.
 
 ---
 
