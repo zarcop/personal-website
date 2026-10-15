@@ -140,10 +140,10 @@ export const hotspots: Hotspot[] = [
   },
   {
     id: 'whiteboard',
-    label: 'Achievements',
+    label: 'Experience',
     object: 'the whiteboard',
     anchor: [2.15, 2.72, -3.9] as Vec3,
-    kicker: 'Newest first',
+    kicker: 'The path so far',
     mesh: 'whiteboard',
     surface: true,
     // flat-on for the same reason as the desk; 1.88m back for a 1.3 x 1.0m board
@@ -153,7 +153,7 @@ export const hotspots: Hotspot[] = [
      * written /experience page can never disagree. This is only the lead line.
      */
     body: [
-      'Research, a bank, big tech, a classroom and a student-run fund.',
+      'Newest first: research, a bank, big tech, a classroom and a student-run fund.',
     ],
     links: [
       { label: 'Experience', href: '/experience' },

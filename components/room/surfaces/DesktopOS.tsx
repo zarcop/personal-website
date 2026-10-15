@@ -23,6 +23,18 @@ import { socialById } from '@/data/socials'
 const PX_W = 900
 const PX_H = 528
 
+/**
+ * The desktop picture: a system wallpaper, not a nameplate. Three layers —
+ * a sweep through blue into violet and warm pink, a glow bottom-right, and a
+ * highlight top-left — because a single linear gradient across 900px reads flat
+ * and banded where a layered one reads lit.
+ */
+const WALLPAPER = [
+  'radial-gradient(85% 70% at 14% 4%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 58%)',
+  'radial-gradient(115% 95% at 88% 104%, rgba(236,142,96,0.58) 0%, rgba(236,142,96,0) 56%)',
+  'linear-gradient(152deg, #0d1f55 0%, #262a7c 28%, #4f2f85 52%, #8a3a7c 76%, #b85070 100%)',
+].join(', ')
+
 const DOCK = [
   { id: 'github', Icon: GitHubIcon, bg: '#1f2328' },
   { id: 'linkedin', Icon: LinkedInIcon, bg: '#0a66c2' },
@@ -121,13 +133,8 @@ export default function DesktopOS() {
 
   return (
     <div
-      className="relative flex flex-col overflow-hidden text-[#dfe9ee]"
-      style={{
-        width: PX_W,
-        height: PX_H,
-        background:
-          'radial-gradient(130% 95% at 18% -10%, #17546a 0%, #0c2c39 52%, #071a22 100%)',
-      }}
+      className="relative flex flex-col overflow-hidden text-[#eef1f6]"
+      style={{ width: PX_W, height: PX_H, background: WALLPAPER }}
     >
       {/* ——— menu bar ——— */}
       <div className="flex flex-none items-center justify-between border-b border-white/10 bg-black/30 px-4 py-[6px] text-[11px]">
@@ -162,21 +169,11 @@ export default function DesktopOS() {
           <Shortcut href="/" label="Written site" glyph="⌂" />
         </div>
 
-        {/* With the browser closed the desktop would otherwise be bare, and it
-            is bare for everyone until Spotify has its keys. The wordmark holds
-            the space; a track replaces it when there is one. */}
+        {/* With the browser closed, the wallpaper is the desktop. A track floats
+            over it when Spotify has one; otherwise there is nothing to say. */}
         {!browserOpen && (
           <div className="absolute inset-0 grid place-items-center px-10">
-            {nowPlaying?.configured && nowPlaying.title ? (
-              <MusicCard data={nowPlaying} />
-            ) : (
-              <div aria-hidden className="select-none text-center text-white opacity-[0.14]">
-                <p className="text-[58px] font-bold leading-none tracking-tight">EZ</p>
-                <p className="mt-2.5 font-mono text-[10px] uppercase tracking-[0.32em]">
-                  Toluca → Atlanta
-                </p>
-              </div>
-            )}
+            <MusicCard data={nowPlaying} />
           </div>
         )}
 
@@ -259,7 +256,7 @@ export default function DesktopOS() {
       </div>
 
       {/* ——— dock ——— */}
-      <div className="flex flex-none items-center justify-center gap-3 border-t border-white/10 bg-black/35 py-2">
+      <div className="flex flex-none items-center justify-center gap-3 border-t border-white/10 bg-black/45 py-2">
         <button
           type="button"
           onClick={() => setBrowserOpen((open) => !open)}
@@ -269,7 +266,7 @@ export default function DesktopOS() {
           <span className="grid h-[38px] w-[38px] place-items-center rounded-[11px] bg-[#c2703c] text-[12px] font-bold text-[#140f0b] ring-1 ring-white/15 transition-transform group-hover:-translate-y-0.5">
             EZ
           </span>
-          <span className="text-[9px] text-white/55 group-hover:text-white/85">
+          <span className="text-[9px] text-white/70 group-hover:text-white">
             {browserOpen ? 'Close' : 'About'}
           </span>
         </button>
@@ -295,7 +292,7 @@ export default function DesktopOS() {
               >
                 <Icon className="h-[19px] w-[19px]" />
               </span>
-              <span className="text-[9px] text-white/55 group-hover:text-white/85">
+              <span className="text-[9px] text-white/70 group-hover:text-white">
                 {social.label}
               </span>
             </a>

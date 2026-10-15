@@ -38,14 +38,15 @@ const FLOOR = '#c9c2b6'
 const ACCENT = '#c2703c'
 
 /**
- * Shared hover/active tint. Blends toward the accent rather than replacing the
- * colour: swapping a large object to full accent made the focused monitor a
- * solid orange slab, and each prop should keep its own material identity while
- * still reading as selected. The floating label carries the louder signal.
+ * Hover tint, and only hover. Blending toward the accent says "this is clickable"
+ * to a pointer that is hunting; once something is selected the camera has already
+ * flown to it and its label has lit up, so recolouring it on top of that only
+ * changes what the object appears to be made of. Selected objects keep their own
+ * colour exactly.
  */
 function tint(hovered: boolean, active: boolean, base: string) {
-  if (!hovered && !active) return base
-  return new Color(base).lerp(new Color(ACCENT), active ? 0.42 : 0.22)
+  if (!hovered || active) return base
+  return new Color(base).lerp(new Color(ACCENT), 0.22)
 }
 
 /** True once `value` has held still for the length of a camera move. */
