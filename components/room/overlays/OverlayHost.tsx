@@ -27,8 +27,9 @@ export default function OverlayHost() {
   const close = useRoom((s) => s.closeOverlay)
   const found = hotspotById(overlay)
   const narrow = useNarrowViewport()
-  // on a wide viewport the monitor and the whiteboard carry their own content
-  const hotspot = found?.surface && !narrow ? undefined : found
+  // on a wide viewport the monitor and the whiteboard carry their own content,
+  // and the bookcase always opens as a book in BookReader instead
+  const hotspot = (found?.surface && !narrow) || found?.id === 'bookcase' ? undefined : found
   const panel = useRef<HTMLDivElement>(null)
   const returnFocus = useRef<HTMLElement | null>(null)
 

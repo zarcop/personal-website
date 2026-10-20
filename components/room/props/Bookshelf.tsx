@@ -4,6 +4,7 @@ import type { ColorRepresentation } from 'three'
 
 import { useMemo } from 'react'
 import { RoundedBox } from '@react-three/drei'
+import { books as featuredBooks } from '@/data/books'
 
 // Authored facing +Z, like every other prop, so a Blender model drops in
 // without having to be built sideways.
@@ -15,6 +16,12 @@ const SHELVES = 4
 
 const BOOK_COLOURS = ['#8a4b32', '#3f5b52', '#6b5540', '#2b3a4a', '#7a6a4f', '#5a3b46']
 
+/** The shelf at eye level from the bookcase pose, where the four real books stand. */
+const FEATURED_SHELF = 2
+const FEATURED_W = 0.07
+const FEATURED_H = 0.36
+const GILT = '#c9a45a'
+
 /** Deterministic pseudo-random so the shelf looks the same on every render. */
 function rand(seed: number) {
   const x = Math.sin(seed * 127.1) * 43758.5453
@@ -25,7 +32,8 @@ type Book = { x: number; width: number; height: number; colour: string; lean: nu
 
 function shelfBooks(shelfIndex: number): Book[] {
   const books: Book[] = []
-  let x = -W / 2 + 0.1
+  // the featured shelf keeps its left end clear for the four real books
+  let x = -W / 2 + 0.1 + (shelfIndex === FEATURED_SHELF ? FEATURED_W * 4 + 0.06 : 0)
   let i = 0
 
   while (x < W / 2 - 0.14) {
@@ -98,6 +106,26 @@ export default function Bookshelf({ accent }: { accent: ColorRepresentation }) {
                 <meshStandardMaterial color={accent} roughness={0.8} />
               </mesh>
             )}
+            {shelfIndex === FEATURED_SHELF &&
+              featuredBooks.map((book, i) => {
+                const x = -W / 2 + 0.1 + FEATURED_W / 2 + i * (FEATURED_W + 0.006)
+                const y = shelfY - gap + 0.0125 + FEATURED_H / 2
+                return (
+                  <group key={book.id} position={[x, y, 0.04]}>
+                    <mesh castShadow>
+                      <boxGeometry args={[FEATURED_W, FEATURED_H, 0.24]} />
+                      <meshStandardMaterial color={book.cloth} roughness={0.7} />
+                    </mesh>
+                    {/* gilt bands across the spine, top and bottom */}
+                    {[FEATURED_H / 2 - 0.035, -FEATURED_H / 2 + 0.035].map((band) => (
+                      <mesh key={band} position={[0, band, 0.1205]}>
+                        <planeGeometry args={[FEATURED_W * 0.86, 0.012]} />
+                        <meshStandardMaterial color={GILT} metalness={0.7} roughness={0.35} />
+                      </mesh>
+                    ))}
+                  </group>
+                )
+              })}
             {books.map((book, i) => (
               <mesh
                 key={i}

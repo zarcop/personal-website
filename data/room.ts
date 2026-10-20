@@ -133,14 +133,11 @@ export const hotspots: Hotspot[] = [
     label: 'What I read',
     object: 'the bookcase',
     anchor: [-2.45, 2.18, -3.6] as Vec3,
-    kicker: 'Economics, history, and what I am reading',
+    kicker: 'History, politics, faith and art',
     mesh: 'bookcase',
     camera: { position: [-2.45, 1.45, -0.2], target: [-2.45, 0.85, -3.7] },
-    todo: 'Needs the actual shelf: 4-6 books with a line each on why they stuck.',
-    body: [
-      'Mostly economics and history, with a bias toward Latin America.',
-      '[Placeholder — the real books go here, with a line each.]',
-    ],
+    /** The four books themselves live in data/books.ts and open in BookReader. */
+    body: ['Four books on what I care about outside of engineering.'],
   },
   {
     id: 'photo',

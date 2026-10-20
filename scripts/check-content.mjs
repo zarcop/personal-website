@@ -2,7 +2,7 @@
 /** Lists everything in data/about.ts that still needs your words. */
 import { readFileSync } from 'node:fs'
 
-const FILES = ['data/about.ts', 'data/room.ts', 'data/socials.ts']
+const FILES = ['data/about.ts', 'data/room.ts', 'data/socials.ts', 'data/books.ts']
 
 const todos = []
 const placeholders = []

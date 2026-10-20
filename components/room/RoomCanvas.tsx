@@ -7,6 +7,7 @@ import { detectCapability, type Capability } from '@/lib/capability'
 import { useRoom } from '@/store/room'
 import Scene from '@/components/room/Scene'
 import OverlayHost from '@/components/room/overlays/OverlayHost'
+import BookReader from '@/components/room/books/BookReader'
 import LoadingScreen from '@/components/room/LoadingScreen'
 import BackToRoom from '@/components/room/BackToRoom'
 
@@ -64,6 +65,7 @@ export default function RoomCanvas() {
       </Canvas>
 
       <OverlayHost />
+      <BookReader />
       <BackToRoom />
       <LoadingScreen />
     </div>
