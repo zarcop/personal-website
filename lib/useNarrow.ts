@@ -9,7 +9,8 @@ import { useEffect, useState } from 'react'
  * It decides whether the monitor and the whiteboard carry their own content.
  * three.js `fov` is vertical, so fitting a landscape surface across a portrait
  * screen pushes the camera back far enough that the text on it is unreadable,
- * however large the surface is in the room. Phones get the bottom panel instead.
+ * however large the surface is in the room. Portrait screens get the
+ * whiteboard in the bottom panel and the desktop full-screen instead.
  *
  * Starts false and corrects after mount: reading the viewport during render
  * would desync hydration.

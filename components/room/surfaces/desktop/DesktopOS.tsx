@@ -37,8 +37,8 @@ import Window from './Window'
  * minimize to the dock and zoom; the pointer is the computer's own.
  */
 
-const PX_W = 900
-const PX_H = 528
+export const PX_W = 900
+export const PX_H = 528
 const MENU_H = 24
 const DOCK_H = 62
 /** The area windows live in: between the menu bar and the dock. */

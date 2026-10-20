@@ -32,6 +32,8 @@ export default function Cursor() {
     if (!cursor || !surface) return
 
     const onMove = (e: PointerEvent) => {
+      // a finger has no pointer to draw; a mouse does
+      if (e.pointerType !== 'mouse') return
       const rect = surface.getBoundingClientRect()
       const scale = designScale(surface)
       const x = (e.clientX - rect.left) * scale

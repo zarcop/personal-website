@@ -85,8 +85,8 @@ export default function Room({ daylight }: { daylight: Daylight }) {
   // surfaces only read correctly once the camera is flat-on, and render as a
   // skewed slab mid-flight, so wait for the move to finish before mounting
   const settled = useSettled(focus)
-  // on a phone the surface would be unreadable at any size; OverlayHost takes
-  // over and renders the same content in the bottom panel instead
+  // on a portrait screen a surface would be unreadable at any size; the desktop
+  // goes full-screen (ScreenOverlay) and the board to the bottom panel
   const narrow = useNarrowViewport()
   const mountSurface = settled && !narrow
 

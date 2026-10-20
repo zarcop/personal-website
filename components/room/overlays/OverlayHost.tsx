@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import DraftBadge from '@/components/DraftBadge'
-import NowPlayingLine, { useNowPlaying } from '@/components/room/NowPlaying'
 import { experience } from '@/data/experience'
 import { projects } from '@/data/projects'
 import { hotspotById } from '@/data/room'
@@ -18,24 +17,22 @@ import { useRoom } from '@/store/room'
  * plain overlay keeps the copy crisp, selectable and reachable by keyboard —
  * and it inherits the design tokens the written site already uses.
  *
- * The monitor and the whiteboard are the two exceptions: on a wide viewport
- * they carry their own content on their own surfaces and this skips them. On a
- * portrait one no surface can be made readable, so they come back here.
+ * The whiteboard is an exception on a wide viewport, where it carries its own
+ * content on its surface; on a portrait one it comes back here. The desk and
+ * the bookcase never show here: they open the desktop and the books.
  */
 export default function OverlayHost() {
   const overlay = useRoom((s) => s.overlay)
   const close = useRoom((s) => s.closeOverlay)
   const found = hotspotById(overlay)
   const narrow = useNarrowViewport()
-  // on a wide viewport the monitor and the whiteboard carry their own content,
-  // and the bookcase always opens as a book in BookReader instead
-  const hotspot = (found?.surface && !narrow) || found?.id === 'bookcase' ? undefined : found
+  // On a wide viewport the monitor and the whiteboard carry their own content.
+  // The bookcase always opens in BookReader, and the desk always runs its
+  // desktop: on the monitor, or full-screen in ScreenOverlay when portrait.
+  const hotspot =
+    (found?.surface && !narrow) || found?.id === 'bookcase' || found?.id === 'desk' ? undefined : found
   const panel = useRef<HTMLDivElement>(null)
   const returnFocus = useRef<HTMLElement | null>(null)
-
-  // the desk panel is the only one that shows what Elias is listening to, and
-  // only when it is the panel doing the work — the screen polls for itself
-  const nowPlaying = useNowPlaying(narrow && overlay === 'desk')
 
   useEffect(() => {
     if (!overlay) return
@@ -147,8 +144,6 @@ export default function OverlayHost() {
               ))}
             </ol>
           )}
-
-          {hotspot.id === 'desk' && <NowPlayingLine data={nowPlaying} />}
 
           {hotspot.links && hotspot.links.length > 0 && (
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">

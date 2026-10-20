@@ -8,6 +8,7 @@ import { useRoom } from '@/store/room'
 import Scene from '@/components/room/Scene'
 import OverlayHost from '@/components/room/overlays/OverlayHost'
 import BookReader from '@/components/room/books/BookReader'
+import ScreenOverlay from '@/components/room/surfaces/desktop/ScreenOverlay'
 import LoadingScreen from '@/components/room/LoadingScreen'
 import BackToRoom from '@/components/room/BackToRoom'
 
@@ -66,6 +67,7 @@ export default function RoomCanvas() {
 
       <OverlayHost />
       <BookReader />
+      <ScreenOverlay />
       <BackToRoom />
       <LoadingScreen />
     </div>
