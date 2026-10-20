@@ -11,7 +11,9 @@
  *                nonced on a statically exported page. 'wasm-unsafe-eval' is
  *                the Meshopt decoder: the moment a .glb lands in public/models
  *                the room instantiates WebAssembly, and without this the first
- *                Blender export would 404 in a way that looks like a bad model
+ *                Blender export would 404 in a way that looks like a bad model.
+ *                'unsafe-eval' is dev only: `next dev` bundles run through eval,
+ *                and without it no client JS runs, so the room never mounts
  *   style-src    'unsafe-inline' is unavoidable: React style props, drei's
  *                <Html>, and the surfaces mounted on the monitor and whiteboard
  *                are all inline styles
@@ -27,7 +29,7 @@ const csp = [
   "img-src 'self' data: blob: https://i.scdn.co",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
   "worker-src 'self' blob:",
   "connect-src 'self'",
 ].join('; ')
