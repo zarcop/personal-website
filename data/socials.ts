@@ -31,7 +31,7 @@ export const socialById = (id: Social['id']) => socials.find((s) => s.id === id)
  * it, and they were drifting apart as two copies of the same URL.
  */
 export const resumePdf =
-  'https://drive.google.com/file/d/1W8xRdizQGlmWFm8Wq9meKZAKcCrNzWpX/view?usp=sharing'
+  'https://drive.google.com/file/d/1yRM36IuxxT_9hp7iAB32jhAHGVoQ4gig/view?usp=sharing'
 
 /** Who to write to. */
 export const email = 'eliaszarco@gmail.com'
