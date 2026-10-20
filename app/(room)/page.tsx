@@ -3,7 +3,6 @@ import RoomCanvasLoader from '@/components/room/RoomCanvasLoader'
 import { intro } from '@/data/about'
 
 export const metadata = {
-  title: 'The Room',
   description:
     'An interactive 3D room. Every object opens something about Elias Zarco — his work, his history, and what he reads.',
 }
@@ -30,7 +29,7 @@ export default function RoomPage() {
           </p>
           <p className="mt-6">
             <Link
-              href="/"
+              href="/about"
               className="font-mono text-2xs uppercase tracking-label text-foreground underline decoration-faint decoration-dotted underline-offset-[5px] transition-colors hover:decoration-accent"
             >
               Prefer to read? The written version →

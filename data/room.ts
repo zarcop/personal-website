@@ -85,7 +85,7 @@ export const hotspots: Hotspot[] = [
       'Where I want to point it: healthcare, economics and retail. In those three a better decision stops being a number on a slide. It is a shorter wait, a clinic that does not run out, a shelf that is not empty.',
     ],
     links: [
-      { label: 'The written version', href: '/' },
+      { label: 'The written version', href: '/about' },
       { label: 'Experience', href: '/experience' },
       { label: 'Projects', href: '/projects' },
       { label: 'Email', href: `mailto:${email}`, external: true },
@@ -104,7 +104,7 @@ export const hotspots: Hotspot[] = [
     ],
     links: [
       { label: 'Download PDF', href: resumePdf, external: true },
-      { label: 'Or read the long version', href: '/' },
+      { label: 'Or read the long version', href: '/about' },
     ],
   },
   {
@@ -154,7 +154,7 @@ export const hotspots: Hotspot[] = [
       'Toluca, an hour outside Mexico City. Home for the first 18 years, and the highest major city in the country — colder than anyone expects Mexico to be.',
       'Left for Georgia Tech, which is where industrial engineering turned into software and then into AI.',
     ],
-    links: [{ label: 'The longer story', href: '/' }],
+    links: [{ label: 'The longer story', href: '/about' }],
   },
   {
     id: 'whiteboard',

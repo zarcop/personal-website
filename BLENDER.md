@@ -44,7 +44,7 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:3000/room>. That is the room, running off your own
+Open <http://localhost:3000>. That is the room, running off your own
 machine, reading the files in this folder.
 
 ### 2. Start the watcher
@@ -585,6 +585,6 @@ Once a prop is in, re-measure the route:
 npm run build
 ```
 
-and compare `/room` against its current 692 KB over the wire — that is the
+and compare `/` against its current 692 KB over the wire — that is the
 figure with no models in play at all. If one prop adds more than a couple of
 hundred KB, open it in Blender and find out why before adding the next.

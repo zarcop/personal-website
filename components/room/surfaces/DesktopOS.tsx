@@ -166,7 +166,7 @@ export default function DesktopOS() {
           {resume && <Shortcut href={resume.href} label="Résumé.pdf" glyph="▤" external />}
           <Shortcut href="/projects" label="Projects" glyph="▸" />
           <Shortcut href="/experience" label="Experience" glyph="◈" />
-          <Shortcut href="/" label="Written site" glyph="⌂" />
+          <Shortcut href="/about" label="Written site" glyph="⌂" />
         </div>
 
         {/* With the browser closed, the wallpaper is the desktop. A track floats

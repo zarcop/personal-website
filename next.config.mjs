@@ -51,6 +51,10 @@ const nextConfig = {
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }]
   },
+  // the room used to live at /room before it became the home page
+  async redirects() {
+    return [{ source: '/room', destination: '/', permanent: false }]
+  },
 }
 
 export default nextConfig

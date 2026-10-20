@@ -16,7 +16,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-reading items-center justify-between px-6 py-5 sm:px-0">
         <Link
-          href="/"
+          href="/about"
           className="font-mono text-2xs uppercase tracking-label text-faint transition-colors duration-200 hover:text-foreground"
         >
           EZ

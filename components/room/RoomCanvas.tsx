@@ -22,7 +22,7 @@ function Fallback({ reason }: { reason: Capability['reason'] }) {
         <p className="text-[1.0625rem] leading-[1.75] text-muted">{message}</p>
         <p className="mt-6">
           <Link
-            href="/"
+            href="/about"
             className="font-mono text-2xs uppercase tracking-label text-foreground underline decoration-faint decoration-dotted underline-offset-[5px] transition-colors hover:decoration-accent"
           >
             Read the written version instead →

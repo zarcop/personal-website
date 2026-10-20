@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 /**
  * Thin client boundary. `ssr: false` is rejected inside a Server Component in the
  * App Router, and R3F touches `window` on mount, so the import has to be deferred
- * from here rather than from app/(room)/room/page.tsx.
+ * from here rather than from app/(room)/page.tsx.
  *
  * Everything three.js-shaped lands in this chunk, keeping it out of the shared
  * bundle that the written site pays for.

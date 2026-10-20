@@ -12,6 +12,10 @@ import { projects } from '@/data/projects'
 import { renderProse } from '@/lib/prose'
 import { validateAbout } from '@/lib/validateAbout'
 
+export const metadata = {
+  title: 'About',
+}
+
 // fails `next build` if a keyword and its detail ever drift apart
 validateAbout(about)
 
