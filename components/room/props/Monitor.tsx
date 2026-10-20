@@ -15,7 +15,7 @@ import type { Vec3 } from '@/lib/types'
  * "primitive" at this scale.
  *
  * What is painted on the screen deliberately mirrors the DOM that mounts on top
- * of it when the desk is focused (components/room/surfaces/DesktopOS): same
+ * of it when the desk is focused (components/room/surfaces/desktop/DesktopOS): same
  * browser window in the same place, same dock along the bottom. The swap from
  * painted to live should read as the screen coming into focus, not as one
  * picture being replaced by a different one.

@@ -12,6 +12,13 @@ type RoomState = {
   quality: 'high' | 'low'
   /** Something is playing on Spotify right now. Drives the monitor's screen. */
   playing: boolean
+  /**
+   * The monitor shows its lock screen. Lives here rather than in the desktop
+   * because the desktop unmounts whenever the camera leaves the desk, and a
+   * visitor who unlocked it once should not have to again on the way back.
+   */
+  screenLocked: boolean
+  setScreenLocked: (locked: boolean) => void
   setPlaying: (playing: boolean) => void
   setReady: (ready: boolean) => void
   setReducedMotion: (reduced: boolean) => void
@@ -29,6 +36,8 @@ export const useRoom = create<RoomState>((set) => ({
   overlay: 'desk',
   quality: 'high',
   playing: false,
+  screenLocked: true,
+  setScreenLocked: (screenLocked) => set({ screenLocked }),
   setPlaying: (playing) => set({ playing }),
   setReady: (ready) => set({ ready }),
   setReducedMotion: (reducedMotion) => set({ reducedMotion }),

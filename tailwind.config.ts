@@ -32,9 +32,25 @@ export default {
           from: { opacity: '0', transform: 'translateY(6px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
+        eq: {
+          '0%, 100%': { transform: 'scaleY(0.3)' },
+          '50%': { transform: 'scaleY(1)' },
+        },
+        load: {
+          '0%': { width: '0%', opacity: '1' },
+          '70%': { width: '100%', opacity: '1' },
+          '100%': { width: '100%', opacity: '0' },
+        },
+        'window-open': {
+          from: { opacity: '0', transform: 'scale(0.94)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
       },
       animation: {
         rise: 'rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both',
+        eq: 'eq 0.9s ease-in-out infinite',
+        load: 'load 0.6s ease-out forwards',
+        'window-open': 'window-open 0.18s cubic-bezier(0.16, 1, 0.3, 1) backwards',
       },
     },
   },
