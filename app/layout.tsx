@@ -1,8 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 import ThemeProvider from '@/components/ThemeProvider'
 
 const sans = Inter({
@@ -45,17 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
-        <ThemeProvider>
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-4 focus:z-50 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2 focus:font-mono focus:text-2xs focus:uppercase focus:tracking-label"
-          >
-            Skip to content
-          </a>
-          <Navbar />
-          <main id="main">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   )

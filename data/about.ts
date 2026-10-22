@@ -74,7 +74,7 @@ export const about: AboutBlock[] = [
     details: {
       clubs: {
         text: [
-          'This interest has been sharpened by my experience in the Georgia Tech Investments Committee, where I helped manage $2M doing fundamental and quantitative analysis.',
+          'This interest has been sharpened by my experience in the GTSF Investments Committee, where I helped manage $2.3M doing fundamental and quantitative analysis.',
           'I learned a ton about financial modeling, valuation methods and public presentations. I have also been part of several business and case competitions that have honed my overall consulting skills.',
         ],
         link: { href: '/experience#gtsf', label: 'More on that' },
