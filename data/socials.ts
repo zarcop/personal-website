@@ -27,11 +27,11 @@ export const socials: Social[] = [
 export const socialById = (id: Social['id']) => socials.find((s) => s.id === id)
 
 /**
- * The one-page PDF. Both the written site and the résumé on the desk link to
- * it, and they were drifting apart as two copies of the same URL.
+ * The one-page PDF, served from public/. The written site, the computer and the
+ * résumé on the desk all link here. When it changes, also re-render page 1 into
+ * public/images/resume/: the desk shows those images, not the PDF itself.
  */
-export const resumePdf =
-  'https://drive.google.com/file/d/1yRM36IuxxT_9hp7iAB32jhAHGVoQ4gig/view?usp=sharing'
+export const resumePdf = '/resume.pdf'
 
 /** Who to write to. */
 export const email = 'eliaszarco@gmail.com'

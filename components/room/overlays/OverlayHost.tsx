@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import DraftBadge from '@/components/DraftBadge'
 import { experience } from '@/data/experience'
@@ -80,8 +81,12 @@ export default function OverlayHost() {
           aria-label={hotspot.label}
           className={[
             'pointer-events-auto mx-auto w-full overflow-y-auto rounded-xl border border-line bg-background/95 p-6 shadow-lg backdrop-blur-md',
-            // the projects panel is the content here, not a caption to the object, so it takes most of the screen
-            hotspot.id === 'projects' ? 'max-h-[86vh] max-w-6xl' : 'max-h-[70vh] max-w-reading',
+            // the projects panel and the résumé are the content here, not a caption to the object, so they take most of the screen
+            hotspot.id === 'projects'
+              ? 'max-h-[86vh] max-w-6xl'
+              : hotspot.id === 'resume'
+                ? 'max-h-[86vh] max-w-3xl'
+                : 'max-h-[70vh] max-w-reading',
           ].join(' ')}
         >
           <div className="flex items-start justify-between gap-4">
@@ -128,6 +133,17 @@ export default function OverlayHost() {
                 </li>
               ))}
             </ol>
+          )}
+
+          {hotspot.id === 'resume' && (
+            <Image
+              src="/images/resume/page-1.png"
+              alt="Page 1 of Elias Zarco's résumé"
+              width={1600}
+              height={2070}
+              sizes="(max-width: 768px) 100vw, 46rem"
+              className="mt-5 h-auto w-full rounded-md bg-white ring-1 ring-line"
+            />
           )}
 
           {hotspot.id === 'projects' && (

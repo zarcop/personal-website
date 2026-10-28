@@ -100,7 +100,7 @@ export const hotspots: Hotspot[] = [
       'The one-page version, if you would rather skim than scroll.',
     ],
     links: [
-      { label: 'View on Google Drive', href: resumePdf, external: true },
+      { label: 'Open the PDF', href: resumePdf, external: true },
       { label: 'Or read the long version', href: '/about' },
     ],
   },
