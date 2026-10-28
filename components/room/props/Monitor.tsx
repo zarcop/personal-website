@@ -55,16 +55,16 @@ function Rects({ rects, z = Z }: { rects: Rect[]; z?: number }) {
 export default function Monitor({ accent, playing }: { accent: ColorRepresentation; playing?: boolean }) {
   // the browser window, painted
   const chrome: Rect[] = [
-    { x: 0, y: 0.06, w: 1.3, h: 0.66, c: '#f4f1ec' },
-    { x: 0, y: 0.3525, w: 1.3, h: 0.075, c: '#e3ddd4' },
-    { x: 0.03, y: 0.3525, w: 0.98, h: 0.038, c: '#f7f5f1' },
-    { x: -0.44, y: 0.3525, w: 0.3, h: 0.052, c: '#f7f5f1' },
+    { x: 0, y: 0.06, w: 1.34, h: 0.68, c: '#f4f1ec' },
+    { x: 0, y: 0.3625, w: 1.34, h: 0.075, c: '#e3ddd4' },
+    { x: 0.03, y: 0.3625, w: 0.98, h: 0.038, c: '#f7f5f1' },
+    { x: -0.44, y: 0.3625, w: 0.3, h: 0.052, c: '#f7f5f1' },
   ]
 
   const dots: { x: number; c: string }[] = [
-    { x: -0.615, c: '#e06c5a' },
-    { x: -0.585, c: '#e0b45a' },
-    { x: -0.555, c: '#7fb86b' },
+    { x: -0.635, c: '#e06c5a' },
+    { x: -0.605, c: '#e0b45a' },
+    { x: -0.575, c: '#7fb86b' },
   ]
 
   // the copy inside it, as weight rather than letters
@@ -104,7 +104,7 @@ export default function Monitor({ accent, playing }: { accent: ColorRepresentati
 
       <Rects rects={chrome} />
       {dots.map((dot) => (
-        <mesh key={dot.x} position={[dot.x, SCREEN_Y + 0.3525, Z + 0.0005]}>
+        <mesh key={dot.x} position={[dot.x, SCREEN_Y + 0.3625, Z + 0.0005]}>
           <circleGeometry args={[0.009, 12]} />
           <meshBasicMaterial color={dot.c} />
         </mesh>

@@ -117,18 +117,19 @@ function About({ onVisit }: { onVisit: (page: Page) => void }) {
   const hotspot = hotspotById('desk')
 
   return (
-    <>
+    // a column the height of the page, so the links sit on the bottom edge
+    <div className="flex min-h-full flex-col">
       <Heading title="Elias Zarco" kicker="AI · Optimization · Systems" />
 
-      <div className="mt-3 space-y-2">
+      <div className="mt-3 flex-1 space-y-3">
         {hotspot?.body.map((paragraph) => (
-          <p key={paragraph} className="text-[12px] leading-[1.6] text-black/72">
+          <p key={paragraph} className="text-justify text-[13px] leading-[1.7] text-black/72">
             {paragraph}
           </p>
         ))}
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 border-t border-black/10 pt-2.5 text-[11px]">
+      <div className="mt-3 flex flex-none flex-wrap gap-x-5 gap-y-1.5 border-t border-black/10 pt-2.5 text-[11px]">
         {hotspot?.links?.map((link) => {
           const inWindow = IN_WINDOW[link.href]
           if (inWindow) {
@@ -149,7 +150,7 @@ function About({ onVisit }: { onVisit: (page: Page) => void }) {
           )
         })}
       </div>
-    </>
+    </div>
   )
 }
 

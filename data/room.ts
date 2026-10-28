@@ -78,11 +78,8 @@ export const hotspots: Hotspot[] = [
     // reference aspect — big enough to read, with the room still around it.
     camera: { position: [0.35, 1.54, -1.82], target: [0.35, 1.535, -3.6] },
     body: [
-      'Industrial engineer from Toluca, Mexico. I am at Georgia Tech for Industrial & Systems Engineering and CS, with a master’s in computational science and engineering running alongside it.',
-      'I have built at Google in California and worked inside HSBC in Mexico City. Big tech and a bank, two countries, two very different ideas of what finished means.',
-      'What carried over was not the stack. It was taking something messy apart, finding the piece that actually matters, and building the smallest thing that moves it.',
-      'Right now that is research and startups. At AI4OPT I work on diffusion models for large-scale optimization; the rest of my time goes to things I am building myself.',
-      'Where I want to point it: healthcare, economics and retail. In those three a better decision stops being a number on a slide. It is a shorter wait, a clinic that does not run out, a shelf that is not empty.',
+      'I grew up in Toluca, Mexico, an hour from Mexico City, and spent my teens convinced public policy was how you change the world. I did competitive debate and planned to study humanities, until senior year, when I realized that if I wanted to create things, I had to learn to build them. I picked industrial engineering at Georgia Tech because it was the most general engineering degree, and two intro CS classes showed me software was how my ideas could actually get built. Clubs and projects along the way gave me a working feel for the business and finance side too.',
+      'Since then I’ve mostly followed the overlap. At Google I worked on the Gemini Education team, building interactive AI tools to help kids learn, and machine learning and AI turned out to be where all those threads met. At HSBC Mexico I was on the other side, getting AI adopted instead of built, which is a different problem from making a model work and taught me more about people than about models. Now I’m researching diffusion models for optimization at AI4OPT, aimed at healthcare and manufacturing, and building my own startup on the side. When I’m not working on that, it’s fútbol, history, music, politics, and travel.',
     ],
     links: [
       { label: 'The written version', href: '/about' },
