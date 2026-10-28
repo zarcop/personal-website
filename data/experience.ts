@@ -18,6 +18,7 @@ export const experience: Experience[] = [
     period: 'Sept 2026 — Now',
     shortPeriod: '2026 —',
     summary: 'Diffusion models for large-scale optimization, aimed at supply chain and healthcare.',
+    logo: '/images/experience/ai4opt_logo.png',
     mark: { short: 'AI4', bg: '#1d3f63' },
     tech: ['Python', 'PyTorch', 'Gurobi'],
     bullets: [
@@ -33,6 +34,7 @@ export const experience: Experience[] = [
     period: 'Summer 2026',
     shortPeriod: '2026',
     summary: 'Got AI agents working inside a global bank — 40% to 90% task success.',
+    logo: '/images/experience/hsbc_logo.png',
     mark: { short: 'HSBC', bg: '#db0011' },
     tech: ['Python', 'SQL'],
     bullets: [
@@ -50,6 +52,7 @@ export const experience: Experience[] = [
     period: 'Spring 2026',
     shortPeriod: '2026',
     summary: 'Optimization and statistics, for courses with 1,000+ students between them.',
+    logo: '/images/experience/gt_logo.png',
     mark: { short: 'GT', bg: '#b3a369', fg: '#1f1e1a' },
     tech: ['Python', 'Gurobi', 'R'],
     bullets: [
