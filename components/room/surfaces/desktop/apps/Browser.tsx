@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { experience } from '@/data/experience'
-import { projects } from '@/data/projects'
+import ProjectsPanel from '@/components/ProjectsPanel'
+import { featuredProjects } from '@/data/projects'
 import { hotspotById } from '@/data/room'
 import { canGoBack, canGoForward, currentPage, type History, type Page } from '../state'
 
@@ -195,29 +196,5 @@ function Experience() {
 }
 
 function Projects() {
-  return (
-    <>
-      <Heading title="Projects" kicker="What I have actually built" />
-      <ol className="mt-3 divide-y divide-black/10">
-        {projects.map((project) => (
-          <li key={project.slug} className="py-2.5">
-            <div className="flex items-baseline justify-between gap-3">
-              <p className="text-[12.5px] font-semibold">{project.title}</p>
-              <p className="flex-none font-mono text-[9px] uppercase tracking-[0.12em] text-black/45">
-                {project.year ?? '—'}
-              </p>
-            </div>
-            <p className="mt-1 text-[11.5px] leading-[1.55] text-black/72">{project.summary}</p>
-            <p className="mt-1.5 flex flex-wrap gap-1">
-              {project.tech.map((tech) => (
-                <span key={tech} className="rounded bg-black/[0.06] px-1.5 py-[1px] font-mono text-[9px] text-black/55">
-                  {tech}
-                </span>
-              ))}
-            </p>
-          </li>
-        ))}
-      </ol>
-    </>
-  )
+  return <ProjectsPanel projects={featuredProjects} className="h-full text-[11px]" />
 }
