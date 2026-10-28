@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import DraftBadge from '@/components/DraftBadge'
 import { experience } from '@/data/experience'
-import { projects } from '@/data/projects'
+import ProjectsPanel from '@/components/ProjectsPanel'
+import { featuredProjects } from '@/data/projects'
 import { hotspotById } from '@/data/room'
 import { useNarrowViewport } from '@/lib/useNarrow'
 import { useRoom } from '@/store/room'
@@ -77,7 +78,11 @@ export default function OverlayHost() {
           role="dialog"
           aria-modal="false"
           aria-label={hotspot.label}
-          className="pointer-events-auto mx-auto max-h-[70vh] w-full max-w-reading overflow-y-auto rounded-xl border border-line bg-background/95 p-6 shadow-lg backdrop-blur-md"
+          className={[
+            'pointer-events-auto mx-auto max-h-[70vh] w-full overflow-y-auto rounded-xl border border-line bg-background/95 p-6 shadow-lg backdrop-blur-md',
+            // the projects panel needs the width for its two columns
+            hotspot.id === 'projects' ? 'max-w-3xl' : 'max-w-reading',
+          ].join(' ')}
         >
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -126,23 +131,7 @@ export default function OverlayHost() {
           )}
 
           {hotspot.id === 'projects' && (
-            <ol className="mt-4 space-y-4">
-              {projects.slice(0, 4).map((project) => (
-                <li key={project.slug} className="border-l border-line pl-4">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <p className="text-[0.9375rem] font-medium leading-snug text-foreground">
-                      {project.title}
-                    </p>
-                    <p className="flex-none font-mono text-2xs uppercase tracking-label text-faint">
-                      {project.year ?? '—'}
-                    </p>
-                  </div>
-                  <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
-                    {project.summary}
-                  </p>
-                </li>
-              ))}
-            </ol>
+            <ProjectsPanel projects={featuredProjects} className="mt-5 text-[0.8125rem]" />
           )}
 
           {hotspot.links && hotspot.links.length > 0 && (

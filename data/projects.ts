@@ -3,6 +3,43 @@ import type { Project } from '@/lib/types'
 // NOTE: projects without a `year` are marked TODO — confirm and fill them in.
 export const projects: Project[] = [
   {
+    slug: 'order-entry-system',
+    title: 'Order Entry System',
+    year: '2024',
+    summary: 'Sub-50ms trading system in Redis and FastAPI, demoed at Millennium HQ.',
+    description:
+      'A full-stack order entry system for hedge fund traders, built with a three-person team. Redis caching and low-latency matching over FastAPI and WebSockets get request/response under 50ms, behind a deliberately lightweight HTMX front end.',
+    tech: ['Python', 'FastAPI', 'Redis'],
+    highlights: [
+      'Sub-50ms request/response on local benchmarks',
+      'Redis sorted sets for price-time priority, atomic matching via Lua scripts',
+      'Real-time order book streamed over WebSockets',
+      'Risk limits, role-based access, multi-account support, and audit logging',
+    ],
+    figures: [
+      {
+        src: '/images/projects/order-entry-screenshot.png',
+        alt: 'Order Entry System — order book and trading interface',
+        width: 800,
+        height: 480,
+      },
+      {
+        src: '/images/projects/millennium-hq-team.jpg',
+        alt: 'The team at Millennium HQ in New York',
+        width: 800,
+        height: 480,
+        caption:
+          'Demoed at Millennium HQ in New York — order submission, real-time matching, and risk controls.',
+      },
+    ],
+    links: [
+      {
+        label: 'GitHub',
+        href: 'https://github.com/zarcop/order-entry-system-millenium',
+      },
+    ],
+  },
+  {
     slug: 'insight-for-impact',
     title: 'Insight for Impact',
     year: '2026',
@@ -40,22 +77,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'deadlight-harness',
-    title: 'AI Safety Sandbox for Navy Agents',
-    // TODO(elias): confirm year
-    summary: 'Simulates every command an AI agent sends to a naval drone, and blocks the unsafe ones.',
-    description:
-      'An offline safety layer between an AI agent and a naval drone. Every command is simulated before it is allowed through, combining hard rules for the things that are never permitted with anomaly detection over ONNX embeddings and a FAISS index for the things that merely look wrong.',
-    tech: ['Python', 'ONNX', 'FAISS'],
-    highlights: [
-      '35 of 35 dangerous commands stopped across 21 simulated scenarios',
-      'About 8 ms per decision, at a 0.4% false-alarm rate',
-      'Hard rules for the absolutes, anomaly detection for everything else',
-      'Offline by design — no network call sits inside the safety path',
-    ],
-    links: [{ label: 'GitHub', href: 'https://github.com/zarcop/deadlight-harness' }],
-  },
-  {
     slug: 'vision-benchmark',
     title: 'Vision Model Benchmark',
     // TODO(elias): confirm year
@@ -80,40 +101,38 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'order-entry-system',
-    title: 'Order Entry System',
-    year: '2024',
-    summary: 'Sub-50ms trading system in Redis and FastAPI, demoed at Millennium HQ.',
+    slug: 'deadlight-harness',
+    title: 'AI Safety Sandbox for Navy Agents',
+    year: '2026',
+    summary: 'Simulates every command an AI agent sends to a naval drone, and blocks the unsafe ones.',
     description:
-      'A full-stack order entry system for hedge fund traders, built with a three-person team. Redis caching and low-latency matching over FastAPI and WebSockets get request/response under 50ms, behind a deliberately lightweight HTMX front end.',
-    tech: ['Python', 'FastAPI', 'Redis'],
+      'An offline safety layer between an AI agent and a naval drone. Every command is simulated before it is allowed through, combining hard rules for the things that are never permitted with anomaly detection over ONNX embeddings and a FAISS index for the things that merely look wrong.',
+    tech: ['Python', 'ONNX', 'FAISS'],
     highlights: [
-      'Sub-50ms request/response on local benchmarks',
-      'Redis sorted sets for price-time priority, atomic matching via Lua scripts',
-      'Real-time order book streamed over WebSockets',
-      'Risk limits, role-based access, multi-account support, and audit logging',
+      '35 of 35 dangerous commands stopped across 21 simulated scenarios',
+      'About 8 ms per decision, at a 0.4% false-alarm rate',
+      'Hard rules for the absolutes, anomaly detection for everything else',
+      'Offline by design — no network call sits inside the safety path',
     ],
-    figures: [
-      {
-        src: '/images/projects/order-entry-screenshot.png',
-        alt: 'Order Entry System — order book and trading interface',
-        width: 800,
-        height: 480,
-      },
-      {
-        src: '/images/projects/millennium-hq-team.jpg',
-        alt: 'The team at Millennium HQ in New York',
-        width: 800,
-        height: 480,
-        caption:
-          'Demoed at Millennium HQ in New York — order submission, real-time matching, and risk controls.',
-      },
+    links: [{ label: 'GitHub', href: 'https://github.com/zarcop/deadlight-harness' }],
+  },
+  {
+    slug: 'shpe-network',
+    title: "Who's Going to SHPE",
+    year: '2026',
+    summary: 'A live graph of who is at SHPE, searchable in plain English.',
+    description:
+      'A networking app for SHPE attendees and recruiters. People sign up from a résumé or LinkedIn PDF, then explore a graph of everyone coming, linked through four hubs: college, company, country of origin and major. You can also search for people in plain English.',
+    tech: ['TypeScript', 'React Native', 'Supabase', 'Claude'],
+    highlights: [
+      'Résumé and LinkedIn autofill that runs entirely on the device, with pdf.js and fixed rules instead of an LLM',
+      'Force-directed graph of people, joined through college, company, country and major',
+      'Plain-English search: free on-device rules first, Claude Haiku only for what they miss',
+      'Row-level security on Postgres, covered by pgTAP tests',
     ],
     links: [
-      {
-        label: 'GitHub',
-        href: 'https://github.com/zarcop/order-entry-system-millenium',
-      },
+      { label: 'Live', href: 'https://who-is-going-to-shpe.vercel.app' },
+      { label: 'GitHub', href: 'https://github.com/zarcop/shpe-network' },
     ],
   },
   {
@@ -167,3 +186,6 @@ export const projects: Project[] = [
     ],
   },
 ]
+
+/** The first five lead: the room's computer and the projects tower show only these. */
+export const featuredProjects = projects.slice(0, 5)

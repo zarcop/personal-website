@@ -49,7 +49,7 @@ const DESK = { w: PX_W, h: PX_H - MENU_H - DOCK_H }
  * props/Monitor.tsx, so the swap from painted to live does not jump.
  */
 const FRAMES: Record<AppId, Frame> = {
-  browser: { x: 24, y: 12, w: 852, h: DESK.h - 20 },
+  browser: { x: 12, y: 6, w: 876, h: DESK.h - 8 },
   finder: { x: 170, y: 54, w: 520, h: 290 },
   music: { x: 470, y: 36, w: 380, h: 150 },
 }
