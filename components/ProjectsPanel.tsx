@@ -49,17 +49,6 @@ export default function ProjectsPanel({
     <div
       className={`flex flex-col overflow-hidden rounded-[0.9em] bg-[#1c1a17] text-[#ece6dc] ring-1 ring-black/25 ${className}`}
     >
-      {/* status bar */}
-      <div className="flex flex-none items-center justify-between border-b border-white/10 px-[1.3em] py-[0.65em] font-mono text-[0.8em] uppercase tracking-[0.17em]">
-        <span className="flex items-center gap-[0.7em] text-white/55">
-          <span aria-hidden className="h-[0.6em] w-[0.6em] rounded-full bg-[#c2703c]" />
-          Projects
-        </span>
-        <span className="text-white/40">
-          <span className="text-[#e39a63]">{pad(index + 1)}</span> / {pad(projects.length)}
-        </span>
-      </div>
-
       {/*
         The 1px gap over a light background is the divider, whichever way the
         columns wrap. A wrapping row grows to fit its tallest column instead of
@@ -97,6 +86,9 @@ export default function ProjectsPanel({
             <button type="button" onClick={() => step(-1)} className="hover:text-white/80">
               ← prev
             </button>
+            <span>
+              <span className="text-[#e39a63]">{pad(index + 1)}</span> / {pad(projects.length)}
+            </span>
             <button type="button" onClick={() => step(1)} className="hover:text-white/80">
               next →
             </button>
@@ -150,7 +142,8 @@ export default function ProjectsPanel({
                 alt={figure.alt}
                 width={figure.width}
                 height={figure.height}
-                className="h-auto w-full rounded-[0.5em] ring-1 ring-white/10"
+                // capped, not full width: a portrait photo at full width runs several screens tall
+                className="h-auto max-h-[20em] w-auto max-w-full rounded-[0.5em] ring-1 ring-white/10"
               />
               {figure.caption && (
                 <figcaption className="mt-[0.5em] text-[0.85em] leading-[1.5] text-white/45">{figure.caption}</figcaption>

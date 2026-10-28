@@ -118,7 +118,6 @@ export const hotspots: Hotspot[] = [
     camera: { position: [0.9, 1.05, -1.15], target: [0.9, -0.35, -3.35] },
     body: [
       'The ones worth showing. Most began as a class project or a hackathon and then kept going.',
-      'The constraint is usually the interesting part — 36 hours, 50 milliseconds, a million rows.',
     ],
     links: [
       { label: 'All of them', href: '/projects' },
