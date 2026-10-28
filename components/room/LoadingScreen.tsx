@@ -17,7 +17,7 @@ export default function LoadingScreen() {
       aria-hidden={!active}
       className={[
         'pointer-events-none absolute inset-0 z-30 flex items-center justify-center',
-        'bg-background transition-opacity duration-700',
+        'bg-background transition-opacity duration-[250ms]',
         active ? 'opacity-100' : 'opacity-0',
       ].join(' ')}
     >

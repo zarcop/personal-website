@@ -30,6 +30,13 @@ function distanceScale(aspect: number) {
   return Math.min(Math.max(scale, 1), 3.8)
 }
 
+/**
+ * How much further back than its pose the camera opens, along the same line.
+ * The first thing the room does is a short settle onto the desk rather than a
+ * flight across it, which held the intro back by about a second.
+ */
+const INTRO_PULLBACK = 0.25
+
 /** Frame-rate independent exponential smoothing. */
 function damp(current: Vector3, goal: Vector3, lambda: number, delta: number) {
   current.lerp(goal, 1 - Math.exp(-lambda * delta))
@@ -43,6 +50,7 @@ export default function CameraRig() {
   const desiredTarget = useRef(new Vector3(...IDLE_POSE.target))
   const smoothedTarget = useRef(new Vector3(...IDLE_POSE.target))
   const offset = useRef(new Vector3())
+  const placed = useRef(false)
 
   useFrame((state, delta) => {
     const aspect = state.viewport.aspect
@@ -62,6 +70,12 @@ export default function CameraRig() {
     if (hotspot?.surface && aspect < 1) scale = Math.min(scale, 2.4)
     offset.current.set(...pose.position).sub(desiredTarget.current).multiplyScalar(scale)
     desiredPosition.current.copy(desiredTarget.current).add(offset.current)
+
+    if (!placed.current) {
+      placed.current = true
+      smoothedTarget.current.copy(desiredTarget.current)
+      state.camera.position.copy(desiredPosition.current).addScaledVector(offset.current, INTRO_PULLBACK)
+    }
 
     if (reducedMotion) {
       // cut straight to the pose: still a 3D room, just one that holds still

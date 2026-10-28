@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Color } from 'three'
 
 import HotspotLabel from '@/components/room/HotspotLabel'
@@ -50,10 +50,19 @@ function tint(hovered: boolean, active: boolean, base: string) {
   return new Color(base).lerp(new Color(ACCENT), 0.22)
 }
 
-/** True once `value` has held still for the length of a camera move. */
+/**
+ * True once `value` has held still for the length of a camera move. The first
+ * value counts as settled: the camera opens already lined up on it (CameraRig),
+ * so there is no skew to wait out.
+ */
 function useSettled(value: string | null, delay = 620) {
-  const [settled, setSettled] = useState(false)
+  const [settled, setSettled] = useState(true)
+  // compared by value, not a first-run flag, so Strict Mode's double effect
+  // in dev does not count as a move
+  const last = useRef(value)
   useEffect(() => {
+    if (last.current === value) return
+    last.current = value
     setSettled(false)
     const id = setTimeout(() => setSettled(true), delay)
     return () => clearTimeout(id)
