@@ -51,6 +51,8 @@ export default function Interactable({
     (e: ThreeEvent<MouseEvent>) => {
       e.stopPropagation()
       if (e.nativeEvent.target !== canvas) return
+      // a swipe along the wall ends in a click too; only a tap should open things
+      if (e.delta > 6) return
       focusHotspot(id)
     },
     [canvas, focusHotspot, id],

@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
-import { Vector3 } from 'three'
+import { useEffect, useRef } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import { MathUtils, PerspectiveCamera, Vector3 } from 'three'
+import { panBy } from '@/components/room/pan'
 import { IDLE_POSE, IDLE_POSE_NARROW, PARALLAX, hotspotById } from '@/data/room'
 import { useRoom } from '@/store/room'
 
@@ -51,6 +52,44 @@ export default function CameraRig() {
   const smoothedTarget = useRef(new Vector3(...IDLE_POSE.target))
   const offset = useRef(new Vector3())
   const placed = useRef(false)
+  // metres along the wall; only portrait's idle pose uses it
+  const pan = useRef(0)
+  const get = useThree((s) => s.get)
+
+  // Swipe to look along the wall on portrait. Listens on the canvas itself, so
+  // a drag that starts on a label or the bottom panel never moves the room.
+  useEffect(() => {
+    const canvas = get().gl.domElement
+    let lastX: number | null = null
+
+    const down = (e: PointerEvent) => {
+      const { viewport } = get()
+      if (viewport.aspect < 1 && !useRoom.getState().focus) lastX = e.clientX
+    }
+    const move = (e: PointerEvent) => {
+      if (lastX === null) return
+      const { camera, size } = get()
+      const distance = camera.position.distanceTo(smoothedTarget.current)
+      const fov = MathUtils.degToRad((camera as PerspectiveCamera).fov)
+      const metresPerPx = (2 * distance * Math.tan(fov / 2)) / size.height
+      pan.current = panBy(pan.current, e.clientX - lastX, metresPerPx)
+      lastX = e.clientX
+    }
+    const up = () => {
+      lastX = null
+    }
+
+    canvas.addEventListener('pointerdown', down)
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+    window.addEventListener('pointercancel', up)
+    return () => {
+      canvas.removeEventListener('pointerdown', down)
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+      window.removeEventListener('pointercancel', up)
+    }
+  }, [get])
 
   useFrame((state, delta) => {
     const aspect = state.viewport.aspect
@@ -69,6 +108,8 @@ export default function CameraRig() {
     let scale = distanceScale(aspect)
     if (hotspot?.surface && aspect < 1) scale = Math.min(scale, 2.4)
     offset.current.set(...pose.position).sub(desiredTarget.current).multiplyScalar(scale)
+    // slide the whole pose sideways, so the view stays square to the wall
+    if (!hotspot && aspect < 1) desiredTarget.current.x += pan.current
     desiredPosition.current.copy(desiredTarget.current).add(offset.current)
 
     if (!placed.current) {

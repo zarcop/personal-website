@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import DraftBadge from '@/components/DraftBadge'
-import { experience } from '@/data/experience'
 import ProjectsPanel from '@/components/ProjectsPanel'
+import BoardContent from '@/components/room/surfaces/BoardContent'
 import { featuredProjects } from '@/data/projects'
 import { hotspotById } from '@/data/room'
 import { useNarrowViewport } from '@/lib/useNarrow'
@@ -63,6 +63,8 @@ export default function OverlayHost() {
   }, [overlay])
 
   const open = Boolean(hotspot)
+  // the projects panel and the board carry their own titles, so nothing goes around them but Close
+  const panelOnly = hotspot?.id === 'projects' || hotspot?.id === 'whiteboard'
 
   return (
     <div
@@ -90,49 +92,45 @@ export default function OverlayHost() {
           ].join(' ')}
         >
           <div className="flex items-start justify-between gap-4">
-            <div>
-              <h2 className="text-[1.0625rem] font-semibold leading-snug text-foreground">
-                {hotspot.label}
-              </h2>
-              <p className="mt-1 font-mono text-2xs uppercase tracking-label text-faint">
-                {hotspot.kicker}
-              </p>
-            </div>
+            {!panelOnly && (
+              <div>
+                <h2 className="text-[1.0625rem] font-semibold leading-snug text-foreground">
+                  {hotspot.label}
+                </h2>
+                <p className="mt-1 font-mono text-2xs uppercase tracking-label text-faint">
+                  {hotspot.kicker}
+                </p>
+              </div>
+            )}
             <button
               type="button"
               onClick={close}
-              className="-m-2 rounded-md p-2 font-mono text-2xs uppercase tracking-label text-faint transition-colors hover:text-foreground"
+              className="-m-2 ml-auto rounded-md p-2 font-mono text-2xs uppercase tracking-label text-faint transition-colors hover:text-foreground"
             >
               Close
               <span className="sr-only"> (or press Escape)</span>
             </button>
           </div>
 
-          {hotspot.todo && <DraftBadge note={hotspot.todo} />}
+          {!panelOnly && (
+            <>
+              {hotspot.todo && <DraftBadge note={hotspot.todo} />}
 
-          <div className="mt-4 space-y-3">
-            {hotspot.body.map((paragraph) => (
-              <p key={paragraph} className="text-[0.9375rem] leading-relaxed text-muted">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+              <div className="mt-4 space-y-3">
+                {hotspot.body.map((paragraph) => (
+                  <p key={paragraph} className="text-[0.9375rem] leading-relaxed text-muted">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </>
+          )}
 
-          {/* the whiteboard's timeline, for viewports that cannot read the board */}
+          {/* the board itself, for viewports too narrow to read it on the wall */}
           {hotspot.id === 'whiteboard' && (
-            <ol className="mt-4 space-y-4">
-              {experience.slice(0, 5).map((role) => (
-                <li key={role.slug} className="border-l border-line pl-4">
-                  <p className="text-[0.9375rem] font-medium leading-snug text-foreground">
-                    {role.org}
-                  </p>
-                  <p className="mt-0.5 font-mono text-2xs uppercase tracking-label text-faint">
-                    {role.role} · {role.period}
-                  </p>
-                  <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">{role.summary}</p>
-                </li>
-              ))}
-            </ol>
+            <div className="mt-3">
+              <BoardContent fit />
+            </div>
           )}
 
           {hotspot.id === 'resume' && (
@@ -147,10 +145,10 @@ export default function OverlayHost() {
           )}
 
           {hotspot.id === 'projects' && (
-            <ProjectsPanel projects={featuredProjects} className="mt-5 text-[0.875rem] sm:text-[0.9375rem]" />
+            <ProjectsPanel projects={featuredProjects} className="mt-3 text-[0.875rem] sm:text-[0.9375rem]" />
           )}
 
-          {hotspot.links && hotspot.links.length > 0 && (
+          {!panelOnly && hotspot.links && hotspot.links.length > 0 && (
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
               {hotspot.links.map((link) =>
                 link.external ? (

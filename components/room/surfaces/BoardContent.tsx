@@ -53,14 +53,18 @@ function Mark({ role }: { role: Experience }) {
   )
 }
 
-export default function BoardContent() {
+/**
+ * `fit` drops the fixed board size so the same timeline can fill the bottom
+ * panel on a portrait screen, where the board in the room is too far back to read.
+ */
+export default function BoardContent({ fit = false }: { fit?: boolean }) {
   const hotspot = hotspotById('whiteboard')
   if (!hotspot) return null
 
   return (
     <div
-      className="flex flex-col bg-[#f8f6f2] px-6 py-5 text-[#23211e]"
-      style={{ width: PX_W, height: PX_H }}
+      className={`flex flex-col bg-[#f8f6f2] text-[#23211e] ${fit ? 'rounded-md px-4 py-4' : 'px-6 py-5'}`}
+      style={fit ? undefined : { width: PX_W, height: PX_H }}
     >
       <div className="flex flex-none items-baseline justify-between border-b-2 border-[#23211e]/80 pb-2">
         <h2 className="text-[19px] font-semibold tracking-tight">{hotspot.label}</h2>
@@ -92,7 +96,10 @@ export default function BoardContent() {
                 </p>
               </div>
               <div className="flex items-baseline justify-between gap-3">
-                <p className="truncate font-mono text-[9px] uppercase tracking-[0.13em] text-[#a8552a]">
+                {/* truncated on the wall, where the board has a fixed size; free to wrap in the panel */}
+                <p
+                  className={`${fit ? '' : 'truncate'} font-mono text-[9px] uppercase tracking-[0.13em] text-[#a8552a]`}
+                >
                   {role.role}
                 </p>
                 {role.location && (
