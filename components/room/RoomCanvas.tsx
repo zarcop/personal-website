@@ -11,6 +11,7 @@ import BookReader from '@/components/room/books/BookReader'
 import ScreenOverlay from '@/components/room/surfaces/desktop/ScreenOverlay'
 import LoadingScreen from '@/components/room/LoadingScreen'
 import BackToRoom from '@/components/room/BackToRoom'
+import SwipeHint from '@/components/room/SwipeHint'
 
 function Fallback({ reason }: { reason: Capability['reason'] }) {
   const message =
@@ -58,6 +59,9 @@ export default function RoomCanvas() {
         camera={{ position: [6.5, 4.2, 6.5], fov: 42 }}
         // cap DPR: retina phones will happily render at 3x and melt
         dpr={[1, capability.quality === 'high' ? 2 : 1.5]}
+        // without this the phone's browser claims a sideways drag as its own
+        // scroll or back gesture and cancels the swipe a few pixels in
+        style={{ touchAction: 'none' }}
         gl={{ antialias: capability.quality === 'high', powerPreference: 'high-performance' }}
       >
         <Suspense fallback={null}>
@@ -69,6 +73,7 @@ export default function RoomCanvas() {
       <BookReader />
       <ScreenOverlay />
       <BackToRoom />
+      <SwipeHint />
       <LoadingScreen />
     </div>
   )

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import { Html } from '@react-three/drei'
 import type { Hotspot } from '@/data/room'
 import { useRoom } from '@/store/room'
@@ -20,6 +21,7 @@ export default function HotspotLabel({ hotspot }: { hotspot: Hotspot }) {
   const focusHotspot = useRoom((s) => s.focusHotspot)
   const close = useRoom((s) => s.closeOverlay)
   const reducedMotion = useRoom((s) => s.reducedMotion)
+  const downX = useRef<number | null>(null)
 
   const active = focus === hotspot.id
   // once something is selected, the other labels step back so the chosen object
@@ -37,8 +39,20 @@ export default function HotspotLabel({ hotspot }: { hotspot: Hotspot }) {
       <button
         type="button"
         aria-pressed={active}
-        onClick={() => (active ? close() : focusHotspot(hotspot.id))}
-        style={{ pointerEvents: 'auto' }}
+        onPointerDown={(e) => {
+          downX.current = e.clientX
+        }}
+        onClick={(e) => {
+          // a swipe along the wall can start on a label (CameraRig); only a tap
+          // should open it. Keyboard clicks have no pointerdown and always count.
+          const dragged = downX.current !== null && Math.abs(e.clientX - downX.current) > 6
+          downX.current = null
+          if (dragged) return
+          if (active) close()
+          else focusHotspot(hotspot.id)
+        }}
+        // the browser would otherwise claim a drag that starts here as a scroll
+        style={{ pointerEvents: 'auto', touchAction: 'none' }}
         className={[
           'group whitespace-nowrap rounded-full border px-3 py-1.5',
           'font-mono text-2xs uppercase tracking-label backdrop-blur-sm',

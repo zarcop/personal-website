@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { MathUtils, PerspectiveCamera, Vector3 } from 'three'
-import { panBy } from '@/components/room/pan'
+import { glide, panBy } from '@/components/room/pan'
 import { IDLE_POSE, IDLE_POSE_NARROW, PARALLAX, hotspotById } from '@/data/room'
 import { useRoom } from '@/store/room'
 
@@ -56,35 +56,60 @@ export default function CameraRig() {
   const pan = useRef(0)
   const get = useThree((s) => s.get)
 
-  // Swipe to look along the wall on portrait. Listens on the canvas itself, so
-  // a drag that starts on a label or the bottom panel never moves the room.
+  // metres per second, carried on after the finger lifts
+  const panVelocity = useRef(0)
+  const dragging = useRef(false)
+
+  // Swipe to look along the wall on portrait. Listens on R3F's event wrapper,
+  // which also holds the floating labels (drei's Html mounts them there), so a
+  // drag that starts on a label still moves the room; the bottom panel lives
+  // outside it and never does.
   useEffect(() => {
-    const canvas = get().gl.domElement
-    let lastX: number | null = null
+    const surface: HTMLElement = get().events.connected
+    let pointerId: number | null = null
+    let lastX = 0
+    let lastTime = 0
 
     const down = (e: PointerEvent) => {
       const { viewport } = get()
-      if (viewport.aspect < 1 && !useRoom.getState().focus) lastX = e.clientX
+      if (pointerId !== null || viewport.aspect >= 1 || useRoom.getState().focus) return
+      pointerId = e.pointerId
+      lastX = e.clientX
+      lastTime = e.timeStamp
+      dragging.current = true
+      panVelocity.current = 0
     }
     const move = (e: PointerEvent) => {
-      if (lastX === null) return
+      if (e.pointerId !== pointerId) return
       const { camera, size } = get()
       const distance = camera.position.distanceTo(smoothedTarget.current)
       const fov = MathUtils.degToRad((camera as PerspectiveCamera).fov)
       const metresPerPx = (2 * distance * Math.tan(fov / 2)) / size.height
+      const before = pan.current
       pan.current = panBy(pan.current, e.clientX - lastX, metresPerPx)
+      const dt = (e.timeStamp - lastTime) / 1000
+      // lightly smoothed, so one jittery last sample does not decide the flick
+      if (dt > 0) panVelocity.current = 0.7 * ((pan.current - before) / dt) + 0.3 * panVelocity.current
+      if (pan.current !== before) useRoom.getState().setPanned()
       lastX = e.clientX
+      lastTime = e.timeStamp
     }
-    const up = () => {
-      lastX = null
+    const up = (e: PointerEvent) => {
+      if (e.pointerId !== pointerId) return
+      pointerId = null
+      dragging.current = false
+      // a finger that stopped before lifting means "stay here", not "flick"
+      if (e.type === 'pointercancel' || e.timeStamp - lastTime > 80 || useRoom.getState().reducedMotion) {
+        panVelocity.current = 0
+      }
     }
 
-    canvas.addEventListener('pointerdown', down)
+    surface.addEventListener('pointerdown', down)
     window.addEventListener('pointermove', move)
     window.addEventListener('pointerup', up)
     window.addEventListener('pointercancel', up)
     return () => {
-      canvas.removeEventListener('pointerdown', down)
+      surface.removeEventListener('pointerdown', down)
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerup', up)
       window.removeEventListener('pointercancel', up)
@@ -100,6 +125,12 @@ export default function CameraRig() {
     const pose = hotspot?.camera ?? idle
 
     desiredTarget.current.set(...pose.target)
+
+    if (!dragging.current && panVelocity.current !== 0) {
+      const step = glide(pan.current, panVelocity.current, Math.min(delta, 0.1))
+      pan.current = step.pan
+      panVelocity.current = step.velocity
+    }
 
     // push out along the pose's own view direction, keeping its framing intent.
     // Surface poses are capped on portrait: their content moves to the bottom

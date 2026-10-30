@@ -82,13 +82,13 @@ export default function OverlayHost() {
           aria-modal="false"
           aria-label={hotspot.label}
           className={[
-            'pointer-events-auto mx-auto w-full overflow-y-auto rounded-xl border border-line bg-background/95 p-6 shadow-lg backdrop-blur-md',
+            'pointer-events-auto mx-auto w-full overflow-y-auto overscroll-contain rounded-xl border border-line bg-background/95 p-6 shadow-lg backdrop-blur-md',
             // the projects panel and the résumé are the content here, not a caption to the object, so they take most of the screen
             hotspot.id === 'projects'
-              ? 'max-h-[86vh] max-w-6xl'
+              ? 'max-h-[86dvh] max-w-6xl'
               : hotspot.id === 'resume'
-                ? 'max-h-[86vh] max-w-3xl'
-                : 'max-h-[70vh] max-w-reading',
+                ? 'max-h-[86dvh] max-w-3xl'
+                : 'max-h-[70dvh] max-w-reading',
           ].join(' ')}
         >
           <div className="flex items-start justify-between gap-4">

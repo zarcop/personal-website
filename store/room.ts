@@ -18,6 +18,9 @@ type RoomState = {
    * visitor who unlocked it once should not have to again on the way back.
    */
   screenLocked: boolean
+  /** The visitor has swiped along the wall at least once, so the swipe hint can go. */
+  panned: boolean
+  setPanned: () => void
   setScreenLocked: (locked: boolean) => void
   setPlaying: (playing: boolean) => void
   setReady: (ready: boolean) => void
@@ -37,6 +40,8 @@ export const useRoom = create<RoomState>((set) => ({
   quality: 'high',
   playing: false,
   screenLocked: true,
+  panned: false,
+  setPanned: () => set({ panned: true }),
   setScreenLocked: (screenLocked) => set({ screenLocked }),
   setPlaying: (playing) => set({ playing }),
   setReady: (ready) => set({ ready }),
