@@ -107,6 +107,8 @@ export default function ProjectsPanel({
                 alt={project.figures[0].alt}
                 width={project.figures[0].width}
                 height={project.figures[0].height}
+                // without sizes, next/image picks by the width prop and a ~280px thumbnail downloads a 1920px image
+                sizes="360px"
                 className="h-[10.7em] w-[17.3em] flex-none rounded-[0.5em] object-cover ring-1 ring-white/10"
               />
             ) : (
@@ -142,6 +144,7 @@ export default function ProjectsPanel({
                 alt={figure.alt}
                 width={figure.width}
                 height={figure.height}
+                sizes="(max-width: 640px) 90vw, 600px"
                 // capped, not full width: a portrait photo at full width runs several screens tall
                 className="h-auto max-h-[20em] w-auto max-w-full rounded-[0.5em] ring-1 ring-white/10"
               />

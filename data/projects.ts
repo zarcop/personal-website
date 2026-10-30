@@ -61,7 +61,7 @@ export const projects: Project[] = [
         height: 480,
       },
       {
-        src: '/images/projects/insight-for-impact-team.png',
+        src: '/images/projects/insight-for-impact-team.jpg',
         alt: 'The Insight for Impact team at Hacklytics 2026',
         width: 800,
         height: 533,

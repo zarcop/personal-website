@@ -40,6 +40,8 @@ export default function ExperiencePage() {
                   width={72}
                   height={72}
                   aria-hidden
+                  // a few KB each: the optimizer's cold round trip costs more than it saves
+                  unoptimized
                   className="h-9 w-9 flex-none rounded-md object-contain opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
                 />
               )}

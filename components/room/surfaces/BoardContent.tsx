@@ -30,6 +30,12 @@ function Mark({ role }: { role: Experience }) {
         width={72}
         height={72}
         aria-hidden
+        // A few KB each, so the optimizer's cold round trip costs more than it
+        // saves. Eager because lazy images inside the 3D-transformed board (and
+        // the nested scrollers of the phone panel) are not reliably noticed as
+        // on screen, and some browsers never fetch them.
+        unoptimized
+        loading="eager"
         className="h-[34px] w-[34px] flex-none rounded-[7px] object-contain ring-1 ring-black/10"
       />
     )
